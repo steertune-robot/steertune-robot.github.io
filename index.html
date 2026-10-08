@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Steertuning Policies from a Few Human Videos</title>
+    <meta name="author" content="Anonymous authors" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Steertuning combines two-minute LoRA finetuning with demonstration-guided action steering to adapt robot policies from five human demonstrations. Research project page."
+    />
+    <meta name="theme-color" content="#fcf8f3" />
+    <meta
+      property="og:title"
+      content="Steertuning Policies from a Few Human Videos"
+    />
+    <meta
+      property="og:description"
+      content="Few-shot robot task adaptation from human videos. Method, experiments, and research materials."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232f5d4a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Georgia' font-size='48' fill='%23fcf8f3'%3ES%3C/text%3E%3C/svg%3E"
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/cormorant-garamond-normal-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/source-serif-4-normal-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <script src="charts.js" defer></script>
+    <script src="plot-data.js" defer></script>
+    <script src="plots.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#abstract">Skip to research content</a>
+    <main id="top">
+      <header class="paper-header container">
+        <h1>
+          <span class="title-line"
+            ><span class="method-name">Steertuning</span> Policies</span
+          ><span class="title-line">from a Few Human Videos</span>
+        </h1>
+        <p class="anonymous-authors">Anonymous authors · Paper ID 1039</p>
+        <div class="publication-links" aria-label="Research resources">
+          <a
+            class="resource-button primary"
+            href="assets/steertuning-paper.pdf"
+            target="_blank"
+            rel="noopener"
+            ><svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 2.5h6l4 4v11H5zM11 2.5v4h4M7.5 10h5M7.5 13h5" /></svg
+            >Paper</a
+          >
+          <span class="resource-button unavailable"
+            ><svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m6 6-4 4 4 4m8-8 4 4-4 4m-3-11-2 14" /></svg
+            >Code <small>Coming soon</small></span
+          >
+          <span class="resource-button unavailable"
+            ><svg viewBox="0 0 20 20" aria-hidden="true">
+              <ellipse cx="10" cy="4.5" rx="6" ry="2.5" />
+              <path
+                d="M4 4.5v10c0 3.3 12 3.3 12 0v-10M4 9.5c0 3.3 12 3.3 12 0"
+              /></svg
+            >Dataset <small>Coming soon</small></span
+          >
+          <span class="resource-button unavailable"
+            ><svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m10 2 7 4v8l-7 4-7-4V6zm0 8 7-4M10 10 3 6m7 4v8" /></svg
+            >Models <small>Coming soon</small></span
+          >
+        </div>
+      </header>
+
+      <section class="teaser-section container" id="teaser" aria-label="Teaser">
+        <figure>
+          <div
+            class="media-placeholder teaser-placeholder"
+            data-asset="teaser-video"
+          >
+            <div class="placeholder-meta">
+              <span>Teaser</span><span>Video placeholder · 16:9</span>
+            </div>
+            <div class="placeholder-center">
+              <svg class="media-symbol" viewBox="0 0 48 48" aria-hidden="true">
+                <rect x="7" y="10" width="34" height="28" rx="2" />
+                <path d="m20 18 11 6-11 6z" /></svg
+              ><span class="placeholder-title">Teaser video</span>
+              <p>
+                Five human demonstrations.<br />Few-shot adaptation. Robot
+                deployment.
+              </p>
+            </div>
+            <div class="placeholder-foot">
+              Reserved for the project overview video
+            </div>
+          </div>
+          <figcaption class="teaser-caption">
+            <strong>Steertuning:</strong>
+            <em class="text-accent"
+              >5 human demonstrations in under 5 minutes</em
+            >.
+            <strong class="text-underline">71% success across 12 tasks</strong>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <nav class="section-nav container" aria-label="On this page">
+        <a href="#abstract">Abstract</a><a href="#overview">Overview</a
+        ><a href="#method">Method</a><a href="#experiments">Experiments</a
+        ><a href="#ablations">Ablations</a><a href="#citation">Citation</a>
+      </nav>
+
+      <section
+        class="paper-section reading-width"
+        id="abstract"
+        aria-labelledby="abstract-title"
+      >
+        <h2 id="abstract-title">Abstract</h2>
+        <div class="abstract-text">
+          <p>
+            <strong>Steertuning</strong> adapts robots to
+            <em>new tasks and environments</em> from just
+            <em class="text-accent">5 human demonstrations</em>. A
+            <span class="text-underline">400M-parameter diffusion policy</span>,
+            pretrained on roughly 100 hours of egocentric human interactions,
+            combines <em>two-minute LoRA finetuning</em> with
+            demonstration-guided action steering.
+          </p>
+          <p>
+            Trained entirely on human data, the policy transfers to a mobile
+            manipulator and achieves
+            <em class="text-accent"
+              >71% success across 12 tasks in 12 new environments</em
+            >. The full process—from collecting demonstrations to robot
+            deployment—takes
+            <span class="text-underline">under five minutes</span>.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="paper-section container ruled"
+        id="overview"
+        aria-labelledby="overview-title"
+      >
+        <h2 id="overview-title">Overview</h2>
+        <p class="section-lead reading-width">
+          From <em class="text-accent">egocentric human data</em> to a YOR
+          mobile manipulator with Wuji hands: pretrain, finetune, and steer.
+        </p>
+        <figure class="research-figure">
+          <div
+            class="media-placeholder figure-wide"
+            data-asset="system-overview"
+          >
+            <div class="placeholder-meta">
+              <span>System overview</span><span>Figure 1</span>
+            </div>
+            <div class="placeholder-center">
+              <span class="placeholder-kicker">Figure placeholder</span
+              ><span class="placeholder-title"
+                >Pretraining & few-shot task adaptation</span
+              >
+              <p>
+                Human interaction data · diffusion policy · LoRA finetuning ·
+                action steering
+              </p>
+            </div>
+          </div>
+          <figcaption>
+            <strong>Figure 1.</strong> Human pretraining followed by
+            <em>few-shot finetuning and action steering</em>.
+          </figcaption>
+        </figure>
+        <div class="contributions reading-width">
+          <h3>Key contributions</h3>
+          <ol>
+            <li>
+              <strong class="text-underline">Rapid task adaptation.</strong>
+              Five demonstrations; under five minutes.
+            </li>
+            <li>
+              <strong class="text-underline"
+                >Human-only policy learning.</strong
+              >
+              Human video supervises pretraining and adaptation.
+            </li>
+            <li>
+              <strong class="text-underline"
+                >End-to-end mobile manipulation.</strong
+              >
+              Language connects navigation and learned manipulation.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section
+        class="paper-section container ruled"
+        id="method"
+        aria-labelledby="method-title"
+      >
+        <h2 id="method-title">Method</h2>
+        <article class="subsection">
+          <h3>Egocentric human data</h3>
+          <p>
+            Aria Gen 2 recordings yield
+            <em class="text-accent">109.6 hours</em>, <em>3.69M frames</em>, and
+            48.7k generated instructions.
+            <span class="text-underline"
+              >Contact segmentation and object grounding</span
+            >
+            create training snippets; removing body geometry helps transfer
+            human observations to the robot.
+          </p>
+          <figure class="research-figure">
+            <div
+              class="media-placeholder figure-wide"
+              data-asset="data-processing"
+            >
+              <div class="placeholder-meta">
+                <span>Data & representations</span><span>Section III-B–C</span>
+              </div>
+              <div class="placeholder-center">
+                <span class="placeholder-kicker">Figure placeholder</span
+                ><span class="placeholder-title"
+                  >From smart-glass recordings to policy inputs</span
+                >
+                <p>
+                  RGB and stereo · hand and head poses · scene point cloud ·
+                  object mask
+                </p>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Data processing.</strong> Segment, annotate, remove body
+              geometry, and align observations and actions in one camera frame.
+            </figcaption>
+          </figure>
+        </article>
+        <article class="subsection">
+          <h3>Policy architecture and action steering</h3>
+          <p>
+            A diffusion transformer takes
+            <span class="text-underline"
+              >point clouds, object masks, fingertip locations, and
+              language</span
+            >
+            as inputs. It predicts <em>human action landmarks</em>, retargeted
+            to the robot at deployment.
+          </p>
+          <figure class="research-figure">
+            <div
+              class="media-placeholder figure-wide"
+              data-asset="policy-architecture"
+            >
+              <div class="placeholder-meta">
+                <span>Policy architecture</span><span>Figure 3</span>
+              </div>
+              <div class="placeholder-center">
+                <span class="placeholder-kicker">Figure placeholder</span
+                ><span class="placeholder-title"
+                  >Multimodal diffusion policy & action steering</span
+                >
+                <p>
+                  Observation encoders · diffusion transformer ·
+                  demonstration-guided DDIM sampling
+                </p>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Figure 3.</strong> Multimodal diffusion policy with
+              <em>demonstration-guided action steering</em>.
+            </figcaption>
+          </figure>
+          <div class="method-columns">
+            <div>
+              <h4>Low-rank finetuning</h4>
+              <p>
+                Freeze the pretrained model; train
+                <em>rank-8 LoRA adapters</em> for 2,000 updates—<em
+                  class="text-accent"
+                  >about two minutes</em
+                >.
+              </p>
+            </div>
+            <div>
+              <h4>Demonstration-guided steering</h4>
+              <p>
+                Match a demonstration by
+                <span class="text-underline">object layout</span>, noise its
+                actions, and blend with model predictions at <i>w</i> = 0.3.
+              </p>
+            </div>
+          </div>
+          <div
+            class="equation"
+            aria-label="x sub t is updated to w times a star sub t plus one minus w times x sub t"
+          >
+            <span
+              ><i>x</i><sub>t</sub> ← <i>w</i> <i>a</i><sup>⋆</sup
+              ><sub>t</sub> + (1 − <i>w</i>) <i>x</i><sub>t</sub></span
+            ><span class="equation-number">(2)</span>
+          </div>
+        </article>
+      </section>
+
+      <section
+        class="paper-section container ruled"
+        id="experiments"
+        aria-labelledby="experiments-title"
+      >
+        <h2 id="experiments-title">Experiments</h2>
+        <p class="section-lead reading-width">
+          <em class="text-accent">71% overall success</em> across
+          <span class="text-underline"
+            >12 tasks: nine at home and three in the lab</span
+          >, with five new demonstrations per task.
+        </p>
+        <nav class="experiment-index" aria-label="Experiment results">
+          <a href="#results">Task adaptation</a
+          ><a href="#scaling">Data &amp; compute</a
+          ><a href="#steering-study">Steering analysis</a
+          ><a href="#architecture-results">Architecture</a
+          ><a href="#trajectory-results">Trajectory selection</a
+          ><a href="#generalization">Object generalization</a>
+        </nav>
+        <p class="evaluation-protocol reading-width">
+          <strong>Lab protocol.</strong> 10 trials per task; object positions
+          vary within 20 × 20 cm. Trash and Bread test pick-and-place; Flower
+          tests watering.
+        </p>
+        <article class="subsection">
+          <h3>In-the-wild task rollouts</h3>
+          <p>
+            Human demonstrations and robot rollouts in
+            <em>unseen environments</em>.
+          </p>
+          <div class="task-tabs" role="tablist" aria-label="In-the-wild task">
+            <button
+              id="task-flower"
+              role="tab"
+              aria-selected="true"
+              aria-controls="rollout-panel"
+              tabindex="0"
+              data-task="flower"
+            >
+              Flower watering</button
+            ><button
+              id="task-coffee"
+              role="tab"
+              aria-selected="false"
+              aria-controls="rollout-panel"
+              tabindex="-1"
+              data-task="coffee"
+            >
+              Coffee machine</button
+            ><button
+              id="task-kettle"
+              role="tab"
+              aria-selected="false"
+              aria-controls="rollout-panel"
+              tabindex="-1"
+              data-task="kettle"
+            >
+              Kettle handling
+            </button>
+          </div>
+          <div
+            id="rollout-panel"
+            role="tabpanel"
+            aria-labelledby="task-flower"
+            tabindex="0"
+          >
+            <div class="media-pair">
+              <figure>
+                <h4>Human demonstration</h4>
+                <div
+                  class="media-placeholder video-small"
+                  data-asset="task-human"
+                >
+                  <div class="placeholder-center">
+                    <span class="placeholder-kicker">Video placeholder</span
+                    ><span class="placeholder-title" data-task-label
+                      >Flower watering</span
+                    >
+                    <p>Human demonstration</p>
+                  </div>
+                </div>
+              </figure>
+              <figure>
+                <h4>Robot rollout</h4>
+                <div
+                  class="media-placeholder video-small"
+                  data-asset="task-robot"
+                >
+                  <div class="placeholder-center">
+                    <span class="placeholder-kicker">Video placeholder</span
+                    ><span class="placeholder-title" data-task-label
+                      >Flower watering</span
+                    >
+                    <p>Steertuning policy</p>
+                  </div>
+                </div>
+              </figure>
+            </div>
+          </div>
+          <p class="figure-note">
+            <strong>Figure 4.</strong> Human demonstration (left); robot rollout
+            (right).
+          </p>
+        </article>
+        <article class="subsection">
+          <h3>End-to-end deployment from language</h3>
+          <p>
+            A vision-language orchestrator translates commands into
+            <span class="text-underline"
+              >navigation and learned manipulation</span
+            >.
+          </p>
+          <figure class="research-figure">
+            <div
+              class="media-placeholder deployment-placeholder"
+              data-asset="language-deployment"
+            >
+              <div class="placeholder-meta">
+                <span>Full-system deployment</span><span>Figure 5</span>
+              </div>
+              <div class="placeholder-center">
+                <span class="placeholder-kicker">Video placeholder</span
+                ><span class="placeholder-title"
+                  >“Put the white cup into the trash.”</span
+                >
+                <p>
+                  Navigate to the cup · pick up · navigate to the trash · place
+                </p>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Figure 5.</strong> Mobile manipulation from a single
+              language command.
+            </figcaption>
+          </figure>
+        </article>
+        <article class="subsection" id="results">
+          <h3>Finetuning and steering are complementary</h3>
+          <p>
+            <em class="text-accent">83% lab success</em> after
+            <em>two minutes of finetuning</em>, versus 77% from a full finetune
+            requiring <span class="text-underline">roughly a day</span>.
+          </p>
+          <figure class="result-chart" data-result-chart="adaptation"></figure>
+          <details class="chart-data" data-result-table open>
+            <summary>View exact results · Table I</summary>
+            <div
+              class="table-wrap"
+              tabindex="0"
+              role="region"
+              aria-label="Table I. Success rates by adaptation method"
+            >
+              <table>
+                <caption>
+                  <strong>Table I.</strong>
+                  Successes / 10 trials. Averages use manuscript rounding.
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Method</th>
+                    <th scope="col">Trash</th>
+                    <th scope="col">Flower</th>
+                    <th scope="col">Bread</th>
+                    <th scope="col">Average</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="ours">
+                    <th scope="row">Steertuning <span>(ours)</span></th>
+                    <td>9/10</td>
+                    <td>7/10</td>
+                    <td>9/10</td>
+                    <td>8.3/10</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Steering only</th>
+                    <td>2/10</td>
+                    <td>2/10</td>
+                    <td>3/10</td>
+                    <td>2.3/10</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Short finetune <span>(2k)</span></th>
+                    <td>0/10</td>
+                    <td>0/10</td>
+                    <td>0/10</td>
+                    <td>0/10</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Full finetune <span>(150k)</span></th>
+                    <td>7/10</td>
+                    <td>8/10</td>
+                    <td>8/10</td>
+                    <td>7.7/10</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+          <p class="table-note">
+            Ablations cover <em>three lab tasks</em>; the 71% headline covers
+            all 12.
+          </p>
+        </article>
+      </section>
+
+      <section
+        class="paper-section container ruled"
+        id="ablations"
+        aria-labelledby="ablations-title"
+      >
+        <h2 id="ablations-title">Ablation Studies</h2>
+        <article class="subsection" id="scaling">
+          <h3>Data and compute scaling</h3>
+          <p>
+            Mean success over three lab tasks, <em>±1 standard deviation</em>.
+            <span class="text-underline"
+              >Filled green points mark our settings</span
+            >.
+          </p>
+          <div class="scaling-grid" id="scaling-charts"></div>
+          <p class="figure-note plot-provenance">
+            <strong>Figure 6.</strong> <em>Approximate</em> PDF-digitized
+            values; equally spaced settings. Zero updates = steering only; pp =
+            percentage points.
+            <a href="assets/plot-data.json" download>Download plotted values</a>
+            ·
+            <a
+              href="assets/steertuning-paper.pdf#page=6"
+              target="_blank"
+              rel="noopener"
+              >Compare with the paper</a
+            >.
+          </p>
+          <details class="chart-data" id="scaling-data">
+            <summary>View all scaling values and error bars</summary>
+          </details>
+        </article>
+        <article class="subsection" id="steering-study">
+          <h3>Finetuning and steering</h3>
+          <p>
+            Steering strength <i>w</i>: <em>0 uses the model alone</em>;
+            <em>1 replays the demonstration</em>. We use
+            <em class="text-accent">0.3</em>.
+          </p>
+          <figure
+            class="curve-panel steering-panel"
+            id="steering-chart"
+          ></figure>
+          <p class="figure-note">
+            Our setting: ≈234.6 MSE; best 128k-step result: ≈229.2. Prediction
+            error is <em>separate from robot task success</em>.
+          </p>
+          <p class="figure-note plot-provenance">
+            <strong>Figure 7.</strong> Approximate PDF-digitized values, not raw
+            logs. Four clipped values remain “&gt;350”.
+            <a
+              href="assets/steertuning-paper.pdf#page=6"
+              target="_blank"
+              rel="noopener"
+              >View the original plot</a
+            >.
+          </p>
+          <details class="chart-data" id="steering-data">
+            <summary>View all budgets × steering weights</summary>
+          </details>
+        </article>
+        <div class="ablation-tables">
+          <article>
+            <h3 id="architecture-results">
+              Architecture: encoders and decoders
+            </h3>
+            <p>
+              <span class="text-underline">Utonia + diffusion transformer</span>
+              performs best among tested variants.
+            </p>
+            <figure
+              class="result-chart"
+              data-result-chart="architecture"
+            ></figure>
+            <details class="chart-data" data-result-table open>
+              <summary>View exact results · Table II</summary>
+              <div
+                class="table-wrap"
+                tabindex="0"
+                role="region"
+                aria-label="Table II. Architecture ablations"
+              >
+                <table class="compact-table">
+                  <caption>
+                    <strong>Table II.</strong>
+                    Successes / 10 trials. Averages use manuscript rounding.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Component</th>
+                      <th scope="col">Variant</th>
+                      <th scope="col">Trash</th>
+                      <th scope="col">Flower</th>
+                      <th scope="col">Bread</th>
+                      <th scope="col">Average</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Encoder</td>
+                      <th scope="row">PointNeXt</th>
+                      <td>5/10</td>
+                      <td>6/10</td>
+                      <td>7/10</td>
+                      <td>6/10</td>
+                    </tr>
+                    <tr>
+                      <td>Encoder</td>
+                      <th scope="row">PTv3</th>
+                      <td>10/10</td>
+                      <td>4/10</td>
+                      <td>9/10</td>
+                      <td>7.7/10</td>
+                    </tr>
+                    <tr class="ours">
+                      <td>Encoder</td>
+                      <th scope="row">Utonia (ours)</th>
+                      <td>9/10</td>
+                      <td>7/10</td>
+                      <td>9/10</td>
+                      <td>8.3/10</td>
+                    </tr>
+                    <tr>
+                      <td>Decoder</td>
+                      <th scope="row">UNet</th>
+                      <td>8/10</td>
+                      <td>8/10</td>
+                      <td>6/10</td>
+                      <td>7.3/10</td>
+                    </tr>
+                    <tr class="ours">
+                      <td>Decoder</td>
+                      <th scope="row">DiT (ours)</th>
+                      <td>9/10</td>
+                      <td>7/10</td>
+                      <td>9/10</td>
+                      <td>8.3/10</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          </article>
+          <article>
+            <h3 id="trajectory-results">Trajectory selection</h3>
+            <p>
+              Selecting by <span class="text-underline">object layout</span>
+              outperforms visual features and wrist pose.
+            </p>
+            <figure
+              class="result-chart"
+              data-result-chart="trajectory"
+            ></figure>
+            <details class="chart-data" data-result-table open>
+              <summary>View exact results · Table III</summary>
+              <div
+                class="table-wrap"
+                tabindex="0"
+                role="region"
+                aria-label="Table III. Trajectory selection"
+              >
+                <table class="compact-table">
+                  <caption>
+                    <strong>Table III.</strong>
+                    Successes / 10 trials. Averages use manuscript rounding.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Variant</th>
+                      <th scope="col">Trash</th>
+                      <th scope="col">Flower</th>
+                      <th scope="col">Bread</th>
+                      <th scope="col">Average</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">VINN</th>
+                      <td>7/10</td>
+                      <td>2/10</td>
+                      <td>7/10</td>
+                      <td>5.3/10</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Wrist pose</th>
+                      <td>6/10</td>
+                      <td>7/10</td>
+                      <td>4/10</td>
+                      <td>5.7/10</td>
+                    </tr>
+                    <tr class="ours">
+                      <th scope="row">Object-based (ours)</th>
+                      <td>9/10</td>
+                      <td>7/10</td>
+                      <td>9/10</td>
+                      <td>8.3/10</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <section
+        class="paper-section container ruled"
+        id="generalization"
+        aria-labelledby="generalization-title"
+      >
+        <h2 id="generalization-title">Object Generalization</h2>
+        <p class="section-lead reading-width">
+          Steertuning handles
+          <span class="text-underline">new object appearances</span> when the
+          required action remains <em>similar</em>.
+        </p>
+        <figure
+          class="result-chart"
+          data-result-chart="generalization"
+        ></figure>
+        <details class="chart-data" data-result-table open>
+          <summary>View exact results · Figure 8</summary>
+          <div
+            class="table-wrap"
+            tabindex="0"
+            role="region"
+            aria-label="Object generalization results"
+          >
+            <table>
+              <caption>
+                Figure 8. Successes / 10 trials per condition.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Task</th>
+                  <th scope="col">Original object</th>
+                  <th scope="col">New object</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Flower</th>
+                  <td>7/10</td>
+                  <td>6/10</td>
+                </tr>
+                <tr>
+                  <th scope="row">Toy</th>
+                  <td>10/10</td>
+                  <td>9/10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+        <figure class="research-figure">
+          <div
+            class="media-placeholder figure-wide"
+            data-asset="object-generalization"
+          >
+            <div class="placeholder-meta">
+              <span>Original and unseen objects</span><span>Figure 8</span>
+            </div>
+            <div class="placeholder-center">
+              <span class="placeholder-kicker">Figure / video placeholder</span
+              ><span class="placeholder-title"
+                >Generalization to new objects</span
+              >
+              <p>Flower: 7/10 → 6/10 &nbsp; · &nbsp; Toy: 10/10 → 9/10</p>
+            </div>
+          </div>
+          <figcaption>
+            <strong>Figure 8.</strong> Original vs. replacement objects. Toy is
+            an additional evaluation task.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section
+        class="paper-section reading-width ruled"
+        id="limitations"
+        aria-labelledby="limitations-title"
+      >
+        <h2 id="limitations-title">Discussion and Limitations</h2>
+        <p>
+          Human video lacks <em>contact measurements</em>, limiting dexterity.
+          <span class="text-underline">Kinematic retargeting</span> can also
+          fail, even when predicted human actions are accurate.
+        </p>
+      </section>
+
+      <section
+        class="paper-section reading-width ruled citation-section"
+        id="citation"
+        aria-labelledby="citation-title"
+      >
+        <h2 id="citation-title">Citation</h2>
+        <div class="citation-note">
+          <p class="citation-title">
+            Steertuning Policies from a Few Human Videos
+          </p>
+          <p>Anonymous authors · Paper ID 1039</p>
+          <p class="muted">BibTeX and publication details forthcoming.</p>
+          <a href="assets/steertuning-paper.pdf" target="_blank" rel="noopener"
+            >Read the manuscript</a
+          >
+        </div>
+      </section>
+    </main>
+    <footer class="page-footer container">
+      <span>Steertuning</span><a href="#top">Back to top</a>
+    </footer>
+  </body>
+</html>

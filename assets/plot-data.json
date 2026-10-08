@@ -1,0 +1,294 @@
+{
+  "source": {
+    "file": "steertuning-paper.pdf",
+    "sha256": "0ce60e654848e3dc33bf52d67e5313137415e13770a7e0d9fe9b693bdab125c2",
+    "page": 6,
+    "method": "Digitized from vector paths in Figures 6\u20137; approximate, rounded to one decimal. Values clipped in the published plot are null, not estimated."
+  },
+  "scaling": [
+    {
+      "id": "pretraining-compute",
+      "title": "Pretraining compute",
+      "xLabel": "Training updates",
+      "defaultIndex": 4,
+      "points": [
+        {
+          "label": "200k",
+          "mean": 60.0,
+          "std": 8.2
+        },
+        {
+          "label": "400k",
+          "mean": 73.3,
+          "std": 12.5
+        },
+        {
+          "label": "600k",
+          "mean": 73.3,
+          "std": 12.5
+        },
+        {
+          "label": "800k",
+          "mean": 80.0,
+          "std": 8.2
+        },
+        {
+          "label": "1M",
+          "mean": 83.3,
+          "std": 9.4
+        }
+      ]
+    },
+    {
+      "id": "lora-compute",
+      "title": "LoRA finetuning compute",
+      "xLabel": "Training updates",
+      "defaultIndex": 2,
+      "points": [
+        {
+          "label": "0",
+          "mean": 23.3,
+          "std": 4.7
+        },
+        {
+          "label": "0.5k",
+          "mean": 50.0,
+          "std": 24.5
+        },
+        {
+          "label": "2k",
+          "mean": 83.3,
+          "std": 9.4
+        },
+        {
+          "label": "4k",
+          "mean": 76.7,
+          "std": 12.5
+        },
+        {
+          "label": "8k",
+          "mean": 83.3,
+          "std": 12.5
+        },
+        {
+          "label": "64k",
+          "mean": 86.7,
+          "std": 12.5
+        },
+        {
+          "label": "256k",
+          "mean": 90.0,
+          "std": 8.2
+        }
+      ]
+    },
+    {
+      "id": "pretraining-data",
+      "title": "Pretraining data",
+      "xLabel": "Data (hours)",
+      "defaultIndex": 4,
+      "points": [
+        {
+          "label": "20",
+          "mean": 66.7,
+          "std": 26.2
+        },
+        {
+          "label": "40",
+          "mean": 66.7,
+          "std": 26.2
+        },
+        {
+          "label": "60",
+          "mean": 80.0,
+          "std": 8.2
+        },
+        {
+          "label": "80",
+          "mean": 76.7,
+          "std": 20.5
+        },
+        {
+          "label": "100",
+          "mean": 83.3,
+          "std": 9.4
+        }
+      ]
+    },
+    {
+      "id": "demonstrations",
+      "title": "Task demonstrations",
+      "xLabel": "Demonstrations",
+      "defaultIndex": 2,
+      "points": [
+        {
+          "label": "1",
+          "mean": 23.3,
+          "std": 18.9
+        },
+        {
+          "label": "3",
+          "mean": 43.3,
+          "std": 12.5
+        },
+        {
+          "label": "5",
+          "mean": 83.3,
+          "std": 9.4
+        },
+        {
+          "label": "7",
+          "mean": 90.0,
+          "std": 8.2
+        }
+      ]
+    }
+  ],
+  "steering": {
+    "weights": [
+      0,
+      0.1,
+      0.2,
+      0.3,
+      0.5,
+      0.7,
+      0.9,
+      1
+    ],
+    "series": [
+      {
+        "label": "None",
+        "values": [
+          null,
+          null,
+          null,
+          330.0,
+          250.5,
+          249.0,
+          251.5,
+          253.4
+        ]
+      },
+      {
+        "label": "0.5k",
+        "values": [
+          null,
+          276.6,
+          245.5,
+          238.0,
+          242.2,
+          248.0,
+          252.3,
+          253.4
+        ]
+      },
+      {
+        "label": "1k",
+        "values": [
+          337.0,
+          266.9,
+          245.0,
+          237.5,
+          240.6,
+          247.1,
+          252.1,
+          253.4
+        ]
+      },
+      {
+        "label": "2k",
+        "values": [
+          312.9,
+          261.5,
+          241.5,
+          234.6,
+          238.1,
+          245.7,
+          251.7,
+          253.4
+        ]
+      },
+      {
+        "label": "4k",
+        "values": [
+          298.4,
+          254.5,
+          238.6,
+          234.1,
+          237.5,
+          245.4,
+          251.6,
+          253.4
+        ]
+      },
+      {
+        "label": "8k",
+        "values": [
+          300.6,
+          259.2,
+          241.9,
+          235.2,
+          237.6,
+          245.2,
+          251.5,
+          253.4
+        ]
+      },
+      {
+        "label": "16k",
+        "values": [
+          286.2,
+          251.6,
+          236.2,
+          231.8,
+          235.0,
+          243.8,
+          251.1,
+          253.4
+        ]
+      },
+      {
+        "label": "32k",
+        "values": [
+          287.4,
+          253.5,
+          237.5,
+          232.3,
+          234.9,
+          243.6,
+          251.0,
+          253.4
+        ]
+      },
+      {
+        "label": "64k",
+        "values": [
+          272.0,
+          246.0,
+          232.0,
+          229.9,
+          232.5,
+          242.0,
+          250.6,
+          253.4
+        ]
+      },
+      {
+        "label": "128k",
+        "values": [
+          249.5,
+          236.5,
+          229.2,
+          229.4,
+          231.5,
+          241.0,
+          250.5,
+          253.4
+        ]
+      }
+    ],
+    "replay": 253.4,
+    "defaultSeries": "2k",
+    "defaultWeight": 0.3
+  }
+}

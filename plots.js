@@ -150,7 +150,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
           : "updates";
     label.textContent = `${point.label} ${unit}${index === data.defaultIndex ? " · chosen" : ""}`;
     value.textContent = `≈ ${point.mean.toFixed(1)}%`;
-    uncertainty.textContent = `Across-task variation: ±${point.std.toFixed(1)} pp`;
+    uncertainty.textContent = `±${point.std.toFixed(1)} pp across tasks`;
     circles.forEach((circle, i) =>
       circle.classList.toggle("is-active", i === index),
     );

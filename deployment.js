@@ -38,36 +38,36 @@
     {
       skill: "navigation",
       title: "Navigate to the white cup",
-      body: "Find the cup by nearest SAM3-latent lookup in the voxelized SLAM map, then move the mobile base to its location.",
+      body: "Locate the cup in the scene map; navigate to it.",
     },
     {
       skill: "manipulation",
       title: "Pick up the white cup",
-      body: "Current observations and the pickup instruction condition the task-adapted policy. Predicted human landmarks become robot motion through wrist IK and Wuji hand retargeting.",
+      body: "The adapted policy predicts the pickup motion; retargeting turns it into robot actions.",
     },
     {
       skill: "navigation",
       title: "Carry the cup to the trash",
-      body: "Locate the trash in the scene map and navigate to it. The arm and hand pose is held while the mobile base carries the cup.",
+      body: "Navigate to the trash while holding the cup.",
     },
     {
       skill: "manipulation",
       title: "Drop the cup into the trash",
-      body: "The learned, human-demonstration skill predicts the placement motion. Wrist IK and Wuji hand retargeting convert the human-landmark trajectory to robot commands.",
+      body: "The adapted policy predicts the placement motion; the robot releases the cup.",
     },
   ];
   const descriptions = {
     planner: {
       title: "One command, ordered subtasks",
-      body: "Gemini ER 1.6 decomposes the command into ordered navigation and manipulation subtasks. Each instruction is passed to its corresponding controller.",
+      body: "Gemini splits the command into navigation and manipulation subtasks.",
     },
     navigation: {
       title: "Object navigation",
-      body: "Nearest SAM3-latent lookup identifies the target in a voxelized SLAM scene map. The mobile base moves to the target; during carrying, the arm and hand pose is held.",
+      body: "Find the target in a semantic scene map and move the mobile base to it.",
     },
     manipulation: {
       title: "Learned manipulation",
-      body: "Current observations and the subtask instruction condition the task-adapted policy. It predicts human landmarks, converted to robot motion by wrist IK, Wuji hand retargeting, and real-time chunking.",
+      body: "Observations + instruction → human motion → wrist IK and hand retargeting.",
     },
   };
   const edges = [];

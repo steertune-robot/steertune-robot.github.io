@@ -9,7 +9,7 @@
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
   let view='model',compact,selected=null,svg,paths=[],cells=[],videos=[],visible=false,paused=reduce.matches,elapsed=0,previous=0,raf=0,painted=0;
   const colors=['#335b49','#819a89','#b49977'];
-  const defaults={model:['From observations to a noise estimate.','Select any representation to inspect it. Utonia and SigLIP are frozen during pretraining.'],sampling:['Eight sampling steps, guided by a demonstration.','A DDIM update is followed by a blend with the demonstration at the next noise level.']};
+  const defaults={model:['Observations → predicted noise','Select a component for details.'],sampling:['Eight DDIM steps with demonstration guidance','']};
   function text(g,x,y,s,cls='av-label',anchor='middle'){return g.append('text').attr('x',x).attr('y',y).attr('class',cls).attr('text-anchor',anchor).text(s);}
   function pick(g,id){
     g.attr('data-pick',id).attr('role','button').attr('tabindex',0).attr('aria-label',data.info[id]?.title||id).attr('aria-pressed','false')
@@ -141,7 +141,7 @@
     svg=d3.select(host).append('svg').attr('class',`ag-svg av-svg av-${view}`).attr('viewBox',`0 0 ${w} ${h}`).attr('role','group').attr('aria-label',view==='model'?'Animated policy architecture with recorded inputs and schematic internal representations':'Animated DDIM sampling and demonstration steering');
     if(view==='model')model();else sampling(layout);
     host.dataset.view=view;host.dataset.compact=String(compact);
-    figure.querySelector('[data-graph-note]').textContent=view==='model'?'Recorded input previews; internal tokens and moving connections are schematic, not measured activations.':'Schematic flow · the final blend uses clean demonstration actions. Retargeting follows sampling.';
+    figure.querySelector('[data-graph-note]').textContent=view==='model'?'Recorded inputs · schematic activations and connections.':'Schematic flow · final clean blend → retargeting.';
     select();paint();media();
   }
   function running(){return visible&&!paused&&!document.hidden;}

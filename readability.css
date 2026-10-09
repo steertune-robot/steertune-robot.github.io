@@ -1,0 +1,167 @@
+/* Keep essential figure text readable without expanding the prose. */
+.figure-heading .figure-kicker,
+.chart-source,
+.scaling-panel .chart-source,
+.deploy-kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .045em;
+  color: var(--ink);
+}
+.research-figure > figcaption,
+.figure-note,
+.subsection > .figure-note {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.table-note,
+.chart-caption,
+.result-chart .chart-guide,
+.curve-panel .chart-guide,
+.scaling-panel .plot-takeaway {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.chart-select-label,
+.chart-select,
+.chart-replay,
+.chart-axis,
+.chart-axis-heading,
+.bar-hint,
+.chart-tooltip,
+.chart-segments button,
+.bar-group-caption,
+.curve-all-label,
+.steering-key,
+.plot-readout-label,
+.plot-readout-detail,
+.scaling-panel .plot-readout-label,
+.scaling-panel .plot-readout-detail,
+.plot-scroll-hint {
+  font-size: 13px;
+}
+.section-lead { font-size: 16px; }
+.resource-button { font-size: 13px; }
+.resource-button small { font-size: 12px; }
+.experiment-index a { font-size: 13px; }
+.evaluation-protocol { font-size: 14px; }
+.chart-replay::before { content: none; }
+.plot-readout-value,
+.scaling-panel .plot-readout-value { font-size: 20px; }
+.scaling-panel .plot-label { font-size: 16px; font-weight: 500; }
+@media (min-width: 1100px) {
+  .scaling-panel .plot-label { font-size: 18px; }
+}
+.overview-start p { font-size: 16px; }
+.overview-start small,
+.overview-stage,
+.overview-result p,
+.overview-example-label { font-size: 13px; }
+.overview-demos strong { font-size: 23px; }
+.overview-uses h4 { font-size: 21px; }
+.overview-uses p { font-size: 16px; line-height: 1.5; }
+.overview-uses small { font-size: 13px; line-height: 1.5; }
+.overview-result > strong { font-size: 22px; }
+.science-figure .overview-example-pair figcaption {
+  font-size: 15px;
+  max-width: 145px;
+}
+.overview-example-pair figure { gap: 18px; }
+.figure-details,
+.figure-details summary,
+.example-toolbar,
+.figure-control { font-size: 13px; line-height: 1.6; }
+.example-toolbar > span,
+.example-toolbar .figure-control,
+.processing-provenance,
+.example-provenance,
+.architecture-example .overview-modality > span,
+.architecture-example .overview-prediction > span,
+.architecture-example .language-strip,
+.architecture-example .language-strip q,
+.figure-micro { font-size: 13px; }
+.architecture-example .overview-modality > strong,
+.architecture-example .overview-prediction > strong { font-size: 15px; }
+.process-tabs strong { font-size: 17px; }
+.science-figure .process-image-pair figcaption { font-size: 14px; }
+.process-description h4 { font-size: 23px; }
+.process-description p { font-size: 14px; line-height: 1.6; }
+.domain-alignment span,
+.domain-alignment strong,
+.domain-alignment p,
+.process-playback,
+.process-media-status { font-size: 13px; }
+#policy-figure .ag-tabs button,
+#policy-figure .ag-reset,
+#policy-figure .ag-pause,
+#policy-figure .ag-status,
+#policy-figure .ag-note { font-size: 13px; }
+#policy-figure .ag-detail { font-size: 14px; min-height: 0; padding-bottom: 8px; }
+#policy-figure .ag-detail strong { font-size: 15px; }
+#policy-figure .ag-detail span:empty { display: none; }
+#policy-figure .av-svg .av-stage { font-size: 13px; }
+#policy-figure .av-svg .av-input-title,
+#policy-figure .av-svg .av-node-title { font-size: 16px; }
+#policy-figure .av-svg .av-small,
+#policy-figure .av-svg .av-dimension,
+#policy-figure .av-svg .av-port { font-size: 14px; }
+#policy-figure .av-svg .av-edge-label { font-size: 14px; }
+#policy-figure .av-sampling-node .av-node-title { font-size: 18px; }
+#policy-figure .av-sampling-node .av-small { font-size: 15px; }
+.deploy-col-label,
+.deploy-command > span,
+.deploy-controls button,
+.deploy-planner small,
+.deploy-planner > small,
+.deploy-skill small,
+.deploy-brand,
+.deploy-step small,
+.deploy-output small,
+.deploy-inspector [data-deploy-status],
+.deploy-caption,
+.deploy-video-heading small { font-size: 13px; }
+.deploy-col-label { white-space: normal; min-height: 2.7em; margin-bottom: 8px; }
+.deploy-step b { font-size: 14px; }
+.deploy-step-number { font-size: 12px; }
+.deploy-planner b,
+.deploy-skill b { font-size: 21px; }
+.deploy-inspector strong { font-size: 20px; }
+.deploy-inspector p { font-size: 14px; min-height: 2.9em; }
+.deploy-video-heading,
+.deploy-video-card figcaption { font-size: 14px; }
+.deploy-caption { gap: 8px 18px; }
+#in-the-wild-rollouts [data-rollout-tabs] button,
+#in-the-wild-rollouts .rollout-pair h4 { font-size: 14px; }
+#in-the-wild-rollouts [data-rollout-count],
+#in-the-wild-rollouts .rollout-pair figcaption,
+#in-the-wild-rollouts [data-rollout-toggle],
+#in-the-wild-rollouts [data-rollout-replay],
+#in-the-wild-rollouts .rollout-playback-note { font-size: 13px; }
+.object-score > span,
+.object-score strong small,
+.object-inspector,
+.trial-key,
+.figure-footer { font-size: 13px; }
+@media (max-width: 700px) {
+  .deploy-heading { flex-wrap: wrap; gap: 8px; }
+  .deploy-kicker { max-width: none; flex-basis: 100%; }
+  .deploy-controls { margin-left: auto; }
+  .overview-demos strong { font-size: 20px; }
+  .overview-uses h4 { font-size: 18px; }
+  .overview-uses p { font-size: 15px; }
+  .overview-uses small,
+  .overview-stage { font-size: 12px; }
+  .overview-result > strong { font-size: 20px; }
+  .overview-start small,
+  .overview-result p { font-size: 12px; }
+  .overview-example-pair figure { gap: 8px; }
+  .science-figure .overview-example-pair figcaption { font-size: 14px; }
+  .deploy-col-label { min-height: 0; }
+  .deploy-command q { font-size: 24px; }
+  .deploy-step b,
+  .deploy-step small { font-size: 12px; }
+  .deploy-step-number { font-size: 11px; }
+  .deploy-step { padding-inline: 3px; }
+  .deploy-inspector-heading { flex-wrap: wrap; }
+  .deploy-inspector p { min-height: 0; }
+}

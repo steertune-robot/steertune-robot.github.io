@@ -45,18 +45,19 @@
     <link rel="stylesheet" href="rollouts.css?v=05f072f120b9" />
     <link rel="stylesheet" href="teaser.css?v=be772bf6e670" />
   <link rel="stylesheet" href="deployment.css?v=f0a3001951fc" />
+    <link rel="stylesheet" href="readability.css?v=d9bc83a3fbc3" />
     <script src="vendor/d3.v7.min.js?v=f2094bbf6141" defer></script>
-    <script src="deployment.js?v=cfe0f6dd2420" defer></script>
+    <script src="deployment.js?v=d26ac922def9" defer></script>
     <script src="deployment-media.js?v=9d6bfeeaf141" defer></script>
     <script src="teaser.js?v=5a2f2d5e54e9" defer></script>
     <script src="graph-layouts.js?v=94a2d7a64195" defer></script>
-    <script src="architecture.js?v=fa4f2c29f106" defer></script>
+    <script src="architecture.js?v=58d7a7434ff1" defer></script>
     <script src="figures.js?v=3fcf2b3d8831" defer></script>
     <script src="rollout-data.js?v=9e3a500d75fe" defer></script>
     <script src="script.js?v=ac9e7cc5bf89" defer></script>
     <script src="charts.js?v=f9148f0a7a0c" defer></script>
     <script src="plot-data.js?v=8da1460b7550" defer></script>
-    <script src="plots.js?v=07e49a48b37e" defer></script>
+    <script src="plots.js?v=60e5d4d996ee" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#abstract">Skip to research content</a>
@@ -176,7 +177,7 @@
             </header>
             <div class="method-overview">
               <div class="overview-start">
-                <span>Starting point</span>
+
                 <p>
                   A policy pretrained on <em>human interaction data</em
                   ><small>109.6 hours · no robot training data</small>
@@ -184,26 +185,21 @@
               </div>
               <div class="overview-demos">
                 <strong>5 human demonstrations of the new task</strong
-                ><span>The same demonstrations are used in two ways.</span>
+                >
               </div>
               <div class="overview-split" aria-hidden="true"></div>
               <div class="overview-uses">
                 <div>
                   <span class="overview-stage">Before execution</span>
                   <h4>Finetune the policy</h4>
-                  <p>
-                    Learn the new task with <em>≈2 minutes of training</em>.
-                  </p>
-                  <small>Train LoRA adapters; keep base weights frozen.</small>
+                  <p>LoRA · 2k updates · <em>≈2 min</em></p>
+                  <small>Base weights frozen</small>
                 </div>
                 <div>
                   <span class="overview-stage">During execution</span>
                   <h4>Guide its actions</h4>
-                  <p>
-                    Use a matching demonstration to
-                    <em>steer each prediction</em>.
-                  </p>
-                  <small>Select by object layout; align motion progress.</small>
+                  <p><em>Steer with a matching demo</em></p>
+                  <small>Match object layout · align motion</small>
                 </div>
               </div>
               <div class="overview-merge" aria-hidden="true"></div>
@@ -221,7 +217,7 @@
               aria-label="Flower task example from the paper"
             >
               <span class="overview-example-label"
-                >Flower task · photographs from the paper</span
+                >Flower task · human to robot</span
               >
               <div class="overview-example-pair">
                 <figure>
@@ -249,34 +245,15 @@
             <details class="figure-details">
               <summary>Method details</summary>
               <div>
-                <p>
-                  <b>Finetuning.</b> Five processed human demonstrations train
-                  rank-8 LoRA adapters for 2,000 updates. The pretrained base
-                  stays frozen.
-                </p>
-                <p>
-                  <b>Steering.</b> At deployment, the robot's observation
-                  conditions the adapted policy. Object-layout retrieval selects
-                  one of the same demonstrations; wrist and hand motion align
-                  its progress. The aligned demonstration is noised and blended
-                  into each reverse-diffusion step, with steering weight 0.3.
-                </p>
-                <p>
-                  <b>Execution.</b> The predicted human-landmark trajectories
-                  become robot commands through wrist IK, hand retargeting, and
-                  real-time chunking.
-                </p>
-                <p>
-                  The two photographs show the paper’s human demonstration and
-                  robot deployment of the Flower task. They illustrate the same
-                  task, not a verified matched rollout sequence.
-                </p>
+                <p><b>Finetuning.</b> Rank-8 LoRA · 2,000 updates · frozen base weights.</p>
+                <p><b>Steering.</b> Retrieve by object layout, align motion, then blend with the noised demonstration at each diffusion step (<i>w</i> = 0.3).</p>
+                <p><b>Execution.</b> Human landmarks → wrist IK + hand retargeting + real-time chunking.</p>
+                <p>Flower photographs from the paper; not synchronized rollouts.</p>
               </div>
             </details>
           </div>
           <figcaption>
-            <strong>Figure 1.</strong> The same five demonstrations
-            <em>adapt the policy and guide its predictions</em>.
+            <strong>Figure 1.</strong> Five human demonstrations for <em>finetuning and action steering</em>.
           </figcaption>
         </figure>
         <div class="contributions reading-width">
@@ -444,12 +421,7 @@
               </div>
               <details class="figure-details">
                 <summary>Processing details</summary>
-                <p class="processing-provenance">
-                  Synchronized eight-second clips from one recorded sequence, at
-                  10 Hz. RGB/mask and cloud pairs have consistent crops. The
-                  sampled-cloud view shows the visible subset of each 5,000-point
-                  input. No generated experiment imagery.
-                </p>
+                <p class="processing-provenance">One eight-second recording at 10 Hz. Paired views use matching crops; sampled clouds show part of the 5,000-point input.</p>
                 <div class="detail-columns">
                   <p>
                     <b>Segment & annotate.</b> S2M2 recovers stereo depth; SAM3
@@ -469,8 +441,7 @@
               </details>
             </div>
             <figcaption>
-              <strong>Data processing.</strong> Segment, annotate, remove body
-              geometry, and align observations and actions in one camera frame.
+              <strong>Data processing.</strong> Human recordings → aligned observations and actions.
             </figcaption>
           </figure>
         </article>
@@ -514,7 +485,7 @@
               <p class="ag-note" data-graph-note></p>
               <details class="figure-details architecture-media">
                 <summary>
-                  Example: cooking inputs and predicted hand motion
+                  Example: inputs and predicted motion
                 </summary>
                 <div class="example-toolbar">
                   <span>8-second sequence · base policy</span
@@ -628,14 +599,7 @@
                     >
                   </div>
                 </div>
-                <p class="example-provenance">
-                  Input previews and these clips share one saved base-policy
-                  example, without task LoRA or steering. Diagram dimensions
-                  follow the manuscript; internal flow is schematic.
-                  Dense geometry and retargeted hand meshes are visualizations;
-                  the model uses a sampled cloud, a binary object mask, and hand
-                  landmarks.
-                </p>
+                <p class="example-provenance">One base-policy recording, without LoRA or steering. Dense clouds and hand meshes are visualizations; the policy uses sampled points, masks, and landmarks.</p>
               </details>
               <details class="figure-details">
                 <summary>Training & deployment details</summary>
@@ -724,7 +688,7 @@
           <div class="rollout-controls">
             <button type="button" data-rollout-toggle>Play both</button>
             <button type="button" data-rollout-replay>Replay</button>
-            <p class="rollout-playback-note">4× speed · no audio · clips loop independently.</p>
+            <p class="rollout-playback-note">4× speed · silent · independent loops.</p>
           </div>
           <p data-rollout-status role="status" aria-live="polite"></p>
           <noscript><p>Enable JavaScript to browse the six task pairs, or open the <a href="assets/rollouts/paper-towel-human.mp4?v=4x-silent-20261008">human demonstration</a> and <a href="assets/rollouts/paper-towel-robot.mp4?v=4x-silent-20261008">robot rollout</a>.</p></noscript>
@@ -814,9 +778,9 @@
                   </figure>
                 </div>
               </section>
-              <footer class="deploy-caption"><span>Schematic walkthrough · select any step or module</span><a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener">Inspired by Transformer Explainer ↗</a></footer>
+              <footer class="deploy-caption"><span>Schematic walkthrough · select a step</span><a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener">Inspired by Transformer Explainer ↗</a></footer>
             </div>
-            <figcaption><strong>Figure 5.</strong> A language command becomes a sequence of navigation and Steertuning manipulation skills.</figcaption>
+            <figcaption><strong>Figure 5.</strong> Language → navigation and learned manipulation.</figcaption>
           </figure>
         </article>
         <article class="subsection" id="results">

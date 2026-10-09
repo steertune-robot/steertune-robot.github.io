@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="rollouts.css?v=05f072f120b9" />
     <link rel="stylesheet" href="teaser.css?v=be772bf6e670" />
   <link rel="stylesheet" href="deployment.css?v=f0a3001951fc" />
-    <link rel="stylesheet" href="readability.css?v=d9bc83a3fbc3" />
+    <link rel="stylesheet" href="readability.css?v=3d7070468926" />
     <script src="vendor/d3.v7.min.js?v=f2094bbf6141" defer></script>
     <script src="deployment.js?v=d26ac922def9" defer></script>
     <script src="deployment-media.js?v=9d6bfeeaf141" defer></script>
@@ -175,71 +175,72 @@
                 >Figure 1 · How Steertuning works</span
               >
             </header>
-            <div class="method-overview">
-              <div class="overview-start">
-
-                <p>
-                  A policy pretrained on <em>human interaction data</em
-                  ><small>109.6 hours · no robot training data</small>
-                </p>
-              </div>
-              <div class="overview-demos">
-                <strong>5 human demonstrations of the new task</strong
-                >
-              </div>
-              <div class="overview-split" aria-hidden="true"></div>
-              <div class="overview-uses">
-                <div>
-                  <span class="overview-stage">Before execution</span>
-                  <h4>Finetune the policy</h4>
-                  <p>LoRA · 2k updates · <em>≈2 min</em></p>
-                  <small>Base weights frozen</small>
-                </div>
-                <div>
-                  <span class="overview-stage">During execution</span>
-                  <h4>Guide its actions</h4>
-                  <p><em>Steer with a matching demo</em></p>
-                  <small>Match object layout · align motion</small>
-                </div>
-              </div>
-              <div class="overview-merge" aria-hidden="true"></div>
-              <div class="overview-result">
-                <strong>Robot performs the new task</strong>
-                <p>
-                  <span>Predict human motion</span
-                  ><span><b aria-hidden="true">→</b> Retarget to the robot</span
-                  ><span><b aria-hidden="true">→</b> Execute</span>
-                </p>
-              </div>
+            <div class="overview-start">
+              <p>
+                <span>A policy pretrained on <em>human interaction data</em></span>
+                <small>109.6 hours · no robot training data</small>
+              </p>
             </div>
-            <div
-              class="overview-task-example"
-              aria-label="Flower task example from the paper"
-            >
-              <span class="overview-example-label"
-                >Flower task · human to robot</span
+            <div class="overview-body">
+              <div class="method-overview">
+                <div class="overview-demos">
+                  <strong>5 human demonstrations of the new task</strong
+                  >
+                </div>
+                <div class="overview-split" aria-hidden="true"></div>
+                <div class="overview-uses">
+                  <div>
+                    <span class="overview-stage">Before execution</span>
+                    <h4>Finetune the policy</h4>
+                    <p>LoRA · 2k updates · <em>≈2 min</em></p>
+                    <small>Base weights frozen</small>
+                  </div>
+                  <div>
+                    <span class="overview-stage">During execution</span>
+                    <h4>Guide its actions</h4>
+                    <p><em>Steer with a matching demo</em></p>
+                    <small>Match object layout · align motion</small>
+                  </div>
+                </div>
+                <div class="overview-merge" aria-hidden="true"></div>
+                <div class="overview-result">
+                  <strong>Robot performs the new task</strong>
+                  <p>
+                    <span>Predict human motion</span
+                    ><span><b aria-hidden="true">→</b> Retarget to the robot</span
+                    ><span><b aria-hidden="true">→</b> Execute</span>
+                  </p>
+                </div>
+              </div>
+              <div
+                class="overview-task-example"
+                aria-label="Flower task example from the paper"
               >
-              <div class="overview-example-pair">
-                <figure>
-                  <img
-                    src="assets/figures/flower-human.png"
-                    width="521"
-                    height="681"
-                    alt="Human demonstrating watering potted flowers with a purple watering can, from paper Figure 1"
-                    loading="lazy"
-                  />
-                  <figcaption>Human demonstration</figcaption>
-                </figure>
-                <figure>
-                  <img
-                    src="assets/figures/robot.png"
-                    width="537"
-                    height="714"
-                    alt="Robot deploying on the Flower task with a purple watering can, from paper Figure 1"
-                    loading="lazy"
-                  />
-                  <figcaption>Robot deployment</figcaption>
-                </figure>
+                <span class="overview-example-label"
+                  >Flower task · human to robot</span
+                >
+                <div class="overview-example-pair">
+                  <figure>
+                    <img
+                      src="assets/figures/flower-human.png"
+                      width="521"
+                      height="681"
+                      alt="Human demonstrating watering potted flowers with a purple watering can, from paper Figure 1"
+                      loading="lazy"
+                    />
+                    <figcaption>Human demonstration</figcaption>
+                  </figure>
+                  <figure>
+                    <img
+                      src="assets/figures/robot.png"
+                      width="537"
+                      height="714"
+                      alt="Robot deploying on the Flower task with a purple watering can, from paper Figure 1"
+                      loading="lazy"
+                    />
+                    <figcaption>Robot deployment</figcaption>
+                  </figure>
+                </div>
               </div>
             </div>
           </div>

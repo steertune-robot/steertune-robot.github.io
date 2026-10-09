@@ -79,24 +79,25 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
     takeaway,
   );
   const svg = plotNode("svg", {
-    viewBox: "0 0 300 224",
+    viewBox: "0 0 300 234",
     class: "scientific-plot",
     role: "group",
     "aria-label": `${data.title}. Approximate success rate and one standard deviation.`,
   });
-  const x = (i) => 35 + (i * 250) / (data.points.length - 1);
+  // Reserve room for larger tick labels at both edges of the small multiples.
+  const x = (i) => 42 + (i * 235) / (data.points.length - 1);
   const y = (value) => 168 - value * 1.32;
-  svg.append(plotText(35, 16, "Success (%) ↑"));
+  svg.append(plotText(42, 16, "Success (%) ↑"));
   for (const tick of [0, 50, 100]) {
     svg.append(
       plotNode("line", {
-        x1: 35,
-        x2: 285,
+        x1: 42,
+        x2: 277,
         y1: y(tick),
         y2: y(tick),
         class: "plot-grid",
       }),
-      plotText(28, y(tick) + 4, tick, { "text-anchor": "end" }),
+      plotText(34, y(tick) + 4, tick, { "text-anchor": "end" }),
     );
   }
   const defaultPoint = data.points[data.defaultIndex];
@@ -157,7 +158,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
   }
   for (const [index, point] of data.points.entries()) {
     svg.append(
-      plotText(x(index), 191, point.label, { "text-anchor": "middle" }),
+      plotText(x(index), 197, point.label, { "text-anchor": "middle" }),
     );
     // A large transparent hit target keeps touch and keyboard inspection usable.
     const target = plotNode("g", {
@@ -192,7 +193,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
     });
     svg.append(target);
   }
-  svg.append(plotText(160, 216, data.xLabel, { "text-anchor": "middle" }));
+  svg.append(plotText(160, 225, data.xLabel, { "text-anchor": "middle" }));
   figure.append(svg, readout);
   scalingRoot.append(figure);
   selectPoint(data.defaultIndex);

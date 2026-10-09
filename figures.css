@@ -5,7 +5,7 @@
   border: 1px solid var(--rule);
   color: var(--ink);
   padding: 22px;
-  font: 500 12px/1.5 var(--label);
+  font: 500 0.75rem/1.5 var(--label);
   overflow: hidden;
 }
 .science-figure *,
@@ -36,12 +36,12 @@
   font-weight: 600;
 }
 .science-figure h3 {
-  font: 600 27px/1.12 var(--heading);
+  font: 600 1.6875rem/1.12 var(--heading);
   margin: 5px 0 0;
 }
 .science-figure h4 {
   margin: 0;
-  font: 600 17px/1.35 var(--serif);
+  font: 600 1.0625rem/1.35 var(--serif);
 }
 .figure-heading {
   display: flex;
@@ -52,7 +52,7 @@
 }
 .figure-kicker {
   display: block;
-  font: 600 10px/1.5 var(--label);
+  font: 600 0.625rem/1.5 var(--label);
   text-transform: uppercase;
   letter-spacing: 0.09em;
   color: var(--muted);
@@ -63,7 +63,7 @@
   background: transparent;
   padding: 7px 10px;
   border-radius: 3px;
-  font-size: 11px !important;
+  font-size: 0.6875rem !important;
   white-space: nowrap;
 }
 .figure-control:hover {
@@ -85,7 +85,7 @@
   display: block;
 }
 .figure-micro {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .overview-band {
@@ -100,17 +100,17 @@
   margin-bottom: 18px;
 }
 .band-heading h4 {
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 .band-heading h4 > span {
-  font: 600 10px var(--label);
+  font: 600 0.625rem var(--label);
   display: inline-block;
   margin-right: 8px;
   color: var(--green);
 }
 .band-heading p {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 0.6875rem;
   text-align: right;
 }
 .pretrain-flow {
@@ -134,13 +134,13 @@
 .overview-prediction > strong {
   display: block;
   color: var(--green);
-  font: 600 13px/1.3 var(--serif);
+  font: 600 0.8125rem/1.3 var(--serif);
   margin: 7px 0 4px;
 }
 .overview-modality > span,
 .overview-prediction > span {
   display: block;
-  font-size: 10px;
+  font-size: 0.625rem;
   line-height: 1.4;
   color: var(--muted);
 }
@@ -151,7 +151,7 @@
   margin-top: 14px;
   padding: 9px 0 0;
   border-top: 1px solid var(--rule);
-  font-size: 10px;
+  font-size: 0.625rem;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -161,7 +161,7 @@
 }
 .language-strip q {
   color: var(--green);
-  font: 500 italic 12px/1.4 var(--serif);
+  font: 500 italic 0.75rem/1.4 var(--serif);
   text-decoration: underline dashed 1px var(--fig-tan);
   text-underline-offset: 0.2em;
 }
@@ -216,12 +216,12 @@
 }
 .prior-node > strong,
 .dit-node > strong {
-  font: 600 40px/1 var(--heading);
+  font: 600 2.5rem/1 var(--heading);
   color: var(--green);
 }
 .prior-node > span:not(.figure-kicker),
 .dit-node > span:not(.figure-kicker) {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .node-rule {
   border-top: 1px solid #ccd4c4;
@@ -275,13 +275,13 @@
 }
 .demo-node > strong,
 .deployment-node strong {
-  font: 600 13px/1.3 var(--serif);
+  font: 600 0.8125rem/1.3 var(--serif);
   display: block;
   color: var(--green);
 }
 .demo-node > span,
 .deployment-node span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
   display: block;
   margin-top: 5px;
@@ -319,12 +319,12 @@
   background: #fbf8f1;
 }
 .adapt-node > strong {
-  font: 600 17px/1.3 var(--heading);
+  font: 600 1.0625rem/1.3 var(--heading);
   display: block;
   margin: 6px 0;
 }
 .adapt-node > p {
-  font-size: 10px;
+  font-size: 0.625rem;
   min-height: 30px;
 }
 .steering-node {
@@ -335,7 +335,7 @@
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   margin-top: 10px;
   border-top: 1px solid var(--rule);
   padding-top: 8px;
@@ -346,7 +346,7 @@
 }
 .recipe-bridge {
   grid-column: 1 / -1;
-  font-size: 10px;
+  font-size: 0.625rem;
   text-align: center;
   padding-top: 8px;
   color: var(--muted);
@@ -368,7 +368,7 @@
   gap: 16px;
   padding-top: 13px;
   border-top: 1px solid var(--rule);
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .figure-footer a {
@@ -378,7 +378,7 @@
   margin-top: 14px;
   border-top: 1px solid var(--rule);
   padding-top: 11px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 .figure-details summary {
@@ -418,16 +418,16 @@
   border-left: 1px solid var(--rule);
 }
 .process-tabs button > span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .process-tabs strong {
   display: block;
-  font: 600 17px/1.4 var(--heading);
+  font: 600 1.0625rem/1.4 var(--heading);
   margin-top: 1px;
 }
 .process-tabs small {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .process-tabs button[aria-selected="true"] {
@@ -461,17 +461,17 @@
   display: block;
 }
 .science-figure .process-image-pair figcaption {
-  font: 500 10px/1.4 var(--label);
+  font: 500 0.625rem/1.4 var(--label);
   margin: 7px 0 0;
   text-align: center;
   color: var(--muted);
 }
 .process-description h4 {
-  font: 600 22px/1.15 var(--heading);
+  font: 600 1.375rem/1.15 var(--heading);
   margin: 6px 0 9px;
 }
 .process-description p {
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.65;
 }
 .process-spec {
@@ -483,11 +483,11 @@
   align-items: baseline;
 }
 .process-spec strong {
-  font: 600 20px/1.2 var(--heading);
+  font: 600 1.25rem/1.2 var(--heading);
   color: var(--green);
 }
 .process-spec span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .process-output {
@@ -497,7 +497,7 @@
   gap: 8px 15px;
   border-top: 1px solid var(--rule);
   padding-top: 12px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .process-output > span {
   color: var(--muted);
@@ -517,7 +517,7 @@
 }
 .encoder-column > .figure-kicker {
   margin-bottom: 8px;
-  font-size: 9px;
+  font-size: 0.5625rem;
 }
 .encoder-row {
   display: grid;
@@ -538,14 +538,14 @@
   display: block;
 }
 .encoder-row strong {
-  font: 600 12px var(--serif);
+  font: 600 0.75rem var(--serif);
 }
 .encoder-row b {
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .encoder-row small {
   display: block;
-  font-size: 9px;
+  font-size: 0.5625rem;
   margin-top: 4px;
   color: var(--muted);
 }
@@ -562,7 +562,7 @@
 }
 .fusion-node > strong {
   display: block;
-  font: 600 21px var(--heading);
+  font: 600 1.3125rem var(--heading);
   margin: 7px 0 10px;
 }
 .conditioning-routes {
@@ -576,14 +576,14 @@
   grid-template-columns: 55px 28px 1fr;
   align-items: center;
   gap: 7px;
-  font-size: 9px;
+  font-size: 0.5625rem;
 }
 .conditioning-routes svg {
   color: #94a08b;
   height: 24px;
 }
 .conditioning-routes b {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--green);
 }
 .dit-node {
@@ -591,7 +591,7 @@
   padding: 17px 12px;
 }
 .noisy-input {
-  font-size: 10px;
+  font-size: 0.625rem;
   text-align: center;
   margin-bottom: 9px;
 }
@@ -603,16 +603,16 @@
 .denoise-output {
   text-align: center;
   padding-top: 9px;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .denoise-output span {
   display: block;
   margin-top: 5px;
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--muted);
 }
 .encoder-inspector {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--green);
   border-bottom: 1px solid var(--rule);
   padding: 14px 0;
@@ -626,16 +626,16 @@
   padding-top: 19px;
 }
 .steering-explanation h4 {
-  font: 600 22px/1.2 var(--heading);
+  font: 600 1.375rem/1.2 var(--heading);
   margin: 5px 0 8px;
 }
 .steering-explanation p {
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.65;
 }
 .steering-equation {
   color: var(--green);
-  font: 500 21px/1.4 var(--serif);
+  font: 500 1.3125rem/1.4 var(--serif);
   padding: 13px 0;
 }
 .steering-equation sub,
@@ -646,7 +646,7 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .steering-slider-label b {
   color: var(--green);
@@ -662,7 +662,7 @@
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--muted);
 }
 .schematic-grid {
@@ -692,7 +692,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .schematic-legend > span::before {
   content: "";
@@ -709,7 +709,7 @@
   border-top: 1px dashed #a48a64;
 }
 .steering-visual > p {
-  font-size: 9px;
+  font-size: 0.5625rem;
   text-align: center;
   margin-top: 11px;
   color: var(--muted);
@@ -726,7 +726,7 @@
   padding-left: 25px;
 }
 .object-task h4 {
-  font: 600 21px var(--heading);
+  font: 600 1.3125rem var(--heading);
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -734,7 +734,7 @@
   gap: 10px;
 }
 .object-task h4 span {
-  font: 500 10px var(--label);
+  font: 500 0.625rem var(--label);
   color: var(--muted);
 }
 .object-pair {
@@ -778,14 +778,14 @@
   padding-top: 9px;
 }
 .object-score > span {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .object-score strong {
   color: var(--green);
-  font: 600 27px/1.2 var(--heading);
+  font: 600 1.6875rem/1.2 var(--heading);
 }
 .object-score strong small {
-  font: 500 12px var(--label);
+  font: 500 0.75rem var(--label);
   margin-left: 2px;
   color: var(--muted);
 }
@@ -815,7 +815,7 @@
   align-items: center;
   gap: 16px;
   padding: 4px 0 15px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   min-height: 52px;
 }
 .object-inspector > p {
@@ -823,7 +823,7 @@
 }
 .trial-key {
   flex-shrink: 0;
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--muted);
 }
 .trial-key span {
@@ -910,7 +910,7 @@
   }
   .process-description h4 {
     grid-column: 1;
-    font-size: 21px;
+    font-size: 1.3125rem;
   }
   .process-description > p {
     grid-column: 1;
@@ -960,7 +960,7 @@
     padding: 14px;
   }
   .science-figure h3 {
-    font-size: 25px;
+    font-size: 1.5625rem;
   }
   .figure-heading {
     align-items: flex-start;
@@ -979,10 +979,10 @@
     margin-top: 6px;
   }
   .overview-modality > strong {
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
   .overview-modality > span {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .overview-inputs .language-strip {
     flex-direction: column;
@@ -1024,7 +1024,7 @@
     margin-top: 4px;
   }
   .adapt-node > strong {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
   .figure-footer {
     flex-wrap: wrap;
@@ -1043,7 +1043,7 @@
     border-top: 1px solid var(--rule);
   }
   .process-tabs small {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .process-image-pair {
     gap: 8px;
@@ -1077,13 +1077,13 @@
     padding: 10px 12px;
   }
   .encoder-row strong {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
   .encoder-row b {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .encoder-row small {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
   .fusion-column {
     display: grid;
@@ -1195,7 +1195,7 @@
   align-items: center;
   gap: 10px;
   margin-top: 8px;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .sampling-loop b {
   color: #718369;
@@ -1208,7 +1208,7 @@
 }
 .processing-provenance {
   grid-column: 1 / -1;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .overview-modality .figure-media {
   overflow: hidden;
@@ -1220,7 +1220,7 @@
   .sampling-loop > div {
     flex-wrap: wrap;
     justify-content: flex-start;
-    font-size: 10px;
+    font-size: 0.625rem;
     gap: 8px;
   }
 }
@@ -1233,7 +1233,7 @@
   padding-bottom: 12px;
 }
 .figure-heading .figure-kicker {
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.06em;
 }
@@ -1251,7 +1251,7 @@
   padding: 15px 0;
 }
 .band-heading h4 {
-  font: 600 18px/1.2 var(--heading);
+  font: 600 1.125rem/1.2 var(--heading);
 }
 .band-heading h4 > span {
   display: none;
@@ -1269,7 +1269,7 @@
   display: none;
 }
 .prior-node > strong {
-  font-size: 32px;
+  font-size: 2rem;
 }
 .prior-node .node-rule {
   border: 0;
@@ -1278,10 +1278,10 @@
 .overview-modality > strong,
 .overview-prediction > strong {
   color: var(--ink);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .overview-modality > span {
-  font-size: 9px;
+  font-size: 0.5625rem;
 }
 .language-strip {
   border: 0;
@@ -1297,7 +1297,7 @@
   border-left: 1px solid var(--rule);
 }
 .adapt-node > strong {
-  font-size: 19px;
+  font-size: 1.1875rem;
   color: var(--ink);
 }
 .adapt-node > p {
@@ -1310,18 +1310,18 @@
 }
 .recipe-bridge {
   padding-top: 10px;
-  font-size: 9px;
+  font-size: 0.5625rem;
 }
 .demo-node > strong,
 .deployment-node strong {
   color: var(--ink);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .deployment-node img {
   height: 116px;
 }
 .figure-details {
-  font-size: 10px;
+  font-size: 0.625rem;
   margin-top: 8px;
   padding-top: 8px;
 }
@@ -1353,7 +1353,7 @@
   color: var(--green);
 }
 .process-tabs strong {
-  font: 500 14px var(--serif);
+  font: 500 0.875rem var(--serif);
   margin: 0;
 }
 .process-panel {
@@ -1370,13 +1370,13 @@
   display: none;
 }
 .process-description h4 {
-  font: 600 19px/1.2 var(--heading);
+  font: 600 1.1875rem/1.2 var(--heading);
 }
 .process-description p {
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .process-output {
-  font-size: 9px;
+  font-size: 0.5625rem;
   justify-content: flex-start;
   gap: 8px 20px;
 }
@@ -1410,14 +1410,14 @@
   border-block: 1px solid var(--rule);
 }
 .dit-node > strong {
-  font-size: 31px;
+  font-size: 1.9375rem;
 }
 .dit-node > .figure-kicker {
   display: none;
 }
 .encoder-inspector {
   min-height: 0;
-  font-size: 10px;
+  font-size: 0.625rem;
   padding: 10px 0;
 }
 .sampling-loop {
@@ -1430,7 +1430,7 @@
 }
 .sampling-loop > div {
   margin-top: 0;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .steering-explainer {
   padding-top: 15px;
@@ -1441,10 +1441,10 @@
   display: none;
 }
 .steering-explanation h4 {
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
 .steering-equation {
-  font-size: 19px;
+  font-size: 1.1875rem;
   padding-block: 9px;
 }
 .steering-visual svg {
@@ -1455,7 +1455,7 @@
   padding-top: 3px;
 }
 .object-task h4 {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 .object-task h4 > span {
   display: none;
@@ -1479,7 +1479,7 @@
   background: transparent;
 }
 .object-score strong {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 .trial-dots {
   max-width: 130px;
@@ -1493,10 +1493,10 @@
 .object-inspector {
   min-height: 0;
   padding-block: 3px 12px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .figure-footer {
-  font-size: 9px;
+  font-size: 0.5625rem;
   padding-top: 9px;
 }
 .processing-provenance {
@@ -1516,7 +1516,7 @@
     align-items: baseline;
   }
   .process-description h4 {
-    font-size: 18px;
+    font-size: 1.125rem;
     margin: 0;
     flex: 0 0 150px;
   }
@@ -1546,7 +1546,7 @@
     padding: 7px 2px;
   }
   .process-tabs strong {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .process-description {
     display: block;
@@ -1636,18 +1636,18 @@
 }
 .pretraining-summary strong {
   display: block;
-  font: 600 14px/1.35 var(--serif);
+  font: 600 0.875rem/1.35 var(--serif);
 }
 .pretraining-summary span:not(.flow-arrow) {
   display: block;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
   margin-top: 4px;
 }
 .pretraining-summary .parameter-note {
   grid-column: 3;
   margin: 0 !important;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .adaptation-heading {
   display: flex;
@@ -1658,10 +1658,10 @@
   flex-wrap: wrap;
 }
 .adaptation-heading h4 {
-  font: 600 22px/1.2 var(--heading);
+  font: 600 1.375rem/1.2 var(--heading);
 }
 .adaptation-heading > span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .adaptation-graph {
@@ -1681,13 +1681,13 @@
 }
 .shared-demo-source strong {
   display: block;
-  font: 600 16px/1.4 var(--serif);
+  font: 600 1rem/1.4 var(--serif);
   color: var(--green);
 }
 .shared-demo-source span {
   display: block;
   margin-top: 9px;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .demo-fork {
@@ -1749,13 +1749,13 @@
   grid-row: 4;
 }
 .adaptation-branch strong {
-  font: 600 16px/1.35 var(--serif);
+  font: 600 1rem/1.35 var(--serif);
 }
 .adaptation-branch span {
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .adaptation-branch small {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .branch-route {
@@ -1775,7 +1775,7 @@
   grid-row: 4;
 }
 .branch-route span {
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -1802,13 +1802,13 @@
   grid-column: 5;
   grid-row: 1;
   text-align: center;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
   padding-bottom: 9px;
 }
 .runtime-observation span {
   display: block;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--green);
   margin-top: 4px;
 }
@@ -1832,7 +1832,7 @@
 }
 .sample-policy strong,
 .sample-steering strong {
-  font: 600 16px/1.3 var(--serif);
+  font: 600 1rem/1.3 var(--serif);
 }
 .sample-steering strong {
   color: var(--green);
@@ -1840,7 +1840,7 @@
 .sample-policy span,
 .sample-steering span,
 .sample-steering small {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .sample-steering small {
   color: var(--muted);
@@ -1850,7 +1850,7 @@
   grid-column: 5;
   text-align: center;
   color: var(--green);
-  font-size: 17px;
+  font-size: 1.0625rem;
   align-self: center;
 }
 .policy-to-sampling {
@@ -1871,15 +1871,15 @@
   text-align: center;
 }
 .robot-output > strong {
-  font: 600 13px/1.4 var(--serif);
+  font: 600 0.8125rem/1.4 var(--serif);
 }
 .robot-output > span:not(.output-arrow) {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 .output-arrow {
   color: #83917e;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 .robot-photo {
   display: flex;
@@ -1892,7 +1892,7 @@
   object-fit: contain;
 }
 .robot-photo small {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .deployment-language {
@@ -1902,10 +1902,10 @@
   align-items: baseline;
   padding: 12px 0;
   border-top: 1px solid var(--rule);
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .deployment-language > span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .deployment-language p {
@@ -1925,12 +1925,12 @@
   padding-top: 12px;
 }
 .domain-alignment > div {
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .domain-alignment span {
   display: block;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 0.625rem;
   margin-bottom: 4px;
 }
 .domain-alignment strong {
@@ -1938,14 +1938,14 @@
 }
 .domain-alignment p {
   grid-column: 1/-1;
-  font: 500 italic 13px/1.5 var(--serif);
+  font: 500 italic 0.8125rem/1.5 var(--serif);
   color: var(--green);
   text-decoration: underline dashed 1px var(--fig-tan);
   text-underline-offset: 0.2em;
   padding-top: 3px;
 }
 .dit-node > strong {
-  font: 600 18px/1.3 var(--serif);
+  font: 600 1.125rem/1.3 var(--serif);
 }
 .architecture-example {
   grid-template-columns: 3fr 30px 1fr;
@@ -1962,12 +1962,12 @@
   max-height: 130px;
 }
 .example-provenance {
-  font-size: 10px;
+  font-size: 0.625rem;
   margin-top: 12px;
 }
 .sampling-loop > .figure-kicker {
   display: block;
-  font-size: 9px;
+  font-size: 0.5625rem;
   margin-bottom: 10px;
 }
 .sampling-loop ol {
@@ -1977,7 +1977,7 @@
   margin: 0;
   padding: 0;
   gap: 24px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .sampling-loop li {
   position: relative;
@@ -2075,11 +2075,11 @@
     grid-row: 3;
   }
   .adaptation-branch strong {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
   .adaptation-branch span,
   .adaptation-branch small {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
   .branch-route {
     grid-row: 4;
@@ -2113,7 +2113,7 @@
     grid-column: 1;
     grid-row: 5;
     padding: 0 0 8px;
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .runtime-observation span {
     display: none;
@@ -2137,7 +2137,7 @@
   }
   .sample-policy strong,
   .sample-steering strong {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
   .policy-to-sampling {
     grid-column: 2;
@@ -2146,7 +2146,7 @@
   }
   .policy-to-sampling::after {
     content: "→";
-    font-size: 17px;
+    font-size: 1.0625rem;
   }
   .sampling-to-output {
     grid-column: 3;
@@ -2159,10 +2159,10 @@
     padding: 14px 0;
   }
   .robot-output > strong {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .robot-output > span:not(.output-arrow) {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
   .robot-photo {
     flex-direction: column;
@@ -2174,7 +2174,7 @@
   }
   .robot-photo small {
     white-space: nowrap;
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
 }
 @container (max-width: 430px) {
@@ -2189,33 +2189,33 @@
     margin-bottom: 8px;
   }
   .pretraining-summary strong {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .pretraining-summary span:not(.flow-arrow),
   .pretraining-summary .parameter-note {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .adaptation-heading h4 {
-    font-size: 21px;
+    font-size: 1.3125rem;
   }
   .robot-output {
     gap: 8px;
   }
   .robot-output > strong {
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
   .robot-output > span:not(.output-arrow) {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .output-arrow {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
   .domain-alignment {
     gap: 10px;
   }
   .deployment-language p {
     gap: 6px;
-    font-size: 10px;
+    font-size: 0.625rem;
   }
 }
 /* Keep conditioning labels and the sampling sequence intact at narrow widths. */
@@ -2253,10 +2253,10 @@
     padding: 10px 8px;
   }
   .encoder-row strong {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
   .encoder-row small {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
   .architecture-flow > .flow-arrow,
   .architecture-flow > .flow-arrow:last-of-type {
@@ -2369,7 +2369,7 @@
     margin-bottom: 12px;
   }
   .object-score {
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
   .trial-dots {
     max-width: 140px;
@@ -2414,7 +2414,7 @@
 }
 .robot-output > .execution-label {
   text-align: left;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 @container (max-width:650px) {
   .adaptation-graph {
@@ -2427,7 +2427,7 @@
   }
   .robot-output > .execution-label {
     flex-basis: 100%;
-    font-size: 9px;
+    font-size: 0.5625rem;
     text-align: left;
   }
 }
@@ -2520,15 +2520,15 @@
 }
 .overview-start > span {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 0.625rem;
   white-space: nowrap;
 }
 .overview-start p {
-  font: 500 14px/1.5 var(--serif);
+  font: 500 0.875rem/1.5 var(--serif);
 }
 .overview-start small {
   display: block;
-  font: 500 10px/1.5 var(--label);
+  font: 500 0.625rem/1.5 var(--label);
   color: var(--muted);
   margin-top: 4px;
 }
@@ -2544,13 +2544,13 @@
 }
 .overview-demos strong {
   display: block;
-  font: 600 20px/1.35 var(--serif);
+  font: 600 1.25rem/1.35 var(--serif);
   color: var(--green);
 }
 .overview-demos span {
   display: block;
   margin-top: 7px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 .overview-split {
@@ -2580,22 +2580,22 @@
 }
 .overview-stage {
   display: block;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
   margin-bottom: 7px;
 }
 .overview-uses h4 {
-  font: 600 18px/1.35 var(--serif);
+  font: 600 1.125rem/1.35 var(--serif);
   margin: 0 0 9px;
 }
 .overview-uses p {
-  font: 500 14px/1.6 var(--serif);
+  font: 500 0.875rem/1.6 var(--serif);
   max-width: 260px;
   margin: auto;
 }
 .overview-uses small {
   display: block;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
   line-height: 1.6;
   margin-top: 9px;
@@ -2615,7 +2615,7 @@
   top: 100%;
   width: 16px;
   text-align: center;
-  font-size: 17px;
+  font-size: 1.0625rem;
   line-height: 24px;
   color: var(--green);
 }
@@ -2624,7 +2624,7 @@
   padding: 21px 0 19px;
 }
 .overview-result > strong {
-  font: 600 19px/1.4 var(--serif);
+  font: 600 1.1875rem/1.4 var(--serif);
 }
 .overview-result p {
   display: flex;
@@ -2632,7 +2632,7 @@
   justify-content: center;
   gap: 6px 12px;
   margin-top: 10px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 .overview-result p > span {
@@ -2652,7 +2652,7 @@
   padding-top: 10px;
 }
 .example-toolbar > span {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 .example-toolbar .figure-control {
@@ -2670,16 +2670,16 @@
     margin-bottom: 6px;
   }
   .overview-start p {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
   .overview-demos {
     padding-top: 21px;
   }
   .overview-demos strong {
-    font-size: 17px;
+    font-size: 1.0625rem;
   }
   .overview-demos span {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
   .overview-uses {
     gap: 18px;
@@ -2688,22 +2688,22 @@
     padding: 12px 0;
   }
   .overview-uses h4 {
-    font-size: 15px;
+    font-size: 0.9375rem;
   }
   .overview-uses p {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .overview-uses small {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .overview-stage {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .overview-result > strong {
-    font-size: 17px;
+    font-size: 1.0625rem;
   }
   .overview-result p {
-    font-size: 10px;
+    font-size: 0.625rem;
     gap: 5px 7px;
   }
   .overview-result b {
@@ -2717,7 +2717,7 @@
 .overview-example-label {
   display: block;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .overview-example-pair {
   display: grid;
@@ -2738,7 +2738,7 @@
   object-fit: contain;
 }
 .science-figure .overview-example-pair figcaption {
-  font: 500 12px/1.5 var(--serif);
+  font: 500 0.75rem/1.5 var(--serif);
   margin: 0;
   max-width: 105px;
 }
@@ -2751,7 +2751,7 @@
     gap: 7px;
   }
   .science-figure .overview-example-pair figcaption {
-    font-size: 11px;
+    font-size: 0.6875rem;
     max-width: none;
     text-align: center;
   }

@@ -3,7 +3,7 @@
 .chart-source,
 .scaling-panel .chart-source,
 .deploy-kicker {
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: .045em;
   color: var(--ink);
@@ -11,7 +11,7 @@
 .research-figure > figcaption,
 .figure-note,
 .subsection > .figure-note {
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.6;
 }
 .table-note,
@@ -19,7 +19,7 @@
 .result-chart .chart-guide,
 .curve-panel .chart-guide,
 .scaling-panel .plot-takeaway {
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.5;
 }
 .chart-select-label,
@@ -38,19 +38,19 @@
 .scaling-panel .plot-readout-label,
 .scaling-panel .plot-readout-detail,
 .plot-scroll-hint {
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
-.section-lead { font-size: 16px; }
-.resource-button { font-size: 13px; }
-.resource-button small { font-size: 12px; }
-.experiment-index a { font-size: 13px; }
-.evaluation-protocol { font-size: 14px; }
+.section-lead { font-size: 1rem; }
+.resource-button { font-size: 0.8125rem; }
+.resource-button small { font-size: 0.75rem; }
+.experiment-index a { font-size: 0.8125rem; }
+.evaluation-protocol { font-size: 0.875rem; }
 .chart-replay::before { content: none; }
 .plot-readout-value,
-.scaling-panel .plot-readout-value { font-size: 20px; }
-.scaling-panel .plot-label { font-size: 16px; font-weight: 500; }
+.scaling-panel .plot-readout-value { font-size: 1.25rem; }
+.scaling-panel .plot-label { font-size: 1rem; font-weight: 500; }
 @media (min-width: 1100px) {
-  .scaling-panel .plot-label { font-size: 18px; }
+  .scaling-panel .plot-label { font-size: 1.0625rem; }
 }
 /* Figure 1 keeps the method and its visual example in one compact reading area. */
 .overview-figure .figure-heading { padding-bottom: 12px; }
@@ -63,14 +63,14 @@
   gap: 4px 18px;
   width: 100%;
   margin: 0;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 .overview-start em {
   color: var(--green);
   text-decoration: underline dashed 1px var(--fig-tan);
   text-underline-offset: .2em;
 }
-.overview-start small { font-size: 14px; margin-top: 0; }
+.overview-start small { font-size: 0.875rem; margin-top: 0; }
 .overview-body {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
@@ -80,32 +80,32 @@
 }
 .overview-body .method-overview { border: 0; }
 .overview-demos { padding: 0; }
-.overview-demos strong { font-size: 25px; line-height: 1.25; }
+.overview-demos strong { font-size: 1.5625rem; line-height: 1.25; }
 .overview-split { height: 12px; margin-top: 21px; }
 .overview-split::before { height: 11px; }
 .overview-uses { gap: 20px; }
 .overview-uses > div { padding: 8px 0 12px; }
-.overview-stage { font-size: 14px; margin-bottom: 4px; }
-.overview-uses h4 { font-size: 24px; margin-bottom: 6px; }
-.overview-uses p { font-size: 18px; line-height: 1.4; max-width: none; }
-.overview-uses small { font-size: 14px; line-height: 1.4; margin-top: 5px; }
+.overview-stage { font-size: 0.875rem; margin-bottom: 4px; }
+.overview-uses h4 { font-size: 1.5rem; margin-bottom: 6px; }
+.overview-uses p { font-size: 1.125rem; line-height: 1.4; max-width: none; }
+.overview-uses small { font-size: 0.875rem; line-height: 1.4; margin-top: 5px; }
 .overview-merge { height: 12px; margin-bottom: 12px; }
-.overview-merge::after { font-size: 19px; line-height: 22px; }
+.overview-merge::after { font-size: 1.1875rem; line-height: 22px; }
 .overview-result { padding: 14px 0 0; }
-.overview-result > strong { font-size: 24px; }
-.overview-result p { font-size: 14px; margin-top: 5px; gap: 4px 9px; }
+.overview-result > strong { font-size: 1.5rem; }
+.overview-result p { font-size: 0.875rem; margin-top: 5px; gap: 4px 9px; }
 .overview-result b { margin-right: 5px; }
 .overview-body .overview-task-example {
   border-top: 0;
   border-left: 1px solid var(--rule);
   padding: 0 0 0 24px;
 }
-.overview-example-label { font-size: 14px; text-align: center; }
+.overview-example-label { font-size: 0.875rem; text-align: center; }
 .overview-example-pair { gap: 18px; padding-top: 14px; }
 .overview-example-pair figure { flex-direction: column; justify-content: flex-start; gap: 10px; }
 .overview-example-pair img { height: 220px; width: 100%; object-fit: contain; }
 .science-figure .overview-example-pair figcaption {
-  font-size: 17px;
+  font-size: 1.0625rem;
   max-width: 130px;
   text-align: center;
   line-height: 1.35;
@@ -125,7 +125,7 @@
 .figure-details,
 .figure-details summary,
 .example-toolbar,
-.figure-control { font-size: 13px; line-height: 1.6; }
+.figure-control { font-size: 0.8125rem; line-height: 1.6; }
 .example-toolbar > span,
 .example-toolbar .figure-control,
 .processing-provenance,
@@ -134,35 +134,35 @@
 .architecture-example .overview-prediction > span,
 .architecture-example .language-strip,
 .architecture-example .language-strip q,
-.figure-micro { font-size: 13px; }
+.figure-micro { font-size: 0.8125rem; }
 .architecture-example .overview-modality > strong,
-.architecture-example .overview-prediction > strong { font-size: 15px; }
-.process-tabs strong { font-size: 17px; }
-.science-figure .process-image-pair figcaption { font-size: 14px; }
-.process-description h4 { font-size: 23px; }
-.process-description p { font-size: 14px; line-height: 1.6; }
+.architecture-example .overview-prediction > strong { font-size: 0.9375rem; }
+.process-tabs strong { font-size: 1.0625rem; }
+.science-figure .process-image-pair figcaption { font-size: 0.875rem; }
+.process-description h4 { font-size: 1.4375rem; }
+.process-description p { font-size: 0.875rem; line-height: 1.6; }
 .domain-alignment span,
 .domain-alignment strong,
 .domain-alignment p,
 .process-playback,
-.process-media-status { font-size: 13px; }
+.process-media-status { font-size: 0.8125rem; }
 #policy-figure .ag-tabs button,
 #policy-figure .ag-reset,
 #policy-figure .ag-pause,
 #policy-figure .ag-status,
-#policy-figure .ag-note { font-size: 13px; }
-#policy-figure .ag-detail { font-size: 14px; min-height: 0; padding-bottom: 8px; }
-#policy-figure .ag-detail strong { font-size: 15px; }
+#policy-figure .ag-note { font-size: 0.8125rem; }
+#policy-figure .ag-detail { font-size: 0.875rem; min-height: 0; padding-bottom: 8px; }
+#policy-figure .ag-detail strong { font-size: 0.9375rem; }
 #policy-figure .ag-detail span:empty { display: none; }
-#policy-figure .av-svg .av-stage { font-size: 13px; }
+#policy-figure .av-svg .av-stage { font-size: 0.8125rem; }
 #policy-figure .av-svg .av-input-title,
-#policy-figure .av-svg .av-node-title { font-size: 16px; }
+#policy-figure .av-svg .av-node-title { font-size: 1rem; }
 #policy-figure .av-svg .av-small,
 #policy-figure .av-svg .av-dimension,
-#policy-figure .av-svg .av-port { font-size: 14px; }
-#policy-figure .av-svg .av-edge-label { font-size: 14px; }
-#policy-figure .av-sampling-node .av-node-title { font-size: 18px; }
-#policy-figure .av-sampling-node .av-small { font-size: 15px; }
+#policy-figure .av-svg .av-port { font-size: 0.875rem; }
+#policy-figure .av-svg .av-edge-label { font-size: 0.875rem; }
+#policy-figure .av-sampling-node .av-node-title { font-size: 1.125rem; }
+#policy-figure .av-sampling-node .av-small { font-size: 0.9375rem; }
 .deploy-col-label,
 .deploy-command > span,
 .deploy-controls button,
@@ -174,49 +174,49 @@
 .deploy-output small,
 .deploy-inspector [data-deploy-status],
 .deploy-caption,
-.deploy-video-heading small { font-size: 13px; }
+.deploy-video-heading small { font-size: 0.8125rem; }
 .deploy-col-label { white-space: normal; min-height: 2.7em; margin-bottom: 8px; }
-.deploy-step b { font-size: 14px; }
-.deploy-step-number { font-size: 12px; }
+.deploy-step b { font-size: 0.875rem; }
+.deploy-step-number { font-size: 0.75rem; }
 .deploy-planner b,
-.deploy-skill b { font-size: 21px; }
-.deploy-inspector strong { font-size: 20px; }
-.deploy-inspector p { font-size: 14px; min-height: 2.9em; }
+.deploy-skill b { font-size: 1.3125rem; }
+.deploy-inspector strong { font-size: 1.25rem; }
+.deploy-inspector p { font-size: 0.875rem; min-height: 2.9em; }
 .deploy-video-heading,
-.deploy-video-card figcaption { font-size: 14px; }
+.deploy-video-card figcaption { font-size: 0.875rem; }
 .deploy-caption { gap: 8px 18px; }
 #in-the-wild-rollouts [data-rollout-tabs] button,
-#in-the-wild-rollouts .rollout-pair h4 { font-size: 14px; }
+#in-the-wild-rollouts .rollout-pair h4 { font-size: 0.875rem; }
 #in-the-wild-rollouts [data-rollout-count],
 #in-the-wild-rollouts .rollout-pair figcaption,
 #in-the-wild-rollouts [data-rollout-toggle],
 #in-the-wild-rollouts [data-rollout-replay],
-#in-the-wild-rollouts .rollout-playback-note { font-size: 13px; }
+#in-the-wild-rollouts .rollout-playback-note { font-size: 0.8125rem; }
 .object-score > span,
 .object-score strong small,
 .object-inspector,
 .trial-key,
-.figure-footer { font-size: 13px; }
+.figure-footer { font-size: 0.8125rem; }
 @media (max-width: 700px) {
   .deploy-heading { flex-wrap: wrap; gap: 8px; }
   .deploy-kicker { max-width: none; flex-basis: 100%; }
   .deploy-controls { margin-left: auto; }
-  .overview-demos strong { font-size: 22px; }
-  .overview-uses h4 { font-size: 21px; }
-  .overview-uses p { font-size: 17px; }
+  .overview-demos strong { font-size: 1.375rem; }
+  .overview-uses h4 { font-size: 1.3125rem; }
+  .overview-uses p { font-size: 1.0625rem; }
   .overview-uses small,
-  .overview-stage { font-size: 13px; }
-  .overview-result > strong { font-size: 22px; }
+  .overview-stage { font-size: 0.8125rem; }
+  .overview-result > strong { font-size: 1.375rem; }
   .overview-start small,
-  .overview-result p { font-size: 13px; }
+  .overview-result p { font-size: 0.8125rem; }
   .overview-example-pair figure { flex-direction: column; gap: 8px; }
   .overview-example-pair img { height: 170px; width: 100%; }
-  .science-figure .overview-example-pair figcaption { font-size: 16px; text-align: center; }
+  .science-figure .overview-example-pair figcaption { font-size: 1rem; text-align: center; }
   .deploy-col-label { min-height: 0; }
-  .deploy-command q { font-size: 24px; }
+  .deploy-command q { font-size: 1.5rem; }
   .deploy-step b,
-  .deploy-step small { font-size: 12px; }
-  .deploy-step-number { font-size: 11px; }
+  .deploy-step small { font-size: 0.75rem; }
+  .deploy-step-number { font-size: 0.6875rem; }
   .deploy-step { padding-inline: 3px; }
   .deploy-inspector-heading { flex-wrap: wrap; }
   .deploy-inspector p { min-height: 0; }

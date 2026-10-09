@@ -65,7 +65,7 @@
       text(g,tx,cy-5,title,'av-input-title','start');text(g,tx,cy+14,dim,'av-small','start');
       const e=pick(g.append('g').attr('class','av-encoder'),id);
       matrix(e,enc-20,cy-20,5,4,6,0,i===1?2:0);
-      text(e,enc,cy+38,encoder,'av-node-title');text(e,enc,cy+54,state,'av-small');
+      text(e,enc,cy+38,encoder,'av-node-title');text(e,enc,cy+60,state,'av-small');
       wire(g,[compact?170:196,cy],[enc-26,cy],`${id} encoders`,0);
       const t=pick(g.append('g').attr('class','av-representation'),'concat');
       matrix(t,tok-(i===0?25:7),cy-15,i===0?6:1,3,i===0?6:8,.75,i===1?2:0);
@@ -79,7 +79,7 @@
       wire(g,[184,424],[76,535],'concat pooled',1.6);
       wire(g,[184,424],[280,566],'concat memory',1.6,'av-memory-wire');
       const s=pick(g.append('g'),'pooled');matrix(s,49,518,6,6,7,2);text(s,77,508,'Self-attention','av-node-title');
-      wire(g,[106,545],[150,545],'pooled',2.3);matrix(s,151,530,1,4,7,2.5);text(s,153,520,'Mean pool','av-small');
+      wire(g,[106,545],[150,545],'pooled',2.3);matrix(s,151,530,1,4,7,2.5);text(s,153,580,'Mean pool','av-small');
       const f=pick(g.append('g'),'memory');matrix(f,253,550,6,4,7,2,2);text(f,280,536,'Full tokens','av-node-title');
       line(g,'M160,545C192,545 191,610 34,610L34,763C34,777 59,777 78,777','pooled denoiser',2.8);
       line(g,'M308,566C341,566 341,624 341,639L341,831C341,845 326,845 312,845','memory denoiser',2.8,'av-memory-wire');
@@ -112,7 +112,7 @@
     core.append('path').attr('d',`M${x+15},${y}H${x}V${y+h}H${x+15}M${x+w-15},${y}H${x+w}V${y+h}H${x+w-15}`).attr('class','av-bracket');
     core.append('rect').attr('x',x).attr('y',y).attr('width',w).attr('height',h).attr('class','av-core-hit');
     const ax=x+16,ay=y+48,cx=right?x+w-10:x+16,cy=right?y+116:y+128;
-    text(core,ax+8,ay-12,'AdaLN','av-port','start');core.append('circle').attr('cx',ax).attr('cy',ay).attr('r',4).attr('class','av-port-dot');
+    text(core,ax+8,right?ay-12:ay+22,'AdaLN','av-port','start');core.append('circle').attr('cx',ax).attr('cy',ay).attr('r',4).attr('class','av-port-dot');
     text(core,right?cx-9:cx+8,cy+23,'Cross-attention','av-port',right?'end':'start');core.append('circle').attr('cx',cx).attr('cy',cy).attr('r',4).attr('class','av-port-dot av-gold');
     const mx=x+w*.59,my=y+62;
     wire(core,[ax,ay],[mx-4,my+17],'pooled denoiser',3.3);
@@ -132,7 +132,7 @@
       g.append('rect').attr('width',n.width).attr('height',n.height).attr('rx',4).attr('class','av-sampling-hit');
       g.append('path').attr('d',`M8,${n.height-1}H${n.width-8}`).attr('class','av-node-rule');
       text(g,n.width/2,n.height/2-(n.lines.length>1?12:3),n.title,'av-node-title');
-      n.lines.forEach((s,i)=>text(g,n.width/2,n.height/2+16+i*15-(n.lines.length>1?9:0),s==='xT'?'xₜ · t = T':s,'av-small'));
+      n.lines.forEach((s,i)=>text(g,n.width/2,n.height/2+20+i*20-(n.lines.length>1?7:0),s==='xT'?'xₜ · t = T':s,'av-small'));
     });
   }
   function render(){

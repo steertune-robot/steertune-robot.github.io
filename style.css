@@ -33,7 +33,8 @@
   --heading: Cormorant, Georgia, serif;
   --content-width: 1034px;
   color-scheme: light;
-  font-size: 16px;
+  /* One shared type scale for prose, controls, and figure labels. */
+  font-size: 112.5%;
 }
 * {
   box-sizing: border-box;
@@ -1015,7 +1016,7 @@ tbody tr:last-child > * {
   stroke: none;
   fill: var(--muted);
   font:
-    600 12px Arial,
+    600 0.75rem Arial,
     Helvetica,
     sans-serif;
   letter-spacing: 0;
@@ -1182,7 +1183,7 @@ tbody tr:last-child > * {
 }
 .replay-label {
   fill: #725a38;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .default-setting-ring {
   fill: #fcfaf5;
@@ -1263,13 +1264,13 @@ tbody tr:last-child > * {
     font-size: 1.25rem;
   }
   .steering-svg .plot-label {
-    font-size: 17px;
+    font-size: 1.0625rem;
   }
   .scaling-panel .plot-label {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
   .steering-svg .replay-label {
-    font-size: 15px;
+    font-size: 0.9375rem;
   }
   .experiment-index {
     justify-content: flex-start;
@@ -1731,7 +1732,7 @@ tbody tr:last-child > * {
   display: none;
 }
 .plot-endpoint {
-  font-size: 11px;
+  font-size: 0.6875rem;
   fill: var(--muted);
 }
 .scaling-panel .plot-dot.is-active:not(.is-default) {
@@ -1935,7 +1936,7 @@ tbody tr:last-child > * {
   margin: 9px 0 7px;
 }
 .scaling-panel .plot-label {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .scaling-panel .plot-readout {
   margin-top: auto;
@@ -1992,7 +1993,7 @@ tbody tr:last-child > * {
     padding-inline: 10px;
   }
   .scaling-panel .plot-label {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 @media (max-width: 760px) {

@@ -27,7 +27,7 @@
   gap: 10px;
   margin-top: 3px;
   min-width: 0;
-  font: 500 11px/1.4 var(--label);
+  font: 500 0.6875rem/1.4 var(--label);
   color: var(--muted);
 }
 .process-playback button {
@@ -50,7 +50,7 @@
 }
 .process-playback button [data-process-play-icon] {
   width: 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   text-align: center;
 }
 .process-playback output {
@@ -103,7 +103,7 @@
 .process-media-status {
   grid-column: 1 / -1;
   margin-top: -3px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .process-playback [hidden] {
   display: none;
@@ -111,6 +111,6 @@
 @container (max-width: 380px) {
   .process-playback {
     gap: 8px;
-    font-size: 10px;
+    font-size: 0.625rem;
   }
 }

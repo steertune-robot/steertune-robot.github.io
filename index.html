@@ -38,13 +38,25 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=20261008-select-inset" />
     <link rel="stylesheet" href="figures.css" />
+    <link rel="stylesheet" href="processing-motion.css" />
+    <link rel="stylesheet" href="architecture.css" />
+    <link rel="stylesheet" href="rollouts.css" />
+    <link rel="stylesheet" href="teaser.css?v=20261008" />
+  <link rel="stylesheet" href="deployment.css?v=4" />
+    <script src="vendor/d3.v7.min.js" defer></script>
+    <script src="deployment.js?v=4" defer></script>
+    <script src="deployment-media.js?v=1" defer></script>
+    <script src="teaser.js?v=20261008" defer></script>
+    <script src="graph-layouts.js" defer></script>
+    <script src="architecture.js" defer></script>
     <script src="figures.js" defer></script>
-    <script src="script.js" defer></script>
-    <script src="charts.js" defer></script>
+    <script src="rollout-data.js?v=9e3a500d75fe" defer></script>
+    <script src="script.js?v=ac9e7cc5bf89" defer></script>
+    <script src="charts.js?v=20261008-no-result-tables" defer></script>
     <script src="plot-data.js" defer></script>
-    <script src="plots.js" defer></script>
+    <script src="plots.js?v=20261008-no-result-tables" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#abstract">Skip to research content</a>
@@ -89,27 +101,20 @@
 
       <section class="teaser-section container" id="teaser" aria-label="Teaser">
         <figure>
-          <div
-            class="media-placeholder teaser-placeholder"
+          <video
+            class="teaser-video"
             data-asset="teaser-video"
+            aria-label="Steertuning project teaser"
+            poster="assets/teaser/poster.jpg?v=20261008-intro"
+            preload="metadata"
+            controls
+            muted
+            loop
+            playsinline
           >
-            <div class="placeholder-meta">
-              <span>Teaser</span><span>Video placeholder · 16:9</span>
-            </div>
-            <div class="placeholder-center">
-              <svg class="media-symbol" viewBox="0 0 48 48" aria-hidden="true">
-                <rect x="7" y="10" width="34" height="28" rx="2" />
-                <path d="m20 18 11 6-11 6z" /></svg
-              ><span class="placeholder-title">Teaser video</span>
-              <p>
-                Five human demonstrations.<br />Few-shot adaptation. Robot
-                deployment.
-              </p>
-            </div>
-            <div class="placeholder-foot">
-              Reserved for the project overview video
-            </div>
-          </div>
+            <source src="assets/teaser/steertuning-teaser.mp4?v=anonymous-20261008" type="video/mp4" />
+            <a href="assets/teaser/steertuning-teaser.mp4?v=anonymous-20261008">Watch the project teaser</a>.
+          </video>
           <figcaption class="teaser-caption">
             <strong>Steertuning:</strong>
             <em class="text-accent"
@@ -119,12 +124,6 @@
           </figcaption>
         </figure>
       </section>
-
-      <nav class="section-nav container" aria-label="On this page">
-        <a href="#abstract">Abstract</a><a href="#overview">Overview</a
-        ><a href="#method">Method</a><a href="#experiments">Experiments</a
-        ><a href="#ablations">Ablations</a><a href="#citation">Citation</a>
-      </nav>
 
       <section
         class="paper-section reading-width"
@@ -171,223 +170,113 @@
             id="system-figure"
           >
             <header class="figure-heading">
-              <div>
-                <span class="figure-kicker">Figure 1 · System overview</span>
-              </div>
-              <button
-                class="figure-control"
-                type="button"
-                data-motion-toggle
-                aria-pressed="false"
-                hidden
+              <span class="figure-kicker"
+                >Figure 1 · How Steertuning works</span
               >
-                <span data-motion-icon aria-hidden="true">Ⅱ</span>
-                <span data-motion-label>Pause</span>
-              </button>
             </header>
-            <div class="overview-band">
-              <div class="band-heading">
-                <h4>Pretraining</h4>
+            <div class="method-overview">
+              <div class="overview-start">
+                <span>Starting point</span>
                 <p>
-                  <b>100+ hours</b> of human interaction ·
-                  <b>400M</b> parameters
+                  A policy pretrained on <em>human interaction data</em
+                  ><small>109.6 hours · no robot training data</small>
                 </p>
               </div>
-              <div class="pretrain-flow">
-                <div class="overview-inputs">
-                  <div class="modality-strip">
-                    <div class="overview-modality">
-                      <div class="figure-media">
-                        <video
-                          muted
-                          loop
-                          playsinline
-                          preload="none"
-                          poster="assets/figures/scene.png"
-                          aria-label="Dense scene point cloud with the human body removed"
-                          data-figure-video
-                        >
-                          <source
-                            data-src="assets/figures/scene.webm"
-                            type="video/webm"
-                          />
-                        </video>
-                      </div>
-                      <strong>Scene geometry</strong><span>Point cloud</span>
-                    </div>
-                    <div class="overview-modality">
-                      <div class="figure-media">
-                        <video
-                          muted
-                          loop
-                          playsinline
-                          preload="none"
-                          poster="assets/figures/object.png"
-                          aria-label="RGB appearance of the segmented manipulated object"
-                          data-figure-video
-                        >
-                          <source
-                            data-src="assets/figures/object.webm"
-                            type="video/webm"
-                          />
-                        </video>
-                      </div>
-                      <strong>Object grounding</strong
-                      ><span>Segmented object</span>
-                    </div>
-                    <div class="overview-modality">
-                      <div class="figure-media">
-                        <video
-                          muted
-                          loop
-                          playsinline
-                          preload="none"
-                          poster="assets/figures/proprio.png"
-                          aria-label="Observed human hand landmarks retargeted to Wuji hands"
-                          data-figure-video
-                        >
-                          <source
-                            data-src="assets/figures/proprio.webm"
-                            type="video/webm"
-                          />
-                        </video>
-                      </div>
-                      <strong>Hand state</strong
-                      ><span>Retargeted visualization</span>
-                    </div>
-                  </div>
-                  <div class="language-strip">
-                    <span>+ Task language</span
-                    ><q data-example-instruction
-                      >transferring food from pot to bowl</q
-                    >
-                  </div>
+              <div class="overview-demos">
+                <strong>5 human demonstrations of the new task</strong
+                ><span>The same demonstrations are used in two ways.</span>
+              </div>
+              <div class="overview-split" aria-hidden="true"></div>
+              <div class="overview-uses">
+                <div>
+                  <span class="overview-stage">Before execution</span>
+                  <h4>Finetune the policy</h4>
+                  <p>
+                    Learn the new task with <em>≈2 minutes of training</em>.
+                  </p>
+                  <small>Train LoRA adapters; keep base weights frozen.</small>
                 </div>
-                <span class="flow-arrow" aria-hidden="true"
-                  ><svg viewBox="0 0 32 16">
-                    <path d="M1 8H29m-5-4 5 4-5 4" />
-                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
-                ></span>
-                <div class="prior-node">
-                  <span class="figure-kicker">Diffusion policy</span
-                  ><strong>DiT</strong>
-
-                  <span>Multimodal conditioning</span
-                  ><span class="node-rule">Noise prediction → DDIM</span>
+                <div>
+                  <span class="overview-stage">During execution</span>
+                  <h4>Guide its actions</h4>
+                  <p>
+                    Use a matching demonstration to
+                    <em>steer each prediction</em>.
+                  </p>
+                  <small>Select by object layout; align motion progress.</small>
                 </div>
-                <span class="flow-arrow" aria-hidden="true"
-                  ><svg viewBox="0 0 32 16">
-                    <path d="M1 8H29m-5-4 5 4-5 4" />
-                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
-                ></span>
-                <div class="overview-prediction">
-                  <div class="figure-media">
-                    <video
-                      muted
-                      loop
-                      playsinline
-                      preload="none"
-                      poster="assets/figures/prediction.png"
-                      aria-label="Saved base-policy action predictions retargeted to Wuji hands"
-                      data-figure-video
-                    >
-                      <source
-                        data-src="assets/figures/prediction.webm"
-                        type="video/webm"
-                      />
-                    </video>
-                  </div>
-                  <strong>Predicted actions</strong
-                  ><span>15 poses · ≈4.5 s horizon</span
-                  ><span class="figure-micro"
-                    >Saved base-policy prediction</span
-                  >
-                </div>
+              </div>
+              <div class="overview-merge" aria-hidden="true"></div>
+              <div class="overview-result">
+                <strong>Robot performs the new task</strong>
+                <p>
+                  <span>Predict human motion</span
+                  ><span><b aria-hidden="true">→</b> Retarget to the robot</span
+                  ><span><b aria-hidden="true">→</b> Execute</span>
+                </p>
               </div>
             </div>
-            <div class="overview-band adaptation-band">
-              <div class="band-heading">
-                <h4>Few-shot adaptation</h4>
-                <p>
-                  <b>5 human demos</b> · task adaptation in <b>&lt;5 min</b>
-                </p>
-              </div>
-              <div class="adapt-flow">
-                <div class="demo-node">
-                  <strong>5 new demonstrations</strong
-                  ><span>Same human-data pipeline</span>
-                </div>
-                <span class="flow-arrow" aria-hidden="true"
-                  ><svg viewBox="0 0 32 16">
-                    <path d="M1 8H29m-5-4 5 4-5 4" />
-                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
-                ></span>
-                <div class="adapt-recipe">
-                  <div class="adapt-node">
-                    <span class="figure-kicker"></span
-                    ><strong>LoRA finetuning</strong>
-                    <p>Frozen prior + rank-8 adapters</p>
-                    <span class="recipe-stat"
-                      >2k updates <span>≈ 2 min</span></span
-                    >
-                  </div>
-                  <div class="adapt-node steering-node">
-                    <span class="figure-kicker"></span
-                    ><strong>Action steering</strong>
-                    <p>Nearest demo by object layout</p>
-                    <span class="recipe-stat"
-                      >DDIM + demo <span>w = 0.3</span></span
-                    >
-                  </div>
-                  <p class="recipe-bridge">
-                    Frozen pretrained weights · shared demonstrations
-                  </p>
-                </div>
-                <span class="flow-arrow" aria-hidden="true"
-                  ><svg viewBox="0 0 32 16">
-                    <path d="M1 8H29m-5-4 5 4-5 4" />
-                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
-                ></span>
-                <div class="deployment-node">
+            <div
+              class="overview-task-example"
+              aria-label="Flower task example from the paper"
+            >
+              <span class="overview-example-label"
+                >Flower task · photographs from the paper</span
+              >
+              <div class="overview-example-pair">
+                <figure>
+                  <img
+                    src="assets/figures/flower-human.png"
+                    width="521"
+                    height="681"
+                    alt="Human demonstrating watering potted flowers with a purple watering can, from paper Figure 1"
+                    loading="lazy"
+                  />
+                  <figcaption>Human demonstration</figcaption>
+                </figure>
+                <figure>
                   <img
                     src="assets/figures/robot.png"
-                    alt="YOR mobile manipulator with Wuji hands, from Figure 1"
+                    width="537"
+                    height="714"
+                    alt="Robot deploying on the Flower task with a purple watering can, from paper Figure 1"
                     loading="lazy"
-                    width="160"
-                    height="172"
                   />
-                  <div>
-                    <strong>Robot deployment</strong
-                    ><span>Wrist IK + hand retargeting</span>
-                  </div>
-                </div>
+                  <figcaption>Robot deployment</figcaption>
+                </figure>
               </div>
             </div>
-
             <details class="figure-details">
-              <summary>Details & sources</summary>
+              <summary>Method details</summary>
               <div>
                 <p>
-                  The paper uses <b>109.6 hours</b>, <b>3.69M frames</b> and
-                  <b>48.7k instructions</b>. Scene, hand history, and future
-                  actions share the anchor RGB-camera frame.
+                  <b>Finetuning.</b> Five processed human demonstrations train
+                  rank-8 LoRA adapters for 2,000 updates. The pretrained base
+                  stays frozen.
                 </p>
                 <p>
-                  The clips show one synchronized offline example: the dense
-                  cloud before 5,000-point sampling, an RGB cutout illustrating
-                  the binary object mask, observed hand landmarks retargeted to
-                  Wuji, and saved base-policy predictions retargeted to Wuji,
-                  before task LoRA or steering. These are visualizations, not
-                  recordings of robot execution. The robot photograph is from
-                  the paper. Architecture dimensions follow the manuscript; the
-                  clips illustrate a separate base-policy checkpoint.
+                  <b>Steering.</b> At deployment, the robot's observation
+                  conditions the adapted policy. Object-layout retrieval selects
+                  one of the same demonstrations; wrist and hand motion align
+                  its progress. The aligned demonstration is noised and blended
+                  into each reverse-diffusion step, with steering weight 0.3.
+                </p>
+                <p>
+                  <b>Execution.</b> The predicted human-landmark trajectories
+                  become robot commands through wrist IK, hand retargeting, and
+                  real-time chunking.
+                </p>
+                <p>
+                  The two photographs show the paper’s human demonstration and
+                  robot deployment of the Flower task. They illustrate the same
+                  task, not a verified matched rollout sequence.
                 </p>
               </div>
             </details>
           </div>
           <figcaption>
-            <strong>Figure 1.</strong> Human pretraining followed by
-            <em>few-shot finetuning and action steering</em>.
+            <strong>Figure 1.</strong> The same five demonstrations
+            <em>adapt the policy and guide its predictions</em>.
           </figcaption>
         </figure>
         <div class="contributions reading-width">
@@ -505,14 +394,7 @@
                 <div class="process-image-pair">
                   <figure>
                     <div class="process-image">
-                      <img
-                        src="assets/figures/record-rgb.png"
-                        data-process-input
-                        alt="Original egocentric RGB recording"
-                        width="640"
-                        height="480"
-                        loading="lazy"
-                      />
+                      <video muted loop playsinline preload="none" width="640" height="480" poster="assets/figures/record-rgb.png" aria-label="Original egocentric RGB recording" data-process-input></video>
                     </div>
                     <figcaption data-process-input-caption>
                       Egocentric RGB
@@ -520,19 +402,18 @@
                   </figure>
                   <figure>
                     <div class="process-image">
-                      <img
-                        src="assets/figures/proprio.png"
-                        data-process-output
-                        alt="Observed human hand landmarks retargeted to Wuji geometry"
-                        width="640"
-                        height="480"
-                        loading="lazy"
-                      />
+                      <video muted loop playsinline preload="none" width="640" height="480" poster="assets/figures/proprio.png" aria-label="Observed human hand landmarks retargeted to Wuji geometry" data-process-output></video>
                     </div>
                     <figcaption data-process-output-caption>
                       Observed hand pose · Wuji rendering
                     </figcaption>
                   </figure>
+                  <div class="process-playback">
+                    <button type="button" data-process-toggle aria-pressed="false" hidden><span data-process-play-icon aria-hidden="true">Ⅱ</span><span data-process-play-label>Pause clips</span></button>
+                    <input type="range" min="0" max="8" step="0.1" value="0" aria-label="Processing clips timeline" data-process-seek />
+                    <output data-process-time aria-live="off">0:00 / 0:08</output>
+                    <span class="process-media-status" data-process-status aria-live="polite" hidden></span>
+                  </div>
                 </div>
                 <div class="process-description">
                   <span class="figure-kicker" data-process-eyebrow
@@ -550,18 +431,24 @@
                   </div>
                 </div>
               </div>
-              <div class="process-output">
-                <span>Policy-ready snippet</span
-                ><strong>5,000 scene points</strong
-                ><strong>255 × 255 object mask</strong
-                ><strong>10 fingertips</strong><strong>Task language</strong>
+              <div class="domain-alignment">
+                <div>
+                  <span>Human observation</span
+                  ><strong>Remove hands / arms with SAM3</strong>
+                </div>
+                <div>
+                  <span>Robot observation</span
+                  ><strong>Remove geometry using kinematics</strong>
+                </div>
+                <p>Shared scene representation in the anchor camera frame</p>
               </div>
               <details class="figure-details">
                 <summary>Processing details</summary>
                 <p class="processing-provenance">
-                  Matched views of one recorded frame. RGB/mask and cloud pairs
-                  have separate, consistent crops. No generated or inpainted
-                  experiment imagery.
+                  Synchronized eight-second clips from one recorded sequence, at
+                  10 Hz. RGB/mask and cloud pairs have consistent crops. The
+                  sampled-cloud view shows the visible subset of each 5,000-point
+                  input. No generated experiment imagery.
                 </p>
                 <div class="detail-columns">
                   <p>
@@ -590,13 +477,13 @@
         <article class="subsection">
           <h3>Policy architecture and action steering</h3>
           <p>
-            A diffusion transformer takes
+            A diffusion policy combines
             <span class="text-underline"
               >point clouds, object masks, fingertip locations, and
               language</span
             >
-            as inputs. It predicts <em>human action landmarks</em>, retargeted
-            to the robot at deployment.
+            as inputs. Noise prediction and DDIM sampling produce <em>human action
+            landmarks</em>, retargeted to the robot at deployment.
           </p>
           <figure class="research-figure">
             <div
@@ -610,190 +497,146 @@
                     >Figure 3 · Policy architecture</span
                   >
                 </div>
-                <button
-                  class="figure-control"
-                  type="button"
-                  data-motion-toggle
-                  aria-pressed="false"
-                  hidden
-                >
-                  <span data-motion-icon aria-hidden="true">Ⅱ</span>
-                  <span data-motion-label>Pause</span>
-                </button>
               </header>
-              <div class="architecture-flow">
-                <div class="encoder-column">
-                  <span class="figure-kicker">Observation encoders</span
+              <div class="ag-toolbar">
+                <div class="ag-tabs" role="tablist" aria-label="Architecture view">
+                  <button type="button" role="tab" id="ag-tab-model" data-graph-view="model" aria-selected="true" aria-controls="ag-panel">Policy network</button>
+                  <button type="button" role="tab" id="ag-tab-sampling" data-graph-view="sampling" aria-selected="false" aria-controls="ag-panel" tabindex="-1">Steering at deployment</button>
+                </div>
+                <div class="ag-controls">
+                  <button type="button" class="ag-reset" data-graph-reset disabled>Clear selection</button>
+                  <button type="button" class="ag-pause" data-graph-pause aria-pressed="false">Pause animation</button>
+                </div>
+              </div>
+              <div class="ag-status" data-graph-status>01 · Encode observations</div>
+              <div id="ag-panel" class="ag-host" data-architecture-graph role="tabpanel" aria-labelledby="ag-tab-model"></div>
+              <div class="ag-detail" data-graph-detail aria-live="polite"></div>
+              <p class="ag-note" data-graph-note></p>
+              <details class="figure-details architecture-media">
+                <summary>
+                  Example: cooking inputs and predicted hand motion
+                </summary>
+                <div class="example-toolbar">
+                  <span>8-second sequence · base policy</span
                   ><button
+                    class="figure-control"
                     type="button"
-                    class="encoder-row"
-                    data-encoder="scene"
+                    data-motion-toggle
                     aria-pressed="false"
+                    hidden
                   >
-                    <span
-                      ><strong>Point cloud</strong
-                      ><small>5,000 × 3</small></span
-                    ><span aria-hidden="true">→</span
-                    ><span
-                      ><b>Utonia</b><small>Frozen · 512 tokens</small></span
-                    ></button
-                  ><button
-                    type="button"
-                    class="encoder-row"
-                    data-encoder="object"
-                    aria-pressed="false"
-                  >
-                    <span
-                      ><strong>Object mask</strong
-                      ><small>255 × 255</small></span
-                    ><span aria-hidden="true">→</span
-                    ><span
-                      ><b>ResNet-18</b><small>Trainable · 1 token</small></span
-                    ></button
-                  ><button
-                    type="button"
-                    class="encoder-row"
-                    data-encoder="hand"
-                    aria-pressed="false"
-                  >
-                    <span
-                      ><strong>Fingertips</strong><small>2 × 5 × 3</small></span
-                    ><span aria-hidden="true">→</span
-                    ><span
-                      ><b>FFN</b><small>Trainable · 1 token</small></span
-                    ></button
-                  ><button
-                    type="button"
-                    class="encoder-row"
-                    data-encoder="text"
-                    aria-pressed="false"
-                  >
-                    <span
-                      ><strong>Task language</strong
-                      ><small>Instruction</small></span
-                    ><span aria-hidden="true">→</span
-                    ><span><b>SigLIP</b><small>Frozen · 1 token</small></span>
+                    <span data-motion-icon aria-hidden="true">Ⅱ</span>
+                    <span data-motion-label>Pause example clips</span>
                   </button>
                 </div>
-                <span class="flow-arrow" aria-hidden="true"
-                  ><svg viewBox="0 0 32 16">
-                    <path d="M1 8H29m-5-4 5 4-5 4" />
-                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
-                ></span>
-                <div class="fusion-column">
-                  <div class="fusion-node">
-                    <span class="figure-kicker">515 × 1,024 tokens</span
-                    ><strong>Self-attention</strong>
-                  </div>
-                  <div class="conditioning-routes">
-                    <div>
-                      <span>Mean pool</span
-                      ><svg viewBox="0 0 50 24" aria-hidden="true">
-                        <path d="M2 3v13h43m-5-4 5 4-5 4" /></svg
-                      ><b>AdaLN</b>
+                <div class="pretrain-flow architecture-example">
+                  <div class="overview-inputs">
+                    <div class="modality-strip">
+                      <div class="overview-modality">
+                        <div class="figure-media">
+                          <video
+                            muted
+                            loop
+                            playsinline
+                            preload="none"
+                            poster="assets/figures/scene.png"
+                            aria-label="Dense scene point cloud with the human body removed"
+                            data-figure-video
+                          >
+                            <source
+                              data-src="assets/figures/scene.webm"
+                              type="video/webm"
+                            />
+                          </video>
+                        </div>
+                        <strong>Scene geometry</strong><span>Point cloud</span>
+                      </div>
+                      <div class="overview-modality">
+                        <div class="figure-media">
+                          <video
+                            muted
+                            loop
+                            playsinline
+                            preload="none"
+                            poster="assets/figures/object.png"
+                            aria-label="RGB appearance of the segmented manipulated object"
+                            data-figure-video
+                          >
+                            <source
+                              data-src="assets/figures/object.webm"
+                              type="video/webm"
+                            />
+                          </video>
+                        </div>
+                        <strong>Object grounding</strong
+                        ><span>Segmented object</span>
+                      </div>
+                      <div class="overview-modality">
+                        <div class="figure-media">
+                          <video
+                            muted
+                            loop
+                            playsinline
+                            preload="none"
+                            poster="assets/figures/proprio.png"
+                            aria-label="Observed human hand landmarks retargeted to Wuji hands"
+                            data-figure-video
+                          >
+                            <source
+                              data-src="assets/figures/proprio.webm"
+                              type="video/webm"
+                            />
+                          </video>
+                        </div>
+                        <strong>Hand state</strong
+                        ><span>Retargeted visualization</span>
+                      </div>
                     </div>
-                    <div>
-                      <span>Full tokens</span
-                      ><svg viewBox="0 0 50 24" aria-hidden="true">
-                        <path d="M2 3v13h43m-5-4 5 4-5 4" /></svg
-                      ><b>Cross-attention</b>
+                    <div class="language-strip">
+                      <span>+ Task language</span
+                      ><q data-example-instruction
+                        >transferring food from pot to bowl</q
+                      >
                     </div>
                   </div>
-                </div>
-                <span class="flow-arrow" aria-hidden="true"
-                  ><svg viewBox="0 0 32 16">
-                    <path d="M1 8H29m-5-4 5 4-5 4" />
-                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
-                ></span>
-                <div class="dit-column">
-                  <div class="noisy-input">
-                    Noisy actions x<sub>t</sub> + t
-                    <span aria-hidden="true">↓</span>
-                  </div>
-                  <div class="dit-node">
-                    <span class="figure-kicker">Diffusion transformer</span
-                    ><strong>DiT</strong><span>AdaLN · cross-attention</span
-                    ><span class="node-rule">FFN → predicted noise ε̂</span>
-                  </div>
-                  <div class="denoise-output">
-                    <b>DDIM × 8</b><span>15 future poses · 52 landmarks</span>
-                  </div>
-                </div>
-              </div>
-              <p class="encoder-inspector" aria-live="polite" hidden>
-                <span data-encoder-detail
-                  >Select an encoder to inspect its representation. During LoRA
-                  adaptation, pretrained weights stay frozen.</span
-                >
-              </p>
-              <div
-                class="sampling-loop"
-                aria-label="At each of eight reverse sampling steps: predict noise, take a DDIM step, and blend the noised demonstration action before the next step"
-              >
-                <span class="figure-kicker">Reverse sampling · 8 steps</span>
-                <div>
-                  <span>Noisy action x<sub>t</sub></span
-                  ><b aria-hidden="true">→</b><span>Predict ε̂</span
-                  ><b aria-hidden="true">→</b><span>DDIM step</span
-                  ><b aria-hidden="true">→</b
-                  ><span class="sampling-blend">Blend noised demo</span
-                  ><b aria-hidden="true">↺</b>
-                </div>
-              </div>
-              <div class="steering-explainer">
-                <div class="steering-explanation">
-                  <span class="figure-kicker">Inside reverse sampling</span>
-                  <h4>Demonstration steering</h4>
-                  <p>Object-layout retrieval; blend at each noise level.</p>
-                  <div class="steering-equation">
-                    x<sub>t</sub> ← <span data-demo-weight>0.3</span> a<sub
-                      >t</sub
-                    ><sup>★</sup> + <span data-model-weight>0.7</span> x<sub
-                      >t</sub
+
+                  <span class="flow-arrow" aria-hidden="true"
+                    ><svg viewBox="0 0 32 16">
+                      <path d="M1 8H29m-5-4 5 4-5 4" /></svg
+                  ></span>
+                  <div class="overview-prediction">
+                    <div class="figure-media">
+                      <video
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        poster="assets/figures/prediction.png"
+                        aria-label="Saved base-policy action predictions retargeted to Wuji hands"
+                        data-figure-video
+                      >
+                        <source
+                          data-src="assets/figures/prediction.webm"
+                          type="video/webm"
+                        />
+                      </video>
+                    </div>
+                    <strong>Predicted actions</strong
+                    ><span>15 poses · ≈4.5 s horizon</span
+                    ><span class="figure-micro"
+                      >Saved base-policy prediction</span
                     >
                   </div>
-                  <label class="steering-slider-label" for="steering-weight"
-                    >Steering strength
-                    <b data-steering-value>w = 0.3 · paper setting</b></label
-                  ><input
-                    type="range"
-                    id="steering-weight"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                    value="0.3"
-                    aria-describedby="steering-schematic-note"
-                  />
-                  <div class="range-endpoints">
-                    <span>0 · Model only</span><span>1 · Demo replay</span>
-                  </div>
                 </div>
-                <div class="steering-visual">
-                  <svg
-                    viewBox="0 0 340 155"
-                    role="img"
-                    aria-label="Schematic showing the noisy action moving toward the selected demonstration as steering strength increases"
-                  >
-                    <path
-                      class="schematic-grid"
-                      d="M15 35H325M15 80H325M15 125H325"
-                    />
-                    <path class="schematic-demo" data-demo-curve />
-                    <path class="schematic-model" data-model-curve />
-                    <path class="schematic-blend" data-blend-curve />
-                    <g data-blend-points></g>
-                  </svg>
-                  <div class="schematic-legend">
-                    <span class="legend-model">Model</span
-                    ><span class="legend-demo">Demo</span
-                    ><span class="legend-blend">Steered</span>
-                  </div>
-                  <p id="steering-schematic-note">
-                    Schematic blend at one noise level; not an experimental
-                    trajectory.
-                  </p>
-                </div>
-              </div>
+                <p class="example-provenance">
+                  Input previews and these clips share one saved base-policy
+                  example, without task LoRA or steering. Diagram dimensions
+                  follow the manuscript; internal flow is schematic.
+                  Dense geometry and retargeted hand meshes are visualizations;
+                  the model uses a sampled cloud, a binary object mask, and hand
+                  landmarks.
+                </p>
+              </details>
               <details class="figure-details">
                 <summary>Training & deployment details</summary>
                 <div class="detail-columns">
@@ -808,8 +651,10 @@
                   <p>
                     <b>Adaptation.</b> Rank-8 LoRA (scaling 16), 2,000 updates,
                     ≈2 minutes. Inference uses eight deterministic DDIM steps
-                    and w = 0.3. Wrist IK, hand retargeting, and real-time
-                    chunking convert the predicted landmarks into smooth robot
+                    and w = 0.3. The deployment view follows the implementation:
+                    DDIM update, blend at the next scheduled noise level, then
+                    repeat; the final blend uses clean actions. Wrist IK, hand
+                    retargeting, and real-time chunking convert the predicted landmarks into smooth robot
                     actions.
                   </p>
                 </div>
@@ -848,116 +693,130 @@
           vary within 20 × 20 cm. Trash and Bread test pick-and-place; Flower
           tests watering.
         </p>
-        <article class="subsection">
+        <article class="subsection" id="in-the-wild-rollouts">
           <h3>In-the-wild task rollouts</h3>
-          <p>
-            Human demonstrations and robot rollouts in
-            <em>unseen environments</em>.
-          </p>
-          <div class="task-tabs" role="tablist" aria-label="In-the-wild task">
-            <button
-              id="task-flower"
-              role="tab"
-              aria-selected="true"
-              aria-controls="rollout-panel"
-              tabindex="0"
-              data-task="flower"
-            >
-              Flower watering</button
-            ><button
-              id="task-coffee"
-              role="tab"
-              aria-selected="false"
-              aria-controls="rollout-panel"
-              tabindex="-1"
-              data-task="coffee"
-            >
-              Coffee machine</button
-            ><button
-              id="task-kettle"
-              role="tab"
-              aria-selected="false"
-              aria-controls="rollout-panel"
-              tabindex="-1"
-              data-task="kettle"
-            >
-              Kettle handling
-            </button>
+          <p>Human demonstrations and robot rollouts in <em>unseen environments</em>.</p>
+          <div class="rollout-tabs" data-rollout-tabs role="tablist" aria-label="In-the-wild task"></div>
+          <div class="rollout-heading">
+            <h4 data-rollout-title>Paper towel</h4>
+            <span data-rollout-count aria-label="Selected task">1 / 6</span>
           </div>
-          <div
-            id="rollout-panel"
-            role="tabpanel"
-            aria-labelledby="task-flower"
-            tabindex="0"
-          >
-            <div class="media-pair">
+          <div id="rollout-panel" role="tabpanel" tabindex="0">
+            <div class="rollout-pair">
               <figure>
                 <h4>Human demonstration</h4>
-                <div
-                  class="media-placeholder video-small"
-                  data-asset="task-human"
-                >
-                  <div class="placeholder-center">
-                    <span class="placeholder-kicker">Video placeholder</span
-                    ><span class="placeholder-title" data-task-label
-                      >Flower watering</span
-                    >
-                    <p>Human demonstration</p>
-                  </div>
+                <div class="rollout-media">
+                  <video data-rollout-human muted loop playsinline controls preload="none"
+                    poster="assets/rollouts/paper-towel-human.jpg" aria-label="Paper towel: human demonstration"></video>
                 </div>
+                <figcaption data-rollout-human-caption></figcaption>
               </figure>
               <figure>
                 <h4>Robot rollout</h4>
-                <div
-                  class="media-placeholder video-small"
-                  data-asset="task-robot"
-                >
-                  <div class="placeholder-center">
-                    <span class="placeholder-kicker">Video placeholder</span
-                    ><span class="placeholder-title" data-task-label
-                      >Flower watering</span
-                    >
-                    <p>Steertuning policy</p>
-                  </div>
+                <div class="rollout-media">
+                  <video data-rollout-robot muted loop playsinline controls preload="none"
+                    poster="assets/rollouts/paper-towel-robot.jpg" aria-label="Paper towel: robot rollout"></video>
                 </div>
+                <figcaption data-rollout-robot-caption></figcaption>
               </figure>
             </div>
           </div>
-          <p class="figure-note">
-            <strong>Figure 4.</strong> Human demonstration (left); robot rollout
-            (right).
-          </p>
+          <div class="rollout-controls">
+            <button type="button" data-rollout-toggle>Play both</button>
+            <button type="button" data-rollout-replay>Replay</button>
+            <p class="rollout-playback-note">4× speed · no audio · clips loop independently.</p>
+          </div>
+          <p data-rollout-status role="status" aria-live="polite"></p>
+          <noscript><p>Enable JavaScript to browse the six task pairs, or open the <a href="assets/rollouts/paper-towel-human.mp4?v=4x-silent-20261008">human demonstration</a> and <a href="assets/rollouts/paper-towel-robot.mp4?v=4x-silent-20261008">robot rollout</a>.</p></noscript>
         </article>
-        <article class="subsection">
+        <article class="subsection" id="deployment">
           <h3>End-to-end deployment from language</h3>
-          <p>
-            A vision-language orchestrator translates commands into
-            <span class="text-underline"
-              >navigation and learned manipulation</span
-            >.
-          </p>
+          <p>A vision-language orchestrator connects <em>navigation and learned manipulation</em> to carry out a single command.</p>
           <figure class="research-figure">
-            <div
-              class="media-placeholder deployment-placeholder"
-              data-asset="language-deployment"
-            >
-              <div class="placeholder-meta">
-                <span>Full-system deployment</span><span>Figure 5</span>
+            <div class="deployment-explainer" id="deployment-figure">
+              <header class="deploy-heading">
+                <span class="deploy-kicker">Figure 5 · Language to action</span>
+                <div class="deploy-controls">
+                  <button type="button" data-deploy-play>Pause walkthrough</button>
+                  <button type="button" data-deploy-replay>Replay</button>
+                </div>
+              </header>
+              <div class="deploy-command"><span>Language command</span><q>Put the white cup into the trash.</q></div>
+              <div class="deploy-flow" data-deploy-flow>
+                <svg class="deploy-wires" data-deploy-wires aria-hidden="true"></svg>
+                <div class="deploy-column">
+                  <span class="deploy-col-label">01 · Decompose</span>
+                  <div class="deploy-column-body">
+                    <button type="button" class="deploy-planner" data-deploy-node="planner" data-deploy-inspect="planner" aria-label="Inspect the vision-language orchestrator">
+                      <b>VLM orchestrator</b><span class="deploy-brand"><img src="assets/deployment/gemini.png" alt="" width="22" height="22" /><span>Gemini ER 1.6</span></span><small>One command → ordered subtasks</small>
+                    </button>
+                  </div>
+                </div>
+                <div class="deploy-column">
+                  <span class="deploy-col-label">02 · Ordered subtasks</span>
+                  <div class="deploy-column-body deploy-plan" role="group" aria-label="Select a deployment step">
+                      <button type="button" class="deploy-step" data-deploy-node="step-0" data-deploy-step="0" aria-pressed="true" aria-label="Step 1: navigate white cup">
+                        <span class="deploy-step-number">01</span><span><b>Navigate</b><small>white cup</small></span><span class="deploy-step-progress" aria-hidden="true"></span>
+                      </button>
+                      <button type="button" class="deploy-step" data-deploy-node="step-1" data-deploy-step="1" aria-pressed="false" aria-label="Step 2: pick up white cup">
+                        <span class="deploy-step-number">02</span><span><b>Pick up</b><small>white cup</small></span><span class="deploy-step-progress" aria-hidden="true"></span>
+                      </button>
+                      <button type="button" class="deploy-step" data-deploy-node="step-2" data-deploy-step="2" aria-pressed="false" aria-label="Step 3: navigate trash">
+                        <span class="deploy-step-number">03</span><span><b>Navigate</b><small>trash</small></span><span class="deploy-step-progress" aria-hidden="true"></span>
+                      </button>
+                      <button type="button" class="deploy-step" data-deploy-node="step-3" data-deploy-step="3" aria-pressed="false" aria-label="Step 4: drop white cup">
+                        <span class="deploy-step-number">04</span><span><b>Drop</b><small>white cup</small></span><span class="deploy-step-progress" aria-hidden="true"></span>
+                      </button>
+                  </div>
+                </div>
+                <div class="deploy-column">
+                  <span class="deploy-col-label">03 · Execute each skill</span>
+                  <div class="deploy-column-body deploy-skills">
+                    <button type="button" class="deploy-skill" data-deploy-node="navigation" data-deploy-inspect="navigation" aria-label="Inspect object navigation">
+                      <b>Object navigation</b><small>Locate in map → move base</small>
+                    </button>
+                    <button type="button" class="deploy-skill" data-deploy-node="manipulation" data-deploy-inspect="manipulation" aria-label="Inspect the Steertuning manipulation policy">
+                      <b>Steertuning policy</b><small>Predict landmarks → retarget</small>
+                    </button>
+                  </div>
+                </div>
+                <div class="deploy-column">
+                  <span class="deploy-col-label">04 · Robot</span>
+                  <div class="deploy-column-body deploy-output" data-deploy-node="robot">
+                    <div><b>YOR</b><small>Mobile base + Wuji hands</small></div>
+                  </div>
+                </div>
               </div>
-              <div class="placeholder-center">
-                <span class="placeholder-kicker">Video placeholder</span
-                ><span class="placeholder-title"
-                  >“Put the white cup into the trash.”</span
-                >
-                <p>
-                  Navigate to the cup · pick up · navigate to the trash · place
-                </p>
+              <div class="deploy-inspector">
+                <div class="deploy-inspector-heading"><strong data-deploy-detail-title>Navigate to the white cup</strong><span data-deploy-status>Step 1 / 4</span></div>
+                <p data-deploy-detail>Find the cup in the semantic scene map, then move the mobile base to its location.</p>
               </div>
+              <section class="deploy-videos" aria-label="Full-stack robot rollouts">
+                <div class="deploy-video-heading"><span>Full-stack rollouts</span><small>No audio</small></div>
+                <div class="deploy-video-grid">
+                  <figure class="deploy-video-card">
+                    <video data-deploy-video src="assets/deployment/videos/trash.mp4" data-src="assets/deployment/videos/trash.mp4" poster="assets/deployment/videos/poster-trash.jpg" aria-label="Cup disposal: full-stack robot rollout" controls muted loop playsinline preload="none">
+                      <a href="assets/deployment/videos/trash.mp4">Watch cup disposal</a>.
+                    </video>
+                    <figcaption>Cup disposal</figcaption>
+                  </figure>
+                  <figure class="deploy-video-card">
+                    <video data-deploy-video src="assets/deployment/videos/full-stack-2.mp4" data-src="assets/deployment/videos/full-stack-2.mp4" poster="assets/deployment/videos/poster-full-stack-2.jpg" aria-label="Table wiping: full-stack robot rollout" controls muted loop playsinline preload="none">
+                      <a href="assets/deployment/videos/full-stack-2.mp4">Watch table wiping</a>.
+                    </video>
+                    <figcaption>Table wiping</figcaption>
+                  </figure>
+                  <figure class="deploy-video-card">
+                    <video data-deploy-video src="assets/deployment/videos/full-stack-1.mp4" data-src="assets/deployment/videos/full-stack-1.mp4" poster="assets/deployment/videos/poster-full-stack-1.jpg" aria-label="Bag retrieval: full-stack robot rollout" controls muted loop playsinline preload="none">
+                      <a href="assets/deployment/videos/full-stack-1.mp4">Watch bag retrieval</a>.
+                    </video>
+                    <figcaption>Bag retrieval</figcaption>
+                  </figure>
+                </div>
+              </section>
+              <footer class="deploy-caption"><span>Schematic walkthrough · select any step or module</span><a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener">Inspired by Transformer Explainer ↗</a></footer>
             </div>
-            <figcaption>
-              <strong>Figure 5.</strong> Mobile manipulation from a single
-              language command.
-            </figcaption>
+            <figcaption><strong>Figure 5.</strong> A language command becomes a sequence of navigation and Steertuning manipulation skills.</figcaption>
           </figure>
         </article>
         <article class="subsection" id="results">
@@ -968,61 +827,6 @@
             requiring <span class="text-underline">roughly a day</span>.
           </p>
           <figure class="result-chart" data-result-chart="adaptation"></figure>
-          <details class="chart-data" data-result-table open>
-            <summary>View exact results · Table I</summary>
-            <div
-              class="table-wrap"
-              tabindex="0"
-              role="region"
-              aria-label="Table I. Success rates by adaptation method"
-            >
-              <table>
-                <caption>
-                  <strong>Table I.</strong>
-                  Successes / 10 trials. Averages use manuscript rounding.
-                </caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Method</th>
-                    <th scope="col">Trash</th>
-                    <th scope="col">Flower</th>
-                    <th scope="col">Bread</th>
-                    <th scope="col">Average</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="ours">
-                    <th scope="row">Steertuning <span>(ours)</span></th>
-                    <td>9/10</td>
-                    <td>7/10</td>
-                    <td>9/10</td>
-                    <td>8.3/10</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Steering only</th>
-                    <td>2/10</td>
-                    <td>2/10</td>
-                    <td>3/10</td>
-                    <td>2.3/10</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Short finetune <span>(2k)</span></th>
-                    <td>0/10</td>
-                    <td>0/10</td>
-                    <td>0/10</td>
-                    <td>0/10</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Full finetune <span>(150k)</span></th>
-                    <td>7/10</td>
-                    <td>8/10</td>
-                    <td>8/10</td>
-                    <td>7.7/10</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
           <p class="table-note">
             Ablations cover <em>three lab tasks</em>; the 71% headline covers
             all 12.
@@ -1058,9 +862,6 @@
               >Compare with the paper</a
             >.
           </p>
-          <details class="chart-data" id="scaling-data">
-            <summary>View all scaling values and error bars</summary>
-          </details>
         </article>
         <article class="subsection" id="steering-study">
           <h3>Finetuning and steering</h3>
@@ -1087,9 +888,6 @@
               >View the original plot</a
             >.
           </p>
-          <details class="chart-data" id="steering-data">
-            <summary>View all budgets × steering weights</summary>
-          </details>
         </article>
         <div class="ablation-tables">
           <article>
@@ -1104,74 +902,6 @@
               class="result-chart"
               data-result-chart="architecture"
             ></figure>
-            <details class="chart-data" data-result-table open>
-              <summary>View exact results · Table II</summary>
-              <div
-                class="table-wrap"
-                tabindex="0"
-                role="region"
-                aria-label="Table II. Architecture ablations"
-              >
-                <table class="compact-table">
-                  <caption>
-                    <strong>Table II.</strong>
-                    Successes / 10 trials. Averages use manuscript rounding.
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Component</th>
-                      <th scope="col">Variant</th>
-                      <th scope="col">Trash</th>
-                      <th scope="col">Flower</th>
-                      <th scope="col">Bread</th>
-                      <th scope="col">Average</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Encoder</td>
-                      <th scope="row">PointNeXt</th>
-                      <td>5/10</td>
-                      <td>6/10</td>
-                      <td>7/10</td>
-                      <td>6/10</td>
-                    </tr>
-                    <tr>
-                      <td>Encoder</td>
-                      <th scope="row">PTv3</th>
-                      <td>10/10</td>
-                      <td>4/10</td>
-                      <td>9/10</td>
-                      <td>7.7/10</td>
-                    </tr>
-                    <tr class="ours">
-                      <td>Encoder</td>
-                      <th scope="row">Utonia (ours)</th>
-                      <td>9/10</td>
-                      <td>7/10</td>
-                      <td>9/10</td>
-                      <td>8.3/10</td>
-                    </tr>
-                    <tr>
-                      <td>Decoder</td>
-                      <th scope="row">UNet</th>
-                      <td>8/10</td>
-                      <td>8/10</td>
-                      <td>6/10</td>
-                      <td>7.3/10</td>
-                    </tr>
-                    <tr class="ours">
-                      <td>Decoder</td>
-                      <th scope="row">DiT (ours)</th>
-                      <td>9/10</td>
-                      <td>7/10</td>
-                      <td>9/10</td>
-                      <td>8.3/10</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </details>
           </article>
           <article>
             <h3 id="trajectory-results">Trajectory selection</h3>
@@ -1183,54 +913,6 @@
               class="result-chart"
               data-result-chart="trajectory"
             ></figure>
-            <details class="chart-data" data-result-table open>
-              <summary>View exact results · Table III</summary>
-              <div
-                class="table-wrap"
-                tabindex="0"
-                role="region"
-                aria-label="Table III. Trajectory selection"
-              >
-                <table class="compact-table">
-                  <caption>
-                    <strong>Table III.</strong>
-                    Successes / 10 trials. Averages use manuscript rounding.
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Variant</th>
-                      <th scope="col">Trash</th>
-                      <th scope="col">Flower</th>
-                      <th scope="col">Bread</th>
-                      <th scope="col">Average</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">VINN</th>
-                      <td>7/10</td>
-                      <td>2/10</td>
-                      <td>7/10</td>
-                      <td>5.3/10</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Wrist pose</th>
-                      <td>6/10</td>
-                      <td>7/10</td>
-                      <td>4/10</td>
-                      <td>5.7/10</td>
-                    </tr>
-                    <tr class="ours">
-                      <th scope="row">Object-based (ours)</th>
-                      <td>9/10</td>
-                      <td>7/10</td>
-                      <td>9/10</td>
-                      <td>8.3/10</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </details>
           </article>
         </div>
       </section>
@@ -1274,7 +956,7 @@
                     <span class="object-image"
                       ><img
                         src="assets/figures/flower-original.png"
-                        alt="Original object in the flower task, from Figure 8"
+                        alt="Original purple watering can in the Flower task, from Figure 8"
                         width="320"
                         height="260"
                         loading="lazy" /></span
@@ -1298,7 +980,7 @@
                     <span class="object-image"
                       ><img
                         src="assets/figures/flower-new.png"
-                        alt="Replacement object in the flower task, from Figure 8"
+                        alt="Replacement gray watering can in the Flower task, from Figure 8"
                         width="320"
                         height="260"
                         loading="lazy" /></span
@@ -1328,7 +1010,7 @@
                     <span class="object-image"
                       ><img
                         src="assets/figures/toy-original.png"
-                        alt="Original object in the toy task, from Figure 8"
+                        alt="Original green toy, from Figure 8"
                         width="320"
                         height="260"
                         loading="lazy" /></span
@@ -1352,7 +1034,7 @@
                     <span class="object-image"
                       ><img
                         src="assets/figures/toy-new.png"
-                        alt="Replacement object in the toy task, from Figure 8"
+                        alt="Replacement pink toy, from Figure 8"
                         width="320"
                         height="260"
                         loading="lazy" /></span
@@ -1372,7 +1054,7 @@
             </div>
             <div class="object-inspector" aria-live="polite">
               <p data-object-detail>
-                Compare the original and replacement objects. Each dot
+                Compare the original and replacement objects. Each mark
                 represents one trial.
               </p>
               <span class="trial-key"
@@ -1398,72 +1080,8 @@
             an additional evaluation task.
           </figcaption>
         </figure>
-        <details class="chart-data" data-result-table>
-          <summary>View exact results · Figure 8</summary>
-          <div
-            class="table-wrap"
-            tabindex="0"
-            role="region"
-            aria-label="Object generalization results"
-          >
-            <table>
-              <caption>
-                Figure 8. Successes / 10 trials per condition.
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">Task</th>
-                  <th scope="col">Original object</th>
-                  <th scope="col">New object</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Flower</th>
-                  <td>7/10</td>
-                  <td>6/10</td>
-                </tr>
-                <tr>
-                  <th scope="row">Toy</th>
-                  <td>10/10</td>
-                  <td>9/10</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </details>
       </section>
 
-      <section
-        class="paper-section reading-width ruled"
-        id="limitations"
-        aria-labelledby="limitations-title"
-      >
-        <h2 id="limitations-title">Discussion and Limitations</h2>
-        <p>
-          Human video lacks <em>contact measurements</em>, limiting dexterity.
-          <span class="text-underline">Kinematic retargeting</span> can also
-          fail, even when predicted human actions are accurate.
-        </p>
-      </section>
-
-      <section
-        class="paper-section reading-width ruled citation-section"
-        id="citation"
-        aria-labelledby="citation-title"
-      >
-        <h2 id="citation-title">Citation</h2>
-        <div class="citation-note">
-          <p class="citation-title">
-            Steertuning Policies from a Few Human Videos
-          </p>
-          <p>Anonymous authors · Paper ID 1039</p>
-          <p class="muted">BibTeX and publication details forthcoming.</p>
-          <a href="assets/steertuning-paper.pdf" target="_blank" rel="noopener"
-            >Read the manuscript</a
-          >
-        </div>
-      </section>
     </main>
     <footer class="page-footer container">
       <span>Steertuning</span><a href="#top">Back to top</a>

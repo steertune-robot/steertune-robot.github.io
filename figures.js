@@ -21,6 +21,8 @@
       state.paused = !state.paused;
       updateMotion(state);
     });
+    for (const detail of figure.querySelectorAll("details"))
+      detail.addEventListener("toggle", () => updateMotion(state));
     for (const video of state.videos) {
       video.addEventListener("error", () => {
         video.classList.add("media-unavailable");
@@ -33,13 +35,16 @@
     state.figure.classList.toggle("is-playing", playing);
     state.button.setAttribute("aria-pressed", String(state.paused));
     state.button.querySelector("[data-motion-label]").textContent = state.paused
-      ? "Play"
-      : "Pause";
+      ? "Play example clips"
+      : "Pause example clips";
     state.button.querySelector("[data-motion-icon]").textContent = state.paused
       ? "▷"
       : "Ⅱ";
     for (const video of state.videos) {
-      if (playing) {
+      if (
+        playing &&
+        (!video.closest("details") || video.closest("details").open)
+      ) {
         const source = video.querySelector("source[data-src]");
         if (source) {
           source.src = source.dataset.src;
@@ -79,7 +84,7 @@
     }
   });
   // All four modality exports share the same eight-second timeline.
-  const overviewState = states.get(document.getElementById("system-figure"));
+  const overviewState = states.get(document.getElementById("policy-figure"));
   if (overviewState?.videos.length) {
     const leader = overviewState.videos[0];
     leader.addEventListener("timeupdate", () => {
@@ -104,9 +109,11 @@
   const stages = [
     {
       input: "record-rgb.png",
+      inputVideo: "processing-rgb.mp4",
       inputAlt: "Original egocentric RGB recording",
       inputCaption: "Egocentric RGB",
       output: "proprio.png",
+      outputVideo: "proprio.webm",
       outputAlt: "Observed human hand landmarks retargeted to Wuji geometry",
       outputCaption: "Observed hand pose · Wuji rendering",
       eyebrow: "01 · Aria Gen 2",
@@ -117,22 +124,26 @@
     },
     {
       input: "cloud-before.png",
+      inputVideo: "processing-cloud-before.webm",
       inputAlt: "Measured point cloud before hand and arm removal",
       inputCaption: "Before hand / arm removal",
       output: "cloud-after.png",
+      outputVideo: "processing-cloud-after.webm",
       outputAlt: "The same point cloud after removing annotated hands and arms",
       outputCaption: "After hand / arm removal",
       eyebrow: "02 · Contact-based segmentation",
-      title: "Contact segmentation",
+      title: "Remove body & segment",
       copy: "Remove hands and arms. Stable contact within 5 cm defines a snippet.",
       stat: "<5 cm",
       spec: "Hand–scene contact",
     },
     {
       input: "record-rgb.png",
+      inputVideo: "processing-rgb.mp4",
       inputAlt: "Original RGB frame matching the binary object annotation",
       inputCaption: "Original RGB · matching crop",
       output: "object-mask.png",
+      outputVideo: "processing-mask.webm",
       outputAlt: "Binary mask of the manipulated object",
       outputCaption: "Binary object mask",
       eyebrow: "03 · Language & object grounding",
@@ -143,9 +154,11 @@
     },
     {
       input: "cloud-after.png",
+      inputVideo: "processing-cloud-after.webm",
       inputAlt: "Dense cloud after hand and arm removal",
       inputCaption: "Dense cloud · detail view",
       output: "cloud-sampled.png",
+      outputVideo: "processing-sampled.webm",
       outputAlt: "Detail view of the saved 5000-point model input sample",
       outputCaption: "5,000-point input · detail view",
       eyebrow: "04 · A common camera frame",
@@ -157,8 +170,171 @@
   ];
   const processing = document.getElementById("processing-figure");
   const tabs = [...processing.querySelectorAll("[data-process-stage]")];
+  const processClips = ["input", "output"].map((side) =>
+    processing.querySelector(`[data-process-${side}]`),
+  );
+  const hasProcessVideo = processClips.every(
+    (clip) => clip instanceof HTMLVideoElement,
+  );
+  const processButton = processing.querySelector("[data-process-toggle]");
+  const processSeek = processing.querySelector("[data-process-seek]");
+  const processTime = processing.querySelector("[data-process-time]");
+  const processStatus = processing.querySelector("[data-process-status]");
+  const processState = {
+    visible: false,
+    paused: reducedMotion.matches,
+    time: 0,
+    duration: 8,
+    version: 0,
+    pendingSeek: true,
+    starting: false,
+    failed: false,
+    frame: 0,
+  };
+  const formatProcessTime = (time) => `0:${String(Math.floor(time)).padStart(2, "0")}`;
+  function processCanPlay() {
+    return processState.visible && !processState.paused && !document.hidden;
+  }
+  function showProcessTime() {
+    if (processTime)
+      processTime.textContent = `${formatProcessTime(processState.time)} / ${formatProcessTime(processState.duration)}`;
+    if (processSeek) {
+      processSeek.max = String(processState.duration);
+      processSeek.value = String(processState.time);
+      processSeek.setAttribute(
+        "aria-valuetext",
+        `${processState.time.toFixed(1)} of ${processState.duration.toFixed(0)} seconds`,
+      );
+      processSeek.style.setProperty(
+        "--process-progress",
+        `${(processState.time / processState.duration) * 100}%`,
+      );
+    }
+  }
+  function pauseProcessClips() {
+    if (processState.frame) cancelAnimationFrame(processState.frame);
+    processState.frame = 0;
+    processClips.forEach((clip) => clip.pause());
+  }
+  function processTimeIsSeekable(clip, target) {
+    if (Math.abs(clip.currentTime - target) <= 0.04) return true;
+    if (target <= 0.04) return true;
+    for (let i = 0; i < clip.seekable.length; i += 1) {
+      if (clip.seekable.start(i) <= target && clip.seekable.end(i) >= target)
+        return true;
+    }
+    return false;
+  }
+  function processClipFullyBuffered(clip) {
+    return Number.isFinite(clip.duration) && clip.buffered.length > 0 &&
+      clip.buffered.end(clip.buffered.length - 1) >= clip.duration - 0.05;
+  }
+  function syncProcessClips() {
+    processState.frame = 0;
+    if (!processCanPlay() || processState.pendingSeek || processState.failed) return;
+    const [leader, follower] = processClips;
+    processState.time = Math.min(leader.currentTime, processState.duration);
+    if (follower.readyState >= 2 && !follower.seeking) {
+      const drift = Math.abs(follower.currentTime - leader.currentTime);
+      if (drift > 0.12) follower.currentTime = leader.currentTime;
+    }
+    showProcessTime();
+    processState.frame = requestAnimationFrame(syncProcessClips);
+  }
+  function updateProcessMotion() {
+    if (!hasProcessVideo) return;
+    const shouldPlay = processCanPlay() && !processState.failed;
+    if (processButton) {
+      processButton.hidden = false;
+      processButton.disabled = processState.failed;
+      processButton.setAttribute("aria-pressed", String(processState.paused));
+      processButton.querySelector("[data-process-play-label]").textContent = processState.paused
+        ? "Play clips"
+        : "Pause clips";
+      processButton.querySelector("[data-process-play-icon]").textContent = processState.paused
+        ? "▷"
+        : "Ⅱ";
+    }
+    if (processSeek) processSeek.disabled = processState.failed;
+    if (!shouldPlay) pauseProcessClips();
+    // Loading only the selected, visible pair also keeps reduced-motion users
+    // on a still frame until they explicitly choose to play.
+    if (!processState.visible || document.hidden || processState.failed) return;
+    for (const clip of processClips) {
+      clip.autoplay = false;
+      clip.preload = "auto";
+      if (clip.dataset.loadedProcessSrc !== clip.dataset.processSrc) {
+        clip.dataset.loadedProcessSrc = clip.dataset.processSrc;
+        clip.src = clip.dataset.processSrc;
+        clip.load();
+      }
+    }
+    if (processClips.some((clip) => clip.readyState < 2)) return;
+    const durations = processClips.map((clip) => clip.duration).filter(Number.isFinite);
+    if (durations.length === 2) processState.duration = Math.min(...durations);
+    if (processState.pendingSeek) {
+      // A seek can remain asynchronous even after loadeddata/canplay. Do not
+      // restart it on each progress event; wait for seeked from both clips.
+      if (processClips.some((clip) => clip.seeking)) return;
+      let target = Math.min(processState.time, Math.max(0, processState.duration - 0.05));
+      if (processClips.some((clip) => !processTimeIsSeekable(clip, target))) {
+        // A new WebM may not expose its cue index until enough data arrives.
+        // Keep the shared time while loading; progress will retry this branch.
+        if (!processClips.every(processClipFullyBuffered)) return;
+        // Only a fully loaded, genuinely unseekable pair falls back to zero.
+        target = 0;
+        processState.time = 0;
+        if (processStatus) {
+          processStatus.textContent = "This pair resumes from 0:00.";
+          processStatus.hidden = false;
+        }
+      }
+      for (const clip of processClips) {
+        if (Math.abs(clip.currentTime - target) > 0.04) clip.currentTime = target;
+      }
+      if (processClips.some((clip) => clip.seeking)) return;
+      processState.pendingSeek = false;
+      processClips.forEach((clip) => { clip.dataset.processReady = "true"; });
+      showProcessTime();
+    }
+    if (!shouldPlay || processState.starting || processState.frame) return;
+    const version = processState.version;
+    processState.starting = true;
+    Promise.all(processClips.map((clip) => clip.play()))
+      .then(() => {
+        if (version !== processState.version) return;
+        processState.starting = false;
+        if (!processCanPlay()) pauseProcessClips();
+        else if (processState.pendingSeek || processClips.some((clip) => clip.paused))
+          updateProcessMotion();
+        else processState.frame = requestAnimationFrame(syncProcessClips);
+      })
+      .catch((error) => {
+        if (version !== processState.version) return;
+        processState.starting = false;
+        // pause(), a tab change, or visibility changes can cancel a pending
+        // play request. Those cancellations must preserve the play choice.
+        if (error.name === "AbortError") {
+          if (processCanPlay() && !processState.failed) updateProcessMotion();
+          return;
+        }
+        if (processState.failed) return;
+        processState.paused = true;
+        updateProcessMotion();
+      });
+  }
   function selectStage(index) {
     const stage = stages[index];
+    if (hasProcessVideo) {
+      if (!processState.pendingSeek && processClips[0].readyState >= 2)
+        processState.time = processClips[0].currentTime;
+      pauseProcessClips();
+      processState.version += 1;
+      processState.pendingSeek = true;
+      processState.starting = false;
+      processState.failed = false;
+      if (processStatus) processStatus.hidden = true;
+    }
     tabs.forEach((tab, i) => {
       tab.setAttribute("aria-selected", String(i === index));
       tab.tabIndex = i === index ? 0 : -1;
@@ -167,9 +343,21 @@
       .querySelector("[role=tabpanel]")
       .setAttribute("aria-labelledby", tabs[index].id);
     for (const side of ["input", "output"]) {
-      const img = processing.querySelector(`[data-process-${side}]`);
-      img.src = `assets/figures/${stage[side]}`;
-      img.alt = stage[`${side}Alt`];
+      const media = processing.querySelector(`[data-process-${side}]`);
+      if (hasProcessVideo) {
+        media.muted = true;
+        media.loop = true;
+        media.playsInline = true;
+        media.autoplay = false;
+        media.poster = `assets/figures/${stage[side]}`;
+        media.setAttribute("aria-label", stage[`${side}Alt`]);
+        media.dataset.processSrc = `assets/figures/${stage[`${side}Video`]}`;
+        media.dataset.processReady = "false";
+        media.parentElement.style.backgroundImage = `url("assets/figures/${stage[side]}")`;
+      } else {
+        media.src = `assets/figures/${stage[side]}`;
+        media.alt = stage[`${side}Alt`];
+      }
       processing.querySelector(`[data-process-${side}-caption]`).textContent =
         stage[`${side}Caption`];
     }
@@ -179,6 +367,8 @@
     const spec = processing.querySelector("[data-process-spec]");
     spec.querySelector("strong").textContent = stage.stat;
     spec.querySelector("span").textContent = stage.spec;
+    showProcessTime();
+    updateProcessMotion();
   }
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => selectStage(index));
@@ -195,73 +385,47 @@
       tabs[next].focus();
     });
   });
-  selectStage(0);
-  const architecture = document.getElementById("policy-figure");
-  const encoderDetails = {
-    scene:
-      "Utonia: the frozen point-cloud encoder maps 5,000 scene points to 512 tokens, each 1,024-dimensional. The video above shows a denser visualization before sampling.",
-    object:
-      "ResNet-18: a binary 255 × 255 manipulated-object mask becomes one 1,024-dimensional token. This encoder is trained from scratch during pretraining.",
-    hand: "Proprioception FFN: ten 3D fingertip locations (five per hand), in the anchor camera frame, become one 1,024-dimensional token. The hand meshes above visualize retargeted landmarks.",
-    text: "SigLIP: the frozen text encoder maps the task instruction to one 1,024-dimensional token. Together, the four modalities form 515 observation tokens.",
-  };
-  for (const button of architecture.querySelectorAll("[data-encoder]"))
-    button.addEventListener("click", () => {
-      for (const sibling of architecture.querySelectorAll("[data-encoder]"))
-        sibling.setAttribute("aria-pressed", String(sibling === button));
-      architecture.querySelector(".encoder-inspector").hidden = false;
-      architecture.querySelector("[data-encoder-detail]").textContent =
-        encoderDetails[button.dataset.encoder];
+  if (hasProcessVideo) {
+    for (const clip of processClips) {
+      for (const event of ["loadeddata", "canplay", "progress", "seeked"])
+        clip.addEventListener(event, updateProcessMotion);
+      clip.addEventListener("error", () => {
+        if (!clip.getAttribute("src")) return;
+        processState.failed = true;
+        pauseProcessClips();
+        processClips.forEach((video) => { video.dataset.processReady = "false"; });
+        if (processStatus) {
+          processStatus.textContent = "Clip unavailable; showing recorded frames.";
+          processStatus.hidden = false;
+        }
+        updateProcessMotion();
+      });
+    }
+    processButton?.addEventListener("click", () => {
+      processState.paused = !processState.paused;
+      updateProcessMotion();
     });
-  const model = [116, 91, 105, 70, 78, 47, 69, 39, 46];
-  const demo = [105, 100, 88, 80, 68, 57, 51, 37, 26];
-  const path = (values) =>
-    values.map((y, i) => `${i ? "L" : "M"}${20 + i * 37.5},${y}`).join(" ");
-  architecture.querySelector("[data-demo-curve]").setAttribute("d", path(demo));
-  architecture
-    .querySelector("[data-model-curve]")
-    .setAttribute("d", path(model));
-  const points = architecture.querySelector("[data-blend-points]");
-  for (let i = 0; i < model.length; i++) {
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle",
-    );
-    circle.setAttribute("cx", 20 + i * 37.5);
-    circle.setAttribute("r", 2.5);
-    points.append(circle);
+    processSeek?.addEventListener("input", () => {
+      pauseProcessClips();
+      processState.time = Number(processSeek.value);
+      processState.pendingSeek = true;
+      showProcessTime();
+      updateProcessMotion();
+    });
+    document.addEventListener("visibilitychange", updateProcessMotion);
+    reducedMotion.addEventListener("change", () => {
+      processState.paused = reducedMotion.matches;
+      updateProcessMotion();
+    });
+    if ("IntersectionObserver" in window) {
+      const processObserver = new IntersectionObserver((entries) => {
+        processState.visible = entries[0].isIntersecting;
+        updateProcessMotion();
+      }, { threshold: 0.08 });
+      processObserver.observe(processing);
+    } else processState.visible = true;
   }
-  const weight = architecture.querySelector("#steering-weight");
-  function blend() {
-    const w = Number(weight.value);
-    const values = model.map((v, i) => (1 - w) * v + w * demo[i]);
-    architecture
-      .querySelector("[data-blend-curve]")
-      .setAttribute("d", path(values));
-    [...points.children].forEach((circle, i) =>
-      circle.setAttribute("cy", values[i]),
-    );
-    architecture.querySelector("[data-demo-weight]").textContent = w.toFixed(1);
-    architecture.querySelector("[data-model-weight]").textContent = (
-      1 - w
-    ).toFixed(1);
-    const setting =
-      w === 0.3
-        ? " · paper setting"
-        : w === 0
-          ? " · model only"
-          : w === 1
-            ? " · demo replay"
-            : "";
-    architecture.querySelector("[data-steering-value]").textContent =
-      `w = ${w.toFixed(1)}${setting}`;
-    weight.setAttribute(
-      "aria-valuetext",
-      `Steering weight ${w.toFixed(1)}${setting}`,
-    );
-  }
-  weight.addEventListener("input", blend);
-  blend();
+  selectStage(0);
   const comparison = document.getElementById("object-figure");
   const objectDetails = {
     "flower-original":

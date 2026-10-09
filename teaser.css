@@ -1,0 +1,14 @@
+.teaser-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+
+.teaser-video:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+}

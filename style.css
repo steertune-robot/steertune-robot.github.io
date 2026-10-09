@@ -376,22 +376,6 @@ h1 {
 .teaser-caption strong {
   color: var(--green);
 }
-.section-nav {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  border-block: 1px solid var(--rule);
-  padding: 12px 6px;
-  margin-top: 25px;
-  font: 500 0.75rem/1.5 var(--label);
-}
-.section-nav a {
-  color: var(--muted);
-}
-.section-nav a:hover,
-.section-nav a[aria-current="true"] {
-  color: var(--green);
-}
 .paper-section {
   padding-block: 36px;
 }
@@ -729,14 +713,19 @@ tbody tr:last-child > * {
   font: 500 0.6875rem/1.5 var(--label);
 }
 .chart-select {
+  -webkit-appearance: none;
+  appearance: none;
   font: inherit;
   color: var(--green);
-  background: #fcfaf5;
+  background: #fcfaf5 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23244c3b' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center;
   border: 1px solid #d6cebf;
   border-radius: 3px;
   min-height: 31px;
-  padding: 4px 24px 4px 9px;
+  padding: 4px 34px 4px 9px;
   cursor: pointer;
+}
+@media (forced-colors: active) {
+  .chart-select { appearance: auto; background-image: none; }
 }
 .chart-select:focus-visible {
   outline: 2px solid var(--green);
@@ -897,27 +886,6 @@ tbody tr:last-child > * {
   color: var(--muted);
   font-size: 0.6875rem;
   line-height: 1.6;
-}
-.chart-data {
-  margin-top: 9px;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 9px;
-}
-.chart-data summary {
-  width: fit-content;
-  cursor: pointer;
-  color: var(--green);
-  font: 500 0.75rem/1.8 var(--label);
-}
-.chart-data summary:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 4px;
-}
-.chart-data[open] summary {
-  margin-bottom: 12px;
-}
-.chart-data .table-wrap {
-  margin-top: 0;
 }
 .sr-only {
   position: absolute;
@@ -1141,9 +1109,6 @@ tbody tr:last-child > * {
 }
 .plot-provenance a {
   border-bottom: 1px solid #b9c7b1;
-}
-.plot-table-wrap + .plot-table-wrap {
-  margin-top: 30px;
 }
 .experiment-findings {
   display: grid;
@@ -1444,15 +1409,6 @@ tbody tr:last-child > * {
     text-align: left;
     margin-top: 19px;
   }
-  .section-nav {
-    gap: 0;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    row-gap: 12px;
-    padding: 14px 3px;
-    font-size: 0.6875rem;
-    margin-top: 26px;
-  }
   .paper-section {
     padding-block: 40px;
   }
@@ -1598,10 +1554,6 @@ tbody tr:last-child > * {
   }
   .resource-button {
     padding: 8px 12px;
-  }
-  .section-nav {
-    column-gap: 18px;
-    justify-content: center;
   }
   .task-tabs button {
     font-size: 0.6875rem;
@@ -1864,9 +1816,6 @@ tbody tr:last-child > * {
     font-size: 0.9rem;
     margin-top: 14px;
   }
-  .section-nav {
-    margin-top: 22px;
-  }
   .figure-wide,
   .deployment-placeholder {
     min-height: 170px;
@@ -1919,9 +1868,6 @@ tbody tr:last-child > * {
   }
   .steering-svg {
     min-width: 600px;
-  }
-  .chart-data {
-    margin-top: 9px;
   }
   th,
   td,
@@ -2089,11 +2035,4 @@ tbody tr:last-child > * {
   .scaling-panel .plot-point:is(:hover, :focus-visible) .plot-dot {
     stroke-width: 1.7;
   }
-}
-
-/* Anonymous review header. */
-.anonymous-authors {
-  margin: 18px 0 0;
-  color: var(--muted);
-  font: 500 0.875rem/1.6 var(--serif);
 }

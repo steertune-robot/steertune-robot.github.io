@@ -1,0 +1,116 @@
+/* Real paired clips share one timeline; posters remain as load/error fallbacks. */
+#processing-figure .process-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  overflow: hidden;
+}
+#processing-figure .process-image video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+}
+#processing-figure .process-image video[data-process-ready="true"] {
+  opacity: 1;
+}
+#processing-figure .process-image:has(video[data-process-ready="true"]) {
+  /* An alpha video must reveal the page, not a frozen poster underneath. */
+  background-image: none !important;
+}
+.process-playback {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(48px, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3px;
+  min-width: 0;
+  font: 500 11px/1.4 var(--label);
+  color: var(--muted);
+}
+.process-playback button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  border: 0;
+  padding: 7px 0;
+  background: transparent;
+  color: var(--green);
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 32px;
+}
+.process-playback button:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+.process-playback button [data-process-play-icon] {
+  width: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+.process-playback output {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.process-playback input[type="range"] {
+  --process-progress: 0%;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  height: 24px;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+.process-playback input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, var(--green) var(--process-progress), var(--rule) var(--process-progress));
+}
+.process-playback input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--rule);
+}
+.process-playback input[type="range"]::-moz-range-progress {
+  height: 2px;
+  background: var(--green);
+}
+.process-playback input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 8px;
+  height: 8px;
+  margin-top: -3px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--green);
+}
+.process-playback input[type="range"]::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--green);
+}
+.process-media-status {
+  grid-column: 1 / -1;
+  margin-top: -3px;
+  font-size: 10px;
+}
+.process-playback [hidden] {
+  display: none;
+}
+@container (max-width: 380px) {
+  .process-playback {
+    gap: 8px;
+    font-size: 10px;
+  }
+}

@@ -19,35 +19,6 @@ function htmlNode(tag, className, text) {
   if (text !== undefined) node.textContent = text;
   return node;
 }
-function plotTable(headers, rows, caption) {
-  const wrap = htmlNode("div", "table-wrap plot-table-wrap");
-  wrap.tabIndex = 0;
-  wrap.setAttribute("role", "region");
-  wrap.setAttribute("aria-label", caption);
-  const table = htmlNode("table", "compact-table");
-  table.append(htmlNode("caption", "", caption));
-  const head = htmlNode("thead");
-  const headRow = htmlNode("tr");
-  for (const label of headers) {
-    const cell = htmlNode("th", "", label);
-    cell.scope = "col";
-    headRow.append(cell);
-  }
-  head.append(headRow);
-  const body = htmlNode("tbody");
-  for (const values of rows) {
-    const row = htmlNode("tr");
-    values.forEach((value, index) => {
-      const cell = htmlNode(index ? "td" : "th", "", value);
-      if (!index) cell.scope = "row";
-      row.append(cell);
-    });
-    body.append(row);
-  }
-  table.append(head, body);
-  wrap.append(table);
-  return wrap;
-}
 function revealPlot(figure) {
   if (chartReducedMotion.matches || !("IntersectionObserver" in window)) {
     figure.classList.add("is-visible");
@@ -226,17 +197,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
   scalingRoot.append(figure);
   selectPoint(data.defaultIndex);
   revealPlot(figure);
-  document.getElementById("scaling-data").append(
-    plotTable(
-      [data.xLabel, "Mean success (≈ %)", "Std (≈ pp)"],
-      data.points.map((p, i) => [
-        `${p.label}${i === data.defaultIndex ? " (default)" : ""}`,
-        p.mean.toFixed(1),
-        p.std.toFixed(1),
-      ]),
-      `${data.title}. Approximate values digitized from Figure 6${"abcd"[panelIndex]}.`,
-    ),
-  );
+
 }
 
 const steeringFigure = document.getElementById("steering-chart");
@@ -540,15 +501,3 @@ weightSelect.addEventListener("change", () => {
 fullToggle.addEventListener("change", () => updateSteering());
 updateSteering();
 revealPlot(steeringFigure);
-document.getElementById("steering-data").append(
-  plotTable(
-    ["Finetuning steps", ...steering.weights.map((w) => `w = ${w.toFixed(1)}`)],
-    steering.series.map((series) => [
-      series.label,
-      ...series.values.map((value) =>
-        value === null ? ">350" : value.toFixed(1),
-      ),
-    ]),
-    "Figure 7. Approximate landmark MSE digitized from the published plot. >350 denotes a clipped, unknown value.",
-  ),
-);

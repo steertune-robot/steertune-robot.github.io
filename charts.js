@@ -356,7 +356,5 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
     observer.observe(figure);
   } else reveal();
 
-  // Show charts first; full static tables stay open when JavaScript is unavailable.
-  const table = figure.nextElementSibling;
-  if (table?.matches("details[data-result-table]")) table.open = false;
+
 }

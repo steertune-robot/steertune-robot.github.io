@@ -1,5 +1,5 @@
 "use strict";
-// The media areas are intentionally placeholders until final research assets are supplied.
+// Rollout panels remain placeholders until the corresponding execution videos are supplied.
 const taskNames = {
   flower: "Flower watering",
   coffee: "Coffee machine",

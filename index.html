@@ -39,6 +39,8 @@
       crossorigin
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="figures.css" />
+    <script src="figures.js" defer></script>
     <script src="script.js" defer></script>
     <script src="charts.js" defer></script>
     <script src="plot-data.js" defer></script>
@@ -164,22 +166,224 @@
         </p>
         <figure class="research-figure">
           <div
-            class="media-placeholder figure-wide"
-            data-asset="system-overview"
+            class="science-figure overview-figure"
+            data-science-figure
+            id="system-figure"
           >
-            <div class="placeholder-meta">
-              <span>System overview</span><span>Figure 1</span>
-            </div>
-            <div class="placeholder-center">
-              <span class="placeholder-kicker">Figure placeholder</span
-              ><span class="placeholder-title"
-                >Pretraining & few-shot task adaptation</span
+            <header class="figure-heading">
+              <div>
+                <span class="figure-kicker">Figure 1 · System overview</span>
+              </div>
+              <button
+                class="figure-control"
+                type="button"
+                data-motion-toggle
+                aria-pressed="false"
+                hidden
               >
-              <p>
-                Human interaction data · diffusion policy · LoRA finetuning ·
-                action steering
-              </p>
+                <span data-motion-icon aria-hidden="true">Ⅱ</span>
+                <span data-motion-label>Pause</span>
+              </button>
+            </header>
+            <div class="overview-band">
+              <div class="band-heading">
+                <h4>Pretraining</h4>
+                <p>
+                  <b>100+ hours</b> of human interaction ·
+                  <b>400M</b> parameters
+                </p>
+              </div>
+              <div class="pretrain-flow">
+                <div class="overview-inputs">
+                  <div class="modality-strip">
+                    <div class="overview-modality">
+                      <div class="figure-media">
+                        <video
+                          muted
+                          loop
+                          playsinline
+                          preload="none"
+                          poster="assets/figures/scene.png"
+                          aria-label="Dense scene point cloud with the human body removed"
+                          data-figure-video
+                        >
+                          <source
+                            data-src="assets/figures/scene.webm"
+                            type="video/webm"
+                          />
+                        </video>
+                      </div>
+                      <strong>Scene geometry</strong><span>Point cloud</span>
+                    </div>
+                    <div class="overview-modality">
+                      <div class="figure-media">
+                        <video
+                          muted
+                          loop
+                          playsinline
+                          preload="none"
+                          poster="assets/figures/object.png"
+                          aria-label="RGB appearance of the segmented manipulated object"
+                          data-figure-video
+                        >
+                          <source
+                            data-src="assets/figures/object.webm"
+                            type="video/webm"
+                          />
+                        </video>
+                      </div>
+                      <strong>Object grounding</strong
+                      ><span>Segmented object</span>
+                    </div>
+                    <div class="overview-modality">
+                      <div class="figure-media">
+                        <video
+                          muted
+                          loop
+                          playsinline
+                          preload="none"
+                          poster="assets/figures/proprio.png"
+                          aria-label="Observed human hand landmarks retargeted to Wuji hands"
+                          data-figure-video
+                        >
+                          <source
+                            data-src="assets/figures/proprio.webm"
+                            type="video/webm"
+                          />
+                        </video>
+                      </div>
+                      <strong>Hand state</strong
+                      ><span>Retargeted visualization</span>
+                    </div>
+                  </div>
+                  <div class="language-strip">
+                    <span>+ Task language</span
+                    ><q data-example-instruction
+                      >transferring food from pot to bowl</q
+                    >
+                  </div>
+                </div>
+                <span class="flow-arrow" aria-hidden="true"
+                  ><svg viewBox="0 0 32 16">
+                    <path d="M1 8H29m-5-4 5 4-5 4" />
+                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
+                ></span>
+                <div class="prior-node">
+                  <span class="figure-kicker">Diffusion policy</span
+                  ><strong>DiT</strong>
+
+                  <span>Multimodal conditioning</span
+                  ><span class="node-rule">Noise prediction → DDIM</span>
+                </div>
+                <span class="flow-arrow" aria-hidden="true"
+                  ><svg viewBox="0 0 32 16">
+                    <path d="M1 8H29m-5-4 5 4-5 4" />
+                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
+                ></span>
+                <div class="overview-prediction">
+                  <div class="figure-media">
+                    <video
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                      poster="assets/figures/prediction.png"
+                      aria-label="Saved base-policy action predictions retargeted to Wuji hands"
+                      data-figure-video
+                    >
+                      <source
+                        data-src="assets/figures/prediction.webm"
+                        type="video/webm"
+                      />
+                    </video>
+                  </div>
+                  <strong>Predicted actions</strong
+                  ><span>15 poses · ≈4.5 s horizon</span
+                  ><span class="figure-micro"
+                    >Saved base-policy prediction</span
+                  >
+                </div>
+              </div>
             </div>
+            <div class="overview-band adaptation-band">
+              <div class="band-heading">
+                <h4>Few-shot adaptation</h4>
+                <p>
+                  <b>5 human demos</b> · task adaptation in <b>&lt;5 min</b>
+                </p>
+              </div>
+              <div class="adapt-flow">
+                <div class="demo-node">
+                  <strong>5 new demonstrations</strong
+                  ><span>Same human-data pipeline</span>
+                </div>
+                <span class="flow-arrow" aria-hidden="true"
+                  ><svg viewBox="0 0 32 16">
+                    <path d="M1 8H29m-5-4 5 4-5 4" />
+                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
+                ></span>
+                <div class="adapt-recipe">
+                  <div class="adapt-node">
+                    <span class="figure-kicker"></span
+                    ><strong>LoRA finetuning</strong>
+                    <p>Frozen prior + rank-8 adapters</p>
+                    <span class="recipe-stat"
+                      >2k updates <span>≈ 2 min</span></span
+                    >
+                  </div>
+                  <div class="adapt-node steering-node">
+                    <span class="figure-kicker"></span
+                    ><strong>Action steering</strong>
+                    <p>Nearest demo by object layout</p>
+                    <span class="recipe-stat"
+                      >DDIM + demo <span>w = 0.3</span></span
+                    >
+                  </div>
+                  <p class="recipe-bridge">
+                    Frozen pretrained weights · shared demonstrations
+                  </p>
+                </div>
+                <span class="flow-arrow" aria-hidden="true"
+                  ><svg viewBox="0 0 32 16">
+                    <path d="M1 8H29m-5-4 5 4-5 4" />
+                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
+                ></span>
+                <div class="deployment-node">
+                  <img
+                    src="assets/figures/robot.png"
+                    alt="YOR mobile manipulator with Wuji hands, from Figure 1"
+                    loading="lazy"
+                    width="160"
+                    height="172"
+                  />
+                  <div>
+                    <strong>Robot deployment</strong
+                    ><span>Wrist IK + hand retargeting</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <details class="figure-details">
+              <summary>Details & sources</summary>
+              <div>
+                <p>
+                  The paper uses <b>109.6 hours</b>, <b>3.69M frames</b> and
+                  <b>48.7k instructions</b>. Scene, hand history, and future
+                  actions share the anchor RGB-camera frame.
+                </p>
+                <p>
+                  The clips show one synchronized offline example: the dense
+                  cloud before 5,000-point sampling, an RGB cutout illustrating
+                  the binary object mask, observed hand landmarks retargeted to
+                  Wuji, and saved base-policy predictions retargeted to Wuji,
+                  before task LoRA or steering. These are visualizations, not
+                  recordings of robot execution. The robot photograph is from
+                  the paper. Architecture dimensions follow the manuscript; the
+                  clips illustrate a separate base-policy checkpoint.
+                </p>
+              </div>
+            </details>
           </div>
           <figcaption>
             <strong>Figure 1.</strong> Human pretraining followed by
@@ -229,22 +433,153 @@
           </p>
           <figure class="research-figure">
             <div
-              class="media-placeholder figure-wide"
-              data-asset="data-processing"
+              class="science-figure processing-figure"
+              data-science-figure
+              id="processing-figure"
             >
-              <div class="placeholder-meta">
-                <span>Data & representations</span><span>Section III-B–C</span>
-              </div>
-              <div class="placeholder-center">
-                <span class="placeholder-kicker">Figure placeholder</span
-                ><span class="placeholder-title"
-                  >From smart-glass recordings to policy inputs</span
+              <header class="figure-heading">
+                <div>
+                  <span class="figure-kicker"
+                    >Data processing · Sections III-B–C</span
+                  >
+                </div>
+              </header>
+              <div
+                class="process-tabs"
+                role="tablist"
+                aria-label="Data processing stage"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  id="process-tab-0"
+                  aria-controls="process-panel"
+                  aria-selected="true"
+                  tabindex="0"
+                  data-process-stage="0"
                 >
-                <p>
-                  RGB and stereo · hand and head poses · scene point cloud ·
-                  object mask
-                </p>
+                  <span>01</span><strong>Record</strong
+                  ><small>RGB · stereo · poses</small></button
+                ><button
+                  type="button"
+                  role="tab"
+                  id="process-tab-1"
+                  aria-controls="process-panel"
+                  aria-selected="false"
+                  tabindex="-1"
+                  data-process-stage="1"
+                >
+                  <span>02</span><strong>Segment</strong
+                  ><small>Contact → snippets</small></button
+                ><button
+                  type="button"
+                  role="tab"
+                  id="process-tab-2"
+                  aria-controls="process-panel"
+                  aria-selected="false"
+                  tabindex="-1"
+                  data-process-stage="2"
+                >
+                  <span>03</span><strong>Ground</strong
+                  ><small>Language + object mask</small></button
+                ><button
+                  type="button"
+                  role="tab"
+                  id="process-tab-3"
+                  aria-controls="process-panel"
+                  aria-selected="false"
+                  tabindex="-1"
+                  data-process-stage="3"
+                >
+                  <span>04</span><strong>Align</strong
+                  ><small>Body removal + camera frame</small>
+                </button>
               </div>
+              <div
+                class="process-panel"
+                id="process-panel"
+                role="tabpanel"
+                aria-labelledby="process-tab-0"
+                tabindex="0"
+              >
+                <div class="process-image-pair">
+                  <figure>
+                    <div class="process-image">
+                      <img
+                        src="assets/figures/record-rgb.png"
+                        data-process-input
+                        alt="Original egocentric RGB recording"
+                        width="640"
+                        height="480"
+                        loading="lazy"
+                      />
+                    </div>
+                    <figcaption data-process-input-caption>
+                      Egocentric RGB
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <div class="process-image">
+                      <img
+                        src="assets/figures/proprio.png"
+                        data-process-output
+                        alt="Observed human hand landmarks retargeted to Wuji geometry"
+                        width="640"
+                        height="480"
+                        loading="lazy"
+                      />
+                    </div>
+                    <figcaption data-process-output-caption>
+                      Observed hand pose · Wuji rendering
+                    </figcaption>
+                  </figure>
+                </div>
+                <div class="process-description">
+                  <span class="figure-kicker" data-process-eyebrow
+                    >01 · Aria Gen 2</span
+                  >
+                  <h4 data-process-title>
+                    Capture geometry and motion together.
+                  </h4>
+                  <p data-process-copy>
+                    RGB and stereo images, tracked hand landmarks, and SLAM head
+                    pose are synchronized at 10 Hz.
+                  </p>
+                  <div class="process-spec" data-process-spec>
+                    <strong>10 Hz</strong><span>One common timeline</span>
+                  </div>
+                </div>
+              </div>
+              <div class="process-output">
+                <span>Policy-ready snippet</span
+                ><strong>5,000 scene points</strong
+                ><strong>255 × 255 object mask</strong
+                ><strong>10 fingertips</strong><strong>Task language</strong>
+              </div>
+              <details class="figure-details">
+                <summary>Processing details</summary>
+                <p class="processing-provenance">
+                  Matched views of one recorded frame. RGB/mask and cloud pairs
+                  have separate, consistent crops. No generated or inpainted
+                  experiment imagery.
+                </p>
+                <div class="detail-columns">
+                  <p>
+                    <b>Segment & annotate.</b> S2M2 recovers stereo depth; SAM3
+                    removes arms and hands. Hand–scene distance under 5 cm
+                    defines active contact; stable contact intervals become
+                    snippets. Qwen3-VL-8B annotates up to ten ordered frames per
+                    snippet.
+                  </p>
+                  <p>
+                    <b>Ground & normalize.</b> Gemini 2.5 Flash supplies two
+                    object keypoints to initialize SAM3 tracking. Crop the scene
+                    to a 0.85 × 1.5 × 1.5 m workspace, reject depth beyond 1.7
+                    m, and sample 5,000 points. Transform observations and
+                    actions into the last observed RGB-camera frame.
+                  </p>
+                </div>
+              </details>
             </div>
             <figcaption>
               <strong>Data processing.</strong> Segment, annotate, remove body
@@ -265,57 +600,226 @@
           </p>
           <figure class="research-figure">
             <div
-              class="media-placeholder figure-wide"
-              data-asset="policy-architecture"
+              class="science-figure architecture-figure"
+              data-science-figure
+              id="policy-figure"
             >
-              <div class="placeholder-meta">
-                <span>Policy architecture</span><span>Figure 3</span>
-              </div>
-              <div class="placeholder-center">
-                <span class="placeholder-kicker">Figure placeholder</span
-                ><span class="placeholder-title"
-                  >Multimodal diffusion policy & action steering</span
+              <header class="figure-heading">
+                <div>
+                  <span class="figure-kicker"
+                    >Figure 3 · Policy architecture</span
+                  >
+                </div>
+                <button
+                  class="figure-control"
+                  type="button"
+                  data-motion-toggle
+                  aria-pressed="false"
+                  hidden
                 >
-                <p>
-                  Observation encoders · diffusion transformer ·
-                  demonstration-guided DDIM sampling
-                </p>
+                  <span data-motion-icon aria-hidden="true">Ⅱ</span>
+                  <span data-motion-label>Pause</span>
+                </button>
+              </header>
+              <div class="architecture-flow">
+                <div class="encoder-column">
+                  <span class="figure-kicker">Observation encoders</span
+                  ><button
+                    type="button"
+                    class="encoder-row"
+                    data-encoder="scene"
+                    aria-pressed="false"
+                  >
+                    <span
+                      ><strong>Point cloud</strong
+                      ><small>5,000 × 3</small></span
+                    ><span aria-hidden="true">→</span
+                    ><span
+                      ><b>Utonia</b><small>Frozen · 512 tokens</small></span
+                    ></button
+                  ><button
+                    type="button"
+                    class="encoder-row"
+                    data-encoder="object"
+                    aria-pressed="false"
+                  >
+                    <span
+                      ><strong>Object mask</strong
+                      ><small>255 × 255</small></span
+                    ><span aria-hidden="true">→</span
+                    ><span
+                      ><b>ResNet-18</b><small>Trainable · 1 token</small></span
+                    ></button
+                  ><button
+                    type="button"
+                    class="encoder-row"
+                    data-encoder="hand"
+                    aria-pressed="false"
+                  >
+                    <span
+                      ><strong>Fingertips</strong><small>2 × 5 × 3</small></span
+                    ><span aria-hidden="true">→</span
+                    ><span
+                      ><b>FFN</b><small>Trainable · 1 token</small></span
+                    ></button
+                  ><button
+                    type="button"
+                    class="encoder-row"
+                    data-encoder="text"
+                    aria-pressed="false"
+                  >
+                    <span
+                      ><strong>Task language</strong
+                      ><small>Instruction</small></span
+                    ><span aria-hidden="true">→</span
+                    ><span><b>SigLIP</b><small>Frozen · 1 token</small></span>
+                  </button>
+                </div>
+                <span class="flow-arrow" aria-hidden="true"
+                  ><svg viewBox="0 0 32 16">
+                    <path d="M1 8H29m-5-4 5 4-5 4" />
+                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
+                ></span>
+                <div class="fusion-column">
+                  <div class="fusion-node">
+                    <span class="figure-kicker">515 × 1,024 tokens</span
+                    ><strong>Self-attention</strong>
+                  </div>
+                  <div class="conditioning-routes">
+                    <div>
+                      <span>Mean pool</span
+                      ><svg viewBox="0 0 50 24" aria-hidden="true">
+                        <path d="M2 3v13h43m-5-4 5 4-5 4" /></svg
+                      ><b>AdaLN</b>
+                    </div>
+                    <div>
+                      <span>Full tokens</span
+                      ><svg viewBox="0 0 50 24" aria-hidden="true">
+                        <path d="M2 3v13h43m-5-4 5 4-5 4" /></svg
+                      ><b>Cross-attention</b>
+                    </div>
+                  </div>
+                </div>
+                <span class="flow-arrow" aria-hidden="true"
+                  ><svg viewBox="0 0 32 16">
+                    <path d="M1 8H29m-5-4 5 4-5 4" />
+                    <circle class="flow-particle" cx="5" cy="8" r="2" /></svg
+                ></span>
+                <div class="dit-column">
+                  <div class="noisy-input">
+                    Noisy actions x<sub>t</sub> + t
+                    <span aria-hidden="true">↓</span>
+                  </div>
+                  <div class="dit-node">
+                    <span class="figure-kicker">Diffusion transformer</span
+                    ><strong>DiT</strong><span>AdaLN · cross-attention</span
+                    ><span class="node-rule">FFN → predicted noise ε̂</span>
+                  </div>
+                  <div class="denoise-output">
+                    <b>DDIM × 8</b><span>15 future poses · 52 landmarks</span>
+                  </div>
+                </div>
               </div>
+              <p class="encoder-inspector" aria-live="polite" hidden>
+                <span data-encoder-detail
+                  >Select an encoder to inspect its representation. During LoRA
+                  adaptation, pretrained weights stay frozen.</span
+                >
+              </p>
+              <div
+                class="sampling-loop"
+                aria-label="At each of eight reverse sampling steps: predict noise, take a DDIM step, and blend the noised demonstration action before the next step"
+              >
+                <span class="figure-kicker">Reverse sampling · 8 steps</span>
+                <div>
+                  <span>Noisy action x<sub>t</sub></span
+                  ><b aria-hidden="true">→</b><span>Predict ε̂</span
+                  ><b aria-hidden="true">→</b><span>DDIM step</span
+                  ><b aria-hidden="true">→</b
+                  ><span class="sampling-blend">Blend noised demo</span
+                  ><b aria-hidden="true">↺</b>
+                </div>
+              </div>
+              <div class="steering-explainer">
+                <div class="steering-explanation">
+                  <span class="figure-kicker">Inside reverse sampling</span>
+                  <h4>Demonstration steering</h4>
+                  <p>Object-layout retrieval; blend at each noise level.</p>
+                  <div class="steering-equation">
+                    x<sub>t</sub> ← <span data-demo-weight>0.3</span> a<sub
+                      >t</sub
+                    ><sup>★</sup> + <span data-model-weight>0.7</span> x<sub
+                      >t</sub
+                    >
+                  </div>
+                  <label class="steering-slider-label" for="steering-weight"
+                    >Steering strength
+                    <b data-steering-value>w = 0.3 · paper setting</b></label
+                  ><input
+                    type="range"
+                    id="steering-weight"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value="0.3"
+                    aria-describedby="steering-schematic-note"
+                  />
+                  <div class="range-endpoints">
+                    <span>0 · Model only</span><span>1 · Demo replay</span>
+                  </div>
+                </div>
+                <div class="steering-visual">
+                  <svg
+                    viewBox="0 0 340 155"
+                    role="img"
+                    aria-label="Schematic showing the noisy action moving toward the selected demonstration as steering strength increases"
+                  >
+                    <path
+                      class="schematic-grid"
+                      d="M15 35H325M15 80H325M15 125H325"
+                    />
+                    <path class="schematic-demo" data-demo-curve />
+                    <path class="schematic-model" data-model-curve />
+                    <path class="schematic-blend" data-blend-curve />
+                    <g data-blend-points></g>
+                  </svg>
+                  <div class="schematic-legend">
+                    <span class="legend-model">Model</span
+                    ><span class="legend-demo">Demo</span
+                    ><span class="legend-blend">Steered</span>
+                  </div>
+                  <p id="steering-schematic-note">
+                    Schematic blend at one noise level; not an experimental
+                    trajectory.
+                  </p>
+                </div>
+              </div>
+              <details class="figure-details">
+                <summary>Training & deployment details</summary>
+                <div class="detail-columns">
+                  <p>
+                    <b>Pretraining.</b> Train an ε-predictor with MSE, using 100
+                    diffusion timesteps. Utonia and SigLIP stay frozen. The
+                    mean-pooled context conditions AdaLN; the observation tokens
+                    also condition cross-attention. Each output chunk is 15 × 52
+                    × 3: 24 points per hand (21 landmarks and three wrist-axis
+                    points), plus four head-pose points.
+                  </p>
+                  <p>
+                    <b>Adaptation.</b> Rank-8 LoRA (scaling 16), 2,000 updates,
+                    ≈2 minutes. Inference uses eight deterministic DDIM steps
+                    and w = 0.3. Wrist IK, hand retargeting, and real-time
+                    chunking convert the predicted landmarks into smooth robot
+                    actions.
+                  </p>
+                </div>
+              </details>
             </div>
             <figcaption>
               <strong>Figure 3.</strong> Multimodal diffusion policy with
               <em>demonstration-guided action steering</em>.
             </figcaption>
           </figure>
-          <div class="method-columns">
-            <div>
-              <h4>Low-rank finetuning</h4>
-              <p>
-                Freeze the pretrained model; train
-                <em>rank-8 LoRA adapters</em> for 2,000 updates—<em
-                  class="text-accent"
-                  >about two minutes</em
-                >.
-              </p>
-            </div>
-            <div>
-              <h4>Demonstration-guided steering</h4>
-              <p>
-                Match a demonstration by
-                <span class="text-underline">object layout</span>, noise its
-                actions, and blend with model predictions at <i>w</i> = 0.3.
-              </p>
-            </div>
-          </div>
-          <div
-            class="equation"
-            aria-label="x sub t is updated to w times a star sub t plus one minus w times x sub t"
-          >
-            <span
-              ><i>x</i><sub>t</sub> ← <i>w</i> <i>a</i><sup>⋆</sup
-              ><sub>t</sub> + (1 − <i>w</i>) <i>x</i><sub>t</sub></span
-            ><span class="equation-number">(2)</span>
-          </div>
         </article>
       </section>
 
@@ -742,11 +1246,159 @@
           <span class="text-underline">new object appearances</span> when the
           required action remains <em>similar</em>.
         </p>
-        <figure
-          class="result-chart"
-          data-result-chart="generalization"
-        ></figure>
-        <details class="chart-data" data-result-table open>
+
+        <figure class="research-figure">
+          <div
+            class="science-figure generalization-figure"
+            data-science-figure
+            id="object-figure"
+          >
+            <header class="figure-heading">
+              <div>
+                <span class="figure-kicker"
+                  >Figure 8 · Object generalization</span
+                >
+              </div>
+            </header>
+            <div class="object-comparison">
+              <article class="object-task">
+                <h4>Flower <span>Flower watering</span></h4>
+                <div class="object-pair">
+                  <button
+                    type="button"
+                    class="object-example"
+                    data-object="flower-original"
+                    aria-pressed="false"
+                    aria-label="Flower, original object: 7 of 10 successful trials"
+                  >
+                    <span class="object-image"
+                      ><img
+                        src="assets/figures/flower-original.png"
+                        alt="Original object in the flower task, from Figure 8"
+                        width="320"
+                        height="260"
+                        loading="lazy" /></span
+                    ><span class="object-score"
+                      ><span>Original</span
+                      ><strong>7<small>/10</small></strong></span
+                    ><span class="trial-dots" aria-hidden="true"
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="failure"></span
+                      ><span class="failure"></span><span class="failure"></span
+                    ></span></button
+                  ><button
+                    type="button"
+                    class="object-example"
+                    data-object="flower-new"
+                    aria-pressed="false"
+                    aria-label="Flower, replacement object: 6 of 10 successful trials"
+                  >
+                    <span class="object-image"
+                      ><img
+                        src="assets/figures/flower-new.png"
+                        alt="Replacement object in the flower task, from Figure 8"
+                        width="320"
+                        height="260"
+                        loading="lazy" /></span
+                    ><span class="object-score"
+                      ><span>Replacement</span
+                      ><strong>6<small>/10</small></strong></span
+                    ><span class="trial-dots" aria-hidden="true"
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="failure"></span><span class="failure"></span
+                      ><span class="failure"></span><span class="failure"></span
+                    ></span>
+                  </button>
+                </div>
+              </article>
+              <article class="object-task">
+                <h4>Toy <span>Pick and place</span></h4>
+                <div class="object-pair">
+                  <button
+                    type="button"
+                    class="object-example"
+                    data-object="toy-original"
+                    aria-pressed="false"
+                    aria-label="Toy, original object: 10 of 10 successful trials"
+                  >
+                    <span class="object-image"
+                      ><img
+                        src="assets/figures/toy-original.png"
+                        alt="Original object in the toy task, from Figure 8"
+                        width="320"
+                        height="260"
+                        loading="lazy" /></span
+                    ><span class="object-score"
+                      ><span>Original</span
+                      ><strong>10<small>/10</small></strong></span
+                    ><span class="trial-dots" aria-hidden="true"
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                    ></span></button
+                  ><button
+                    type="button"
+                    class="object-example"
+                    data-object="toy-new"
+                    aria-pressed="false"
+                    aria-label="Toy, replacement object: 9 of 10 successful trials"
+                  >
+                    <span class="object-image"
+                      ><img
+                        src="assets/figures/toy-new.png"
+                        alt="Replacement object in the toy task, from Figure 8"
+                        width="320"
+                        height="260"
+                        loading="lazy" /></span
+                    ><span class="object-score"
+                      ><span>Replacement</span
+                      ><strong>9<small>/10</small></strong></span
+                    ><span class="trial-dots" aria-hidden="true"
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="success"></span
+                      ><span class="success"></span><span class="failure"></span
+                    ></span>
+                  </button>
+                </div>
+              </article>
+            </div>
+            <div class="object-inspector" aria-live="polite">
+              <p data-object-detail>
+                Compare the original and replacement objects. Each dot
+                represents one trial.
+              </p>
+              <span class="trial-key"
+                ><span></span> Success <span></span> Failure</span
+              >
+            </div>
+            <footer class="figure-footer">
+              <span
+                >10 trials per condition · Toy is an additional evaluation
+                task.</span
+              ><button
+                type="button"
+                class="figure-control"
+                data-object-reset
+                hidden
+              >
+                Reset comparison
+              </button>
+            </footer>
+          </div>
+          <figcaption>
+            <strong>Figure 8.</strong> Original vs. replacement objects. Toy is
+            an additional evaluation task.
+          </figcaption>
+        </figure>
+        <details class="chart-data" data-result-table>
           <summary>View exact results · Figure 8</summary>
           <div
             class="table-wrap"
@@ -780,27 +1432,6 @@
             </table>
           </div>
         </details>
-        <figure class="research-figure">
-          <div
-            class="media-placeholder figure-wide"
-            data-asset="object-generalization"
-          >
-            <div class="placeholder-meta">
-              <span>Original and unseen objects</span><span>Figure 8</span>
-            </div>
-            <div class="placeholder-center">
-              <span class="placeholder-kicker">Figure / video placeholder</span
-              ><span class="placeholder-title"
-                >Generalization to new objects</span
-              >
-              <p>Flower: 7/10 → 6/10 &nbsp; · &nbsp; Toy: 10/10 → 9/10</p>
-            </div>
-          </div>
-          <figcaption>
-            <strong>Figure 8.</strong> Original vs. replacement objects. Toy is
-            an additional evaluation task.
-          </figcaption>
-        </figure>
       </section>
 
       <section

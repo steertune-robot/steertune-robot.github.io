@@ -1,0 +1,361 @@
+{
+  "version": 1,
+  "sequence_id": "food-transfer-01",
+  "assets": [
+    {
+      "path": "proprio.png",
+      "caption": "Observed hand landmarks retargeted to Wuji geometry",
+      "bytes": 64630,
+      "sha256": "d18ef05b92407b52dabad0140c091bdf3bb1f749526c0f5105553e40402a78c6",
+      "source_frame": 40,
+      "source_preprocessed_frame": 180,
+      "source_raw_frame": 188,
+      "presentation_crop": null,
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "proprio.webm",
+      "caption": "Observed hand landmarks retargeted to Wuji geometry",
+      "bytes": 422103,
+      "sha256": "6b1b9c7156e8e20457e17504e364e8da31ea251ec0f5a44d762fc704fa1453a8",
+      "width": 640,
+      "height": 480,
+      "frames": 80,
+      "fps": 10,
+      "duration_seconds": 8,
+      "alpha": true,
+      "presentation_crop": null
+    },
+    {
+      "path": "object.png",
+      "caption": "Recorded RGB object appearance isolated by its segmentation mask",
+      "bytes": 83756,
+      "sha256": "535929d77f59455b44553c4575d72d40dc31934408b06ba477a38edd998f92ff",
+      "source_frame": 40,
+      "source_preprocessed_frame": 180,
+      "source_raw_frame": 188,
+      "presentation_crop": null,
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "object.webm",
+      "caption": "Recorded RGB object appearance isolated by its segmentation mask",
+      "bytes": 297568,
+      "sha256": "7cdfa16f7f00ecb049a728ab7a6207c9436cff2dcfb4dec204b6df9413ed165d",
+      "width": 640,
+      "height": 480,
+      "frames": 80,
+      "fps": 10,
+      "duration_seconds": 8,
+      "alpha": true,
+      "presentation_crop": null
+    },
+    {
+      "path": "scene.png",
+      "caption": "Dense measured scene cloud with annotated hands and arms removed (detail view)",
+      "bytes": 204395,
+      "sha256": "deb153784d6f4ce3ef4d0e85e4fe3fa08d90e394ec8f7a6cf38d74d33707afd5",
+      "source_frame": 40,
+      "source_preprocessed_frame": 180,
+      "source_raw_frame": 188,
+      "presentation_crop": [
+        540,
+        320,
+        1180,
+        800
+      ],
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "scene.webm",
+      "caption": "Dense measured scene cloud with annotated hands and arms removed (detail view)",
+      "bytes": 1686803,
+      "sha256": "9266bef270fa2ff0f5fee30d1b9c68add1325d3f00f08cbcf1f94b2c49b707c7",
+      "width": 640,
+      "height": 480,
+      "frames": 80,
+      "fps": 10,
+      "duration_seconds": 8,
+      "alpha": true,
+      "presentation_crop": [
+        540,
+        320,
+        1180,
+        800
+      ]
+    },
+    {
+      "path": "prediction.png",
+      "caption": "Saved base-policy future prediction retargeted to Wuji geometry",
+      "bytes": 103013,
+      "sha256": "e654380ecf082a64d312b899f2d862fb1d6eefb40be70fb71b12c87461a4e69e",
+      "source_frame": 40,
+      "source_preprocessed_frame": 180,
+      "source_raw_frame": 188,
+      "presentation_crop": null,
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "prediction.webm",
+      "caption": "Saved base-policy future prediction retargeted to Wuji geometry",
+      "bytes": 811119,
+      "sha256": "71d389415543d03d885470cb3960a062d165f5efe9708b70447f3ea5c4dee9ba",
+      "width": 640,
+      "height": 480,
+      "frames": 80,
+      "fps": 10,
+      "duration_seconds": 8,
+      "alpha": true,
+      "presentation_crop": null
+    },
+    {
+      "path": "record-rgb.png",
+      "caption": "Recorded RGB observation, detail crop",
+      "bytes": 442284,
+      "sha256": "1a7b31159eff0ae272bdc3e6c12fecdcb32cd4312b800eedfec912096125fc71",
+      "sequence_id": "food-transfer-01",
+      "preprocessed_frame": 180,
+      "raw_frame": 188,
+      "instruction": "transferring food from pot to bowl",
+      "crop_in_original_rgb": [
+        980,
+        1020,
+        2180,
+        1920
+      ],
+      "width": 640,
+      "height": 480,
+      "mode": "RGB"
+    },
+    {
+      "path": "object-mask.png",
+      "caption": "Binary object annotation, same detail crop as RGB",
+      "bytes": 1768,
+      "sha256": "00204ed13cb751066235a4cddf346da805842696a38451e8be7ce020d92093cb",
+      "sequence_id": "food-transfer-01",
+      "preprocessed_frame": 180,
+      "raw_frame": 188,
+      "instruction": "transferring food from pot to bowl",
+      "crop_in_original_rgb": [
+        980,
+        1020,
+        2180,
+        1920
+      ],
+      "width": 640,
+      "height": 480,
+      "mode": "L"
+    },
+    {
+      "path": "cloud-before.png",
+      "caption": "Measured scene cloud before annotated hand/arm removal; identical camera and crop",
+      "bytes": 259035,
+      "sha256": "6116c71b4a91daa17a1db4139497c3b29d248af51c94da6442cbdf6046068e6b",
+      "sequence_id": "food-transfer-01",
+      "preprocessed_frame": 180,
+      "raw_frame": 188,
+      "instruction": "transferring food from pot to bowl",
+      "points_before_display_projection": 139288,
+      "presentation_crop": [
+        540,
+        320,
+        1180,
+        800
+      ],
+      "units": "metres",
+      "coordinate_frame": "anchor RGB camera",
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "cloud-after.png",
+      "caption": "Measured scene cloud after annotated hand/arm removal; identical camera and crop",
+      "bytes": 204395,
+      "sha256": "deb153784d6f4ce3ef4d0e85e4fe3fa08d90e394ec8f7a6cf38d74d33707afd5",
+      "sequence_id": "food-transfer-01",
+      "preprocessed_frame": 180,
+      "raw_frame": 188,
+      "instruction": "transferring food from pot to bowl",
+      "points_before_display_projection": 110205,
+      "presentation_crop": [
+        540,
+        320,
+        1180,
+        800
+      ],
+      "units": "metres",
+      "coordinate_frame": "anchor RGB camera",
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "cloud-sampled.png",
+      "caption": "Saved 5,000-point observation sample, same cloud camera and detail crop",
+      "bytes": 37889,
+      "sha256": "8e02d55e4a7fbcdc750637ae73acd73b08a714612abf10025fbca6481ac1b280",
+      "sequence_id": "food-transfer-01",
+      "preprocessed_frame": 180,
+      "raw_frame": 188,
+      "instruction": "transferring food from pot to bowl",
+      "sampled_points": 5000,
+      "voxelized_points": 3764,
+      "presentation_crop": [
+        540,
+        320,
+        1180,
+        800
+      ],
+      "note": "This detail viewport shows a subset of the saved input. Presentation dense crop and model preprocessing are different.",
+      "width": 640,
+      "height": 480,
+      "mode": "RGBA"
+    },
+    {
+      "path": "flower-original.png",
+      "caption": "Flower original object: 7/10 successful trials",
+      "bytes": 82924,
+      "sha256": "b12bba9e796593f877b8fefe87f76109b5a8a53ccd5207f1cfc23ca6d9736c9b",
+      "source": "https://steertune-robot.github.io/assets/steertuning-paper.pdf",
+      "pdf_page": 7,
+      "pdf_image_xref": 253,
+      "success": "7/10",
+      "note": "Exact embedded photograph extracted from the paper; no generative edits or upscaling.",
+      "width": 320,
+      "height": 180,
+      "mode": "RGB"
+    },
+    {
+      "path": "flower-new.png",
+      "caption": "Flower new object: 6/10 successful trials",
+      "bytes": 78745,
+      "sha256": "2fd30727157a828b2869e818b7202f6d6a0690b0ef8fe80e8acfc6fac1fdf142",
+      "source": "https://steertune-robot.github.io/assets/steertuning-paper.pdf",
+      "pdf_page": 7,
+      "pdf_image_xref": 254,
+      "success": "6/10",
+      "note": "Exact embedded photograph extracted from the paper; no generative edits or upscaling.",
+      "width": 322,
+      "height": 180,
+      "mode": "RGB"
+    },
+    {
+      "path": "toy-original.png",
+      "caption": "Toy original object: 10/10 successful trials",
+      "bytes": 100452,
+      "sha256": "943152df7afcd6a868c3031f44ee071601911d21455da591f05f596c169be4d4",
+      "source": "https://steertune-robot.github.io/assets/steertuning-paper.pdf",
+      "pdf_page": 7,
+      "pdf_image_xref": 252,
+      "success": "10/10",
+      "note": "Exact embedded photograph extracted from the paper; no generative edits or upscaling.",
+      "width": 373,
+      "height": 208,
+      "mode": "RGB"
+    },
+    {
+      "path": "toy-new.png",
+      "caption": "Toy new object: 9/10 successful trials",
+      "bytes": 88874,
+      "sha256": "e56a202b2406fd255ed1ef514619a99cb64549c6a50cf95ec47fb8f4f8bd5e58",
+      "source": "https://steertune-robot.github.io/assets/steertuning-paper.pdf",
+      "pdf_page": 7,
+      "pdf_image_xref": 251,
+      "success": "9/10",
+      "note": "Exact embedded photograph extracted from the paper; no generative edits or upscaling.",
+      "width": 344,
+      "height": 192,
+      "mode": "RGB"
+    },
+    {
+      "path": "robot.png",
+      "caption": "YOR with Wuji hands performing the flower task; original Figure 1 photograph",
+      "bytes": 348527,
+      "sha256": "c9fcf723940c8380bda8a636c5d65df38c8212cafbb518a81fe12a39f1e10bd5",
+      "source": "https://steertune-robot.github.io/assets/steertuning-paper.pdf",
+      "pdf_page": 1,
+      "pdf_image_xref": 596,
+      "note": "Rectangular photograph with background. Its PDF alpha is 168\u2013255, NOT an isolated transparent full-body cutout. No such cutout was found.",
+      "width": 537,
+      "height": 714,
+      "mode": "RGBA"
+    }
+  ],
+  "processing": {
+    "sequence_id": "food-transfer-01",
+    "preprocessed_frame": 180,
+    "raw_frame": 188,
+    "instruction": "transferring food from pot to bowl",
+    "raw_colored_points": 203279,
+    "workspace_before_removal": 139288,
+    "workspace_after_removal": 110205,
+    "model_sampled_points": 5000,
+    "model_voxelized_points": 3764,
+    "body_mask": "Recorded stereo-left hand/arm annotation; calibrated projection; 4-pixel dilation",
+    "depth_scale_to_metres": 0.001,
+    "pair_registration": "RGB/mask/cutout share one crop. Cloud before/after/sample share another camera and crop. RGB and cloud are not pixel registered."
+  },
+  "clip_timeline": {
+    "fps": 10,
+    "frames": 80,
+    "seconds": 8,
+    "raw_frames": [
+      148,
+      227
+    ],
+    "preprocessed_frames": [
+      140,
+      219
+    ],
+    "registration": "Frame mapping verified from camera/head transforms. Independent display cameras for different modalities.",
+    "prompts": [
+      {
+        "clip_frames": [
+          0,
+          12
+        ],
+        "text": "pouring food from pot into bowl"
+      },
+      {
+        "clip_frames": [
+          13,
+          75
+        ],
+        "text": "transferring food from pot to bowl"
+      },
+      {
+        "clip_frames": [
+          76,
+          79
+        ],
+        "text": "pouring food from pot into bowl"
+      }
+    ]
+  },
+  "provenance": {
+    "prediction": "Existing saved offline BASE-policy predictions, no task LoRA, no steering, no robot execution. This export ran neither inference nor training.",
+    "observed_hands": "Observed human landmarks retargeted to Wuji; not measured robot joint encoders.",
+    "future_hands": "15 saved predicted poses; rendered steps 0,7,14, with later poses translucent. Ground-truth future arrays exist in the source record but are NOT rendered.",
+    "coordinates": "3D source data in the anchor RGB camera frame, metres; retargeted Wuji joints in radians. Masks in image pixels.",
+    "action_shape": [
+      15,
+      52,
+      3
+    ],
+    "action_step_seconds": 0.3,
+    "horizon": "Paper calls this a 4.5-second chunk. Saved targets are anchor+1,+4,\u2026,+43 source frames (0.1\u20134.3 seconds).",
+    "input_cloud": "Dense visual is a display rendering of measured stereo depth, not the 5,000-point model input. Saved 5,000-point samples become roughly 3,700\u20133,941 voxelized points before the 512-token encoder.",
+    "object_visual": "RGB cutout illustrates the segmented object. The model consumes the black/white segmentation-mask image, not this RGB appearance."
+  },
+  "privacy": "Source names, absolute paths, user names and original file metadata omitted. RGB and cloud detail crops exclude room context and product labels. Paper assets retain published backgrounds; no unblurred face identified. No new deployment imagery was generated.",
+  "rights": "Research assets supplied for this project. Source paper and YOR/Wuji geometry attribution apply; no new license or independent third-party rights audit is asserted."
+}

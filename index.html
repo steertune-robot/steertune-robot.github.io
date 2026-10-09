@@ -242,15 +242,6 @@
                 </figure>
               </div>
             </div>
-            <details class="figure-details">
-              <summary>Method details</summary>
-              <div>
-                <p><b>Finetuning.</b> Rank-8 LoRA · 2,000 updates · frozen base weights.</p>
-                <p><b>Steering.</b> Retrieve by object layout, align motion, then blend with the noised demonstration at each diffusion step (<i>w</i> = 0.3).</p>
-                <p><b>Execution.</b> Human landmarks → wrist IK + hand retargeting + real-time chunking.</p>
-                <p>Flower photographs from the paper; not synchronized rollouts.</p>
-              </div>
-            </details>
           </div>
           <figcaption>
             <strong>Figure 1.</strong> Five human demonstrations for <em>finetuning and action steering</em>.
@@ -419,26 +410,6 @@
                 </div>
                 <p>Shared scene representation in the anchor camera frame</p>
               </div>
-              <details class="figure-details">
-                <summary>Processing details</summary>
-                <p class="processing-provenance">One eight-second recording at 10 Hz. Paired views use matching crops; sampled clouds show part of the 5,000-point input.</p>
-                <div class="detail-columns">
-                  <p>
-                    <b>Segment & annotate.</b> S2M2 recovers stereo depth; SAM3
-                    removes arms and hands. Hand–scene distance under 5 cm
-                    defines active contact; stable contact intervals become
-                    snippets. Qwen3-VL-8B annotates up to ten ordered frames per
-                    snippet.
-                  </p>
-                  <p>
-                    <b>Ground & normalize.</b> Gemini 2.5 Flash supplies two
-                    object keypoints to initialize SAM3 tracking. Crop the scene
-                    to a 0.85 × 1.5 × 1.5 m workspace, reject depth beyond 1.7
-                    m, and sample 5,000 points. Transform observations and
-                    actions into the last observed RGB-camera frame.
-                  </p>
-                </div>
-              </details>
             </div>
             <figcaption>
               <strong>Data processing.</strong> Human recordings → aligned observations and actions.
@@ -483,7 +454,7 @@
               <div id="ag-panel" class="ag-host" data-architecture-graph role="tabpanel" aria-labelledby="ag-tab-model"></div>
               <div class="ag-detail" data-graph-detail aria-live="polite"></div>
               <p class="ag-note" data-graph-note></p>
-              <details class="figure-details architecture-media">
+              <details class="figure-details architecture-media" open>
                 <summary>
                   Example: inputs and predicted motion
                 </summary>
@@ -600,28 +571,6 @@
                   </div>
                 </div>
                 <p class="example-provenance">One base-policy recording, without LoRA or steering. Dense clouds and hand meshes are visualizations; the policy uses sampled points, masks, and landmarks.</p>
-              </details>
-              <details class="figure-details">
-                <summary>Training & deployment details</summary>
-                <div class="detail-columns">
-                  <p>
-                    <b>Pretraining.</b> Train an ε-predictor with MSE, using 100
-                    diffusion timesteps. Utonia and SigLIP stay frozen. The
-                    mean-pooled context conditions AdaLN; the observation tokens
-                    also condition cross-attention. Each output chunk is 15 × 52
-                    × 3: 24 points per hand (21 landmarks and three wrist-axis
-                    points), plus four head-pose points.
-                  </p>
-                  <p>
-                    <b>Adaptation.</b> Rank-8 LoRA (scaling 16), 2,000 updates,
-                    ≈2 minutes. Inference uses eight deterministic DDIM steps
-                    and w = 0.3. The deployment view follows the implementation:
-                    DDIM update, blend at the next scheduled noise level, then
-                    repeat; the final blend uses clean actions. Wrist IK, hand
-                    retargeting, and real-time chunking convert the predicted landmarks into smooth robot
-                    actions.
-                  </p>
-                </div>
               </details>
             </div>
             <figcaption>

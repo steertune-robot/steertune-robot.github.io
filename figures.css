@@ -62,7 +62,7 @@
   border: 1px solid var(--rule);
   background: transparent;
   padding: 7px 10px;
-  border-radius: 3px;
+  border-radius: 0;
   font-size: 0.6875rem !important;
   white-space: nowrap;
 }
@@ -747,7 +747,7 @@
   border: 1px solid transparent;
   padding: 5px;
   text-align: left;
-  border-radius: 2px;
+  border-radius: 0;
   transition:
     background 0.2s,
     border-color 0.2s,

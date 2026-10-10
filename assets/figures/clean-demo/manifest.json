@@ -1,0 +1,1571 @@
+{
+  "schema_version": 1,
+  "sequence_id": "table-wiping-01",
+  "instruction": "wiping table surface with cloth",
+  "source": "One recorded human table-wiping sequence with synchronized RGB, stereo depth, camera poses, and hand tracking.",
+  "selection": "Chosen to make input/output motion visible. This illustrative example is not a performance estimate or a robot execution.",
+  "policy": {
+    "checkpoint_id": "base-policy-1000000-updates",
+    "checkpoint_sha256": "825041643f39b3059972b2cb9790ba96a028d5e11120ab5774859d6eb7f82fdd",
+    "base_policy": true,
+    "task_finetuning": false,
+    "demonstration_steering": false,
+    "policy_inference_calls": 1,
+    "ddim_steps": 8,
+    "seed": 20261009,
+    "inference_implementation_sha256": "d31244c3317997f8f0d3f8cdaff927e8cb2c58ef4f669c184d44c2f741498e00",
+    "normalization": {
+      "mode": "limits",
+      "scale": [
+        0.45341631021546197,
+        0.5899458791314668,
+        0.4090272719451204
+      ],
+      "offset": [
+        -0.0357843209323484,
+        0.023668210016763114,
+        -0.44310384924156365
+      ],
+      "clip_low": [
+        -2.1265571117401123,
+        -1.7351900339126587,
+        -1.3615134954452515
+      ],
+      "clip_high": [
+        2.284400224685669,
+        1.6549514532089233,
+        3.5281360149383545
+      ],
+      "clip_percentiles": [
+        0.001,
+        0.999
+      ],
+      "input_stats": {
+        "min": [
+          -34.58924257987139,
+          -16.392167237752666,
+          -31.76283941980048
+        ],
+        "max": [
+          35.544021575205825,
+          19.635699170884106,
+          27.92410284750625
+        ],
+        "mean": [
+          0.04998771202483925,
+          0.18657255460633465,
+          0.3442051017503075
+        ],
+        "std": [
+          0.30320436770681575,
+          0.24985729662336081,
+          0.3524986742226789
+        ]
+      }
+    }
+  },
+  "timing": {
+    "input_duration_seconds": 8,
+    "input_fps": 10,
+    "anchor_clip_frame": 40,
+    "anchor_clip_seconds": 4,
+    "input_posters": "All input posters use clip frame 40 / raw 289 / preprocessed 280.",
+    "prediction_duration_seconds": 4.5,
+    "prediction_fps": 20,
+    "predicted_poses": 15,
+    "future_time_seconds": [
+      0.099992448,
+      0.399969689,
+      0.69994698,
+      0.999924219,
+      1.299901459,
+      1.599878751,
+      1.899855989,
+      2.199833282,
+      2.499810521,
+      2.799787812,
+      3.099765053,
+      3.399742292,
+      3.699719583,
+      3.999696824,
+      4.299674115
+    ],
+    "interpolation": "Saved 15 predictions are exact model results. Video linearly interpolates retargeted joint angles and root translation, with SLERP root rotations. No motion amplification. First/final poses held at boundaries.",
+    "prediction_posters": "prediction-chunk.png is first future pose; prediction-chunk-final.png is last. Both derive from the same clip4.0s model inference.",
+    "input_frame_count": 80,
+    "raw_frames_inclusive": [
+      249,
+      328
+    ],
+    "preprocessed_frames_inclusive": [
+      240,
+      319
+    ],
+    "freeze_raw_frame": 289,
+    "freeze_preprocessed_frame": 280,
+    "future_raw_frames": [
+      290,
+      293,
+      296,
+      299,
+      302,
+      305,
+      308,
+      311,
+      314,
+      317,
+      320,
+      323,
+      326,
+      329,
+      332
+    ],
+    "future_preprocessed_frames": [
+      281,
+      284,
+      287,
+      290,
+      293,
+      296,
+      299,
+      302,
+      305,
+      308,
+      311,
+      314,
+      317,
+      320,
+      323
+    ],
+    "recorded_input_relative_seconds": [
+      0.0,
+      0.099992449,
+      0.199984845,
+      0.299977291,
+      0.399969688,
+      0.499962136,
+      0.599954532,
+      0.699946981,
+      0.799939375,
+      0.899931771,
+      0.999924219,
+      1.099916616,
+      1.199909062,
+      1.299901458,
+      1.399893907,
+      1.499886303,
+      1.599878751,
+      1.699871146,
+      1.799863594,
+      1.89985599,
+      1.999848439,
+      2.099840835,
+      2.199833281,
+      2.299825677,
+      2.399818126,
+      2.499810522,
+      2.599802968,
+      2.699795365,
+      2.799787813,
+      2.899780209,
+      2.999772605,
+      3.099765052,
+      3.199757448,
+      3.299749896,
+      3.399742293,
+      3.499734741,
+      3.599727135,
+      3.699719584,
+      3.79971198,
+      3.899704428,
+      3.999696823,
+      4.099689271,
+      4.199681667,
+      4.299674116,
+      4.399666512,
+      4.499658958,
+      4.599651354,
+      4.699643803,
+      4.799636199,
+      4.899628647,
+      4.999621042,
+      5.09961349,
+      5.199605886,
+      5.299598282,
+      5.399590729,
+      5.499583125,
+      5.599575574,
+      5.69956797,
+      5.799560418,
+      5.899552812,
+      5.999545261,
+      6.099537657,
+      6.199530105,
+      6.2995225,
+      6.399514948,
+      6.499507344,
+      6.599499793,
+      6.699492189,
+      6.799484635,
+      6.899477032,
+      6.99946948,
+      7.099461876,
+      7.199454324,
+      7.299446719,
+      7.399439115,
+      7.499431563,
+      7.59942396,
+      7.699416406,
+      7.799408802,
+      7.89940125
+    ]
+  },
+  "mask_generation": {
+    "model": "SAM3 image model",
+    "checkpoint_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+    "text_prompt": "table",
+    "target": "Table / task-relevant work surface; not the cloth.",
+    "source": "Fresh segmentation inference on the original recorded RGB frames.",
+    "selection_rule": "Largest-area predicted table instance above confidence threshold 0.5.",
+    "original_cached_mask_nonzero": 0,
+    "source_dataset_modified": false,
+    "model_input": "The binary mask is resized with nearest-neighbor interpolation to 160 by 120 pixels. The same generated mask is used by the policy and the displayed mask example.",
+    "validation": "All 80 staged masks exactly match the recorded policy-input masks. The frame-40 collated inference tensor exactly matches the saved binary mask divided by 255.",
+    "display": "The H.264 binary-mask video is compressed; PNG and NPZ data retain exact binary values.",
+    "frames": [
+      {
+        "clip_frame": 0,
+        "raw_frame": 249,
+        "selected_score": 0.72265625,
+        "foreground_pixels": 1478967,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 1,
+        "raw_frame": 250,
+        "selected_score": 0.83984375,
+        "foreground_pixels": 1489213,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 2,
+        "raw_frame": 251,
+        "selected_score": 0.86328125,
+        "foreground_pixels": 1535684,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 3,
+        "raw_frame": 252,
+        "selected_score": 0.91796875,
+        "foreground_pixels": 1554428,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 4,
+        "raw_frame": 253,
+        "selected_score": 0.8359375,
+        "foreground_pixels": 1568444,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 5,
+        "raw_frame": 254,
+        "selected_score": 0.91015625,
+        "foreground_pixels": 1576026,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 6,
+        "raw_frame": 255,
+        "selected_score": 0.8671875,
+        "foreground_pixels": 1587140,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 7,
+        "raw_frame": 256,
+        "selected_score": 0.8984375,
+        "foreground_pixels": 1620703,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 8,
+        "raw_frame": 257,
+        "selected_score": 0.953125,
+        "foreground_pixels": 1604301,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 9,
+        "raw_frame": 258,
+        "selected_score": 0.9609375,
+        "foreground_pixels": 1612563,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 10,
+        "raw_frame": 259,
+        "selected_score": 0.90234375,
+        "foreground_pixels": 1663510,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 11,
+        "raw_frame": 260,
+        "selected_score": 0.89453125,
+        "foreground_pixels": 1724122,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 12,
+        "raw_frame": 261,
+        "selected_score": 0.91796875,
+        "foreground_pixels": 1710420,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 13,
+        "raw_frame": 262,
+        "selected_score": 0.859375,
+        "foreground_pixels": 1587096,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 14,
+        "raw_frame": 263,
+        "selected_score": 0.9609375,
+        "foreground_pixels": 1628005,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 15,
+        "raw_frame": 264,
+        "selected_score": 0.94921875,
+        "foreground_pixels": 1665957,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 16,
+        "raw_frame": 265,
+        "selected_score": 0.921875,
+        "foreground_pixels": 1720537,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 17,
+        "raw_frame": 266,
+        "selected_score": 0.91796875,
+        "foreground_pixels": 1736118,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 18,
+        "raw_frame": 267,
+        "selected_score": 0.81640625,
+        "foreground_pixels": 1736382,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 19,
+        "raw_frame": 268,
+        "selected_score": 0.66796875,
+        "foreground_pixels": 1754966,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 20,
+        "raw_frame": 269,
+        "selected_score": 0.9140625,
+        "foreground_pixels": 1696564,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 21,
+        "raw_frame": 270,
+        "selected_score": 0.95703125,
+        "foreground_pixels": 1647096,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 22,
+        "raw_frame": 271,
+        "selected_score": 0.96875,
+        "foreground_pixels": 1674253,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 23,
+        "raw_frame": 272,
+        "selected_score": 0.89453125,
+        "foreground_pixels": 1667539,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 24,
+        "raw_frame": 273,
+        "selected_score": 0.275390625,
+        "foreground_pixels": 1799581,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 25,
+        "raw_frame": 274,
+        "selected_score": 0.5,
+        "foreground_pixels": 1934719,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 26,
+        "raw_frame": 275,
+        "selected_score": 0.765625,
+        "foreground_pixels": 1883670,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 27,
+        "raw_frame": 276,
+        "selected_score": 0.90625,
+        "foreground_pixels": 1813590,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 28,
+        "raw_frame": 277,
+        "selected_score": 0.953125,
+        "foreground_pixels": 1882666,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 29,
+        "raw_frame": 278,
+        "selected_score": 0.921875,
+        "foreground_pixels": 1931795,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 30,
+        "raw_frame": 279,
+        "selected_score": 0.8203125,
+        "foreground_pixels": 1961786,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 31,
+        "raw_frame": 280,
+        "selected_score": 0.6640625,
+        "foreground_pixels": 2075695,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 32,
+        "raw_frame": 281,
+        "selected_score": 0.6796875,
+        "foreground_pixels": 2103631,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 33,
+        "raw_frame": 282,
+        "selected_score": 0.85546875,
+        "foreground_pixels": 2024549,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 34,
+        "raw_frame": 283,
+        "selected_score": 0.96484375,
+        "foreground_pixels": 2143504,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 35,
+        "raw_frame": 284,
+        "selected_score": 0.96484375,
+        "foreground_pixels": 2313037,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 36,
+        "raw_frame": 285,
+        "selected_score": 0.9375,
+        "foreground_pixels": 2379668,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 37,
+        "raw_frame": 286,
+        "selected_score": 0.8828125,
+        "foreground_pixels": 2441638,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 38,
+        "raw_frame": 287,
+        "selected_score": 0.8359375,
+        "foreground_pixels": 2434762,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 39,
+        "raw_frame": 288,
+        "selected_score": 0.83203125,
+        "foreground_pixels": 2459148,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 40,
+        "raw_frame": 289,
+        "selected_score": 0.91796875,
+        "foreground_pixels": 2504848,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 41,
+        "raw_frame": 290,
+        "selected_score": 0.87890625,
+        "foreground_pixels": 2514660,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 42,
+        "raw_frame": 291,
+        "selected_score": 0.72265625,
+        "foreground_pixels": 2499801,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 43,
+        "raw_frame": 292,
+        "selected_score": 0.73828125,
+        "foreground_pixels": 2504412,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 44,
+        "raw_frame": 293,
+        "selected_score": 0.63671875,
+        "foreground_pixels": 2471385,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 45,
+        "raw_frame": 294,
+        "selected_score": 0.80859375,
+        "foreground_pixels": 2491815,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 46,
+        "raw_frame": 295,
+        "selected_score": 0.75,
+        "foreground_pixels": 2519031,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 47,
+        "raw_frame": 296,
+        "selected_score": 0.75390625,
+        "foreground_pixels": 2489753,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 48,
+        "raw_frame": 297,
+        "selected_score": 0.578125,
+        "foreground_pixels": 2455916,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 49,
+        "raw_frame": 298,
+        "selected_score": 0.68359375,
+        "foreground_pixels": 2440398,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 50,
+        "raw_frame": 299,
+        "selected_score": 0.63671875,
+        "foreground_pixels": 2398641,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 51,
+        "raw_frame": 300,
+        "selected_score": 0.74609375,
+        "foreground_pixels": 2367427,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 52,
+        "raw_frame": 301,
+        "selected_score": 0.81640625,
+        "foreground_pixels": 2317670,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 53,
+        "raw_frame": 302,
+        "selected_score": 0.88671875,
+        "foreground_pixels": 2277452,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 54,
+        "raw_frame": 303,
+        "selected_score": 0.8828125,
+        "foreground_pixels": 2275307,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 55,
+        "raw_frame": 304,
+        "selected_score": 0.91796875,
+        "foreground_pixels": 2273889,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 56,
+        "raw_frame": 305,
+        "selected_score": 0.921875,
+        "foreground_pixels": 2238396,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 57,
+        "raw_frame": 306,
+        "selected_score": 0.75,
+        "foreground_pixels": 2187786,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 58,
+        "raw_frame": 307,
+        "selected_score": 0.80859375,
+        "foreground_pixels": 2188449,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 59,
+        "raw_frame": 308,
+        "selected_score": 0.6953125,
+        "foreground_pixels": 2212364,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 60,
+        "raw_frame": 309,
+        "selected_score": 0.66015625,
+        "foreground_pixels": 2210064,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 61,
+        "raw_frame": 310,
+        "selected_score": 0.77734375,
+        "foreground_pixels": 2217363,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 62,
+        "raw_frame": 311,
+        "selected_score": 0.73046875,
+        "foreground_pixels": 2227895,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 63,
+        "raw_frame": 312,
+        "selected_score": 0.6015625,
+        "foreground_pixels": 2238742,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 64,
+        "raw_frame": 313,
+        "selected_score": 0.61328125,
+        "foreground_pixels": 2226718,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 65,
+        "raw_frame": 314,
+        "selected_score": 0.6953125,
+        "foreground_pixels": 2121191,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 66,
+        "raw_frame": 315,
+        "selected_score": 0.83203125,
+        "foreground_pixels": 2073629,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 67,
+        "raw_frame": 316,
+        "selected_score": 0.88671875,
+        "foreground_pixels": 2074445,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 68,
+        "raw_frame": 317,
+        "selected_score": 0.68359375,
+        "foreground_pixels": 2202779,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 69,
+        "raw_frame": 318,
+        "selected_score": 0.6953125,
+        "foreground_pixels": 2131062,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 70,
+        "raw_frame": 319,
+        "selected_score": 0.8203125,
+        "foreground_pixels": 2096319,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 71,
+        "raw_frame": 320,
+        "selected_score": 0.87109375,
+        "foreground_pixels": 2137192,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 72,
+        "raw_frame": 321,
+        "selected_score": 0.83984375,
+        "foreground_pixels": 2259825,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 73,
+        "raw_frame": 322,
+        "selected_score": 0.79296875,
+        "foreground_pixels": 2387037,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 74,
+        "raw_frame": 323,
+        "selected_score": 0.859375,
+        "foreground_pixels": 2365581,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 75,
+        "raw_frame": 324,
+        "selected_score": 0.85546875,
+        "foreground_pixels": 2411597,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 76,
+        "raw_frame": 325,
+        "selected_score": 0.859375,
+        "foreground_pixels": 2439893,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 77,
+        "raw_frame": 326,
+        "selected_score": 0.85546875,
+        "foreground_pixels": 2487769,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 78,
+        "raw_frame": 327,
+        "selected_score": 0.8515625,
+        "foreground_pixels": 2500008,
+        "image_size": [
+          2560,
+          1920
+        ]
+      },
+      {
+        "clip_frame": 79,
+        "raw_frame": 328,
+        "selected_score": 0.875,
+        "foreground_pixels": 2465546,
+        "image_size": [
+          2560,
+          1920
+        ]
+      }
+    ]
+  },
+  "coordinates": {
+    "units": "metres for positions; radians for retargeted joint angles",
+    "prediction": "All 15 predicted poses share the RGB camera coordinate frame at freeze anchor 280 / raw frame 289.",
+    "display": "Observed hands and all cloud views are transformed into that fixed freeze-anchor frame, removing egocentric head motion; one fixed virtual camera is used.",
+    "model_inputs": "Each observation in model-inputs.npz retains its own current observation RGB camera coordinates, exactly as supplied to the policy.",
+    "anchor_scene": "Cloud arrays in anchor_scene.npz use the fixed freeze-anchor RGB camera frame.",
+    "camera": "camera.json",
+    "rgb_mask_crop_xyxy": [
+      160,
+      240,
+      2400,
+      1920
+    ],
+    "rgb_original_size_height_width": [
+      1920,
+      2560
+    ],
+    "raw_to_preprocessed_head_mapping_max_error": 0
+  },
+  "semantics": {
+    "rgb": "Original recorded RGB with fixed spatial crop.",
+    "mask": "Fresh SAM3 segmentation of table/task-relevant work surface, not cloth. Original cached object annotation is zero. Full-resolution binary masks are resized nearest-neighbor to 160x120; these exact masks are supplied to the actual policy. Binary display MP4 is compressed, while PNG/NPZ masks preserve exact binary values.",
+    "cloud": "Saved measured stereo-depth points; no synthesized geometry or additional depth inference. Before/after differ by recorded calibrated hand mask exclusion.",
+    "sampled": "Exactly 5000 policy input points saved per observation; display uses common work-area crop, so visible count is lower. The full freeze-anchor sample is included in anchor_scene.npz.",
+    "proprio": "Recorded human hand landmarks retargeted to real Wuji meshes. This is derived robot visualization, not recorded robot joint sensing.",
+    "prediction": "One genuine unadapted base-policy chunk conditioned on freeze-anchor observations and fresh table mask, retargeted to Wuji; one opaque hand pair, no ghost stack.",
+    "coordinates": "All geometry shown in fixed freeze-anchor RGB frame in metres, with one fixed virtual camera; RGB/mask use the same fixed pixel crop.",
+    "transparency": "WebM VP9 alpha and PNG RGBA for hand/cloud/object assets. RGB and binary-mask H264 videos are opaque."
+  },
+  "hand_display": {
+    "observed": "Recorded human hand landmarks retargeted with the project Wuji retargeter and geometry; not measured robot joint encoders.",
+    "predicted": "The single saved base-policy 15-pose chunk is retargeted to the same Wuji geometry. It is not a recording of robot execution.",
+    "interpolation": "Saved 15 predictions are exact model results. Video linearly interpolates retargeted joint angles and root translation, with SLERP root rotations. No motion amplification. First/final poses held at boundaries.",
+    "numeric_source": "wuji_poses.npz"
+  },
+  "motion_metrics": {
+    "units": "metres",
+    "coordinates": "Observed positions in world frame; prediction and recorded future in fixed freeze-anchor RGB frame. Rigid transformations preserve these distances.",
+    "observed": {
+      "left": {
+        "span_m": 0.4003034945130095,
+        "path_length_m": 1.2477811306526887
+      },
+      "right": {
+        "span_m": 0.525212493132764,
+        "path_length_m": 6.608517278444472
+      }
+    },
+    "predicted": {
+      "left": {
+        "span_m": 0.5557559728622437,
+        "path_length_m": 1.518281102180481
+      },
+      "right": {
+        "span_m": 0.5587376356124878,
+        "path_length_m": 1.2399336099624634
+      }
+    },
+    "recorded_future": {
+      "left": {
+        "span_m": 0.2122465819120407,
+        "path_length_m": 0.4601325988769531
+      },
+      "right": {
+        "span_m": 0.4486345052719116,
+        "path_length_m": 1.097660779953003
+      }
+    },
+    "span_definition": "Maximum pairwise Euclidean wrist displacement within the interval; robust to out-and-back motion.",
+    "intervals": {
+      "observed": "80 recorded observations / nominal 8 seconds",
+      "predicted": "15 saved future poses / +0.1 to +4.3 seconds",
+      "recorded_future": "The corresponding 15 tracked human future poses"
+    },
+    "interpretation": "Excursion metrics describe movement only. Predictions can differ from tracked human motion; these are not accuracy or success scores."
+  },
+  "numerical_assets": {
+    "prediction-chunk.npz": {
+      "prediction_m": {
+        "shape": [
+          15,
+          52,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "prediction_normalized": {
+        "shape": [
+          15,
+          52,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "ground_truth_m": {
+        "shape": [
+          15,
+          52,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "action_valid": {
+        "shape": [
+          15,
+          156
+        ],
+        "dtype": "float32"
+      },
+      "normalization_scale": {
+        "shape": [
+          3
+        ],
+        "dtype": "float64"
+      },
+      "normalization_offset": {
+        "shape": [
+          3
+        ],
+        "dtype": "float64"
+      },
+      "anchor_frame": {
+        "shape": [],
+        "dtype": "int64"
+      },
+      "raw_anchor": {
+        "shape": [],
+        "dtype": "int64"
+      },
+      "clip_anchor_frame": {
+        "shape": [],
+        "dtype": "int64"
+      },
+      "future_raw_frames": {
+        "shape": [
+          15
+        ],
+        "dtype": "int64"
+      },
+      "future_time_seconds": {
+        "shape": [
+          15
+        ],
+        "dtype": "float64"
+      }
+    },
+    "model-inputs.npz": {
+      "sampled_coord": {
+        "shape": [
+          80,
+          5000,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "sampled_color": {
+        "shape": [
+          80,
+          5000,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "object_mask": {
+        "shape": [
+          80,
+          120,
+          160,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "proprio_m": {
+        "shape": [
+          80,
+          4,
+          18,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "hand_valid_history": {
+        "shape": [
+          80,
+          4,
+          2
+        ],
+        "dtype": "float32"
+      },
+      "anchor_frame": {
+        "shape": [
+          80
+        ],
+        "dtype": "int64"
+      },
+      "raw_frame": {
+        "shape": [
+          80
+        ],
+        "dtype": "int64"
+      }
+    },
+    "anchor_scene.npz": {
+      "dense_before_xyz_m": {
+        "shape": [
+          203594,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "dense_before_rgb": {
+        "shape": [
+          203594,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "dense_after_xyz_m": {
+        "shape": [
+          194343,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "dense_after_rgb": {
+        "shape": [
+          194343,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "sampled5000_xyz_m": {
+        "shape": [
+          5000,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "sampled5000_rgb": {
+        "shape": [
+          5000,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "sampled_display_keep": {
+        "shape": [
+          5000
+        ],
+        "dtype": "bool"
+      },
+      "model_mask_native": {
+        "shape": [
+          120,
+          160,
+          3
+        ],
+        "dtype": "uint8"
+      },
+      "T_world_rgb_anchor": {
+        "shape": [
+          4,
+          4
+        ],
+        "dtype": "float64"
+      }
+    },
+    "wuji_poses.npz": {
+      "observed_q_rad": {
+        "shape": [
+          80,
+          2,
+          20
+        ],
+        "dtype": "float32"
+      },
+      "observed_root_T": {
+        "shape": [
+          80,
+          2,
+          4,
+          4
+        ],
+        "dtype": "float64"
+      },
+      "observed_landmarks_m": {
+        "shape": [
+          80,
+          2,
+          21,
+          3
+        ],
+        "dtype": "float64"
+      },
+      "predicted_q_rad": {
+        "shape": [
+          15,
+          2,
+          20
+        ],
+        "dtype": "float32"
+      },
+      "predicted_root_T": {
+        "shape": [
+          15,
+          2,
+          4,
+          4
+        ],
+        "dtype": "float64"
+      },
+      "future_time_seconds": {
+        "shape": [
+          15
+        ],
+        "dtype": "float64"
+      }
+    }
+  },
+  "video_validation": [
+    {
+      "file": "processing-rgb.mp4",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "h264",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "processing-cloud-before.webm",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    },
+    {
+      "file": "processing-cloud-after.webm",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    },
+    {
+      "file": "processing-sampled.webm",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    },
+    {
+      "file": "processing-mask.mp4",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "h264",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "file": "scene.webm",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    },
+    {
+      "file": "proprio.webm",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    },
+    {
+      "file": "prediction-chunk.webm",
+      "frames": 90,
+      "duration_seconds": 4.5,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    },
+    {
+      "file": "object.webm",
+      "frames": 80,
+      "duration_seconds": 8.0,
+      "codec": "vp9",
+      "width": 960,
+      "height": 720,
+      "alpha_verified": true
+    }
+  ],
+  "packaging": {
+    "media_and_numeric_archives_unchanged": true,
+    "private_paths_included": false,
+    "metadata": "Public metadata uses sequence IDs and checksums. Private source paths, account names, machine paths, and checkpoint locations are omitted.",
+    "duplicate_prediction_archive_omitted": "prediction_chunk.npz duplicates prediction-chunk.npz and is not included."
+  },
+  "assets": [
+    {
+      "path": "cloud-after.png",
+      "bytes": 493702,
+      "sha256": "6975799fc39b0aab4a7c095ac6377d6d844634619f07506313f84757f6996bf2"
+    },
+    {
+      "path": "cloud-before.png",
+      "bytes": 510507,
+      "sha256": "82db97342386df96b3bea69aa2c5f7dd6cb81cd14b958b78baafc9cf541b9684"
+    },
+    {
+      "path": "cloud-sampled.png",
+      "bytes": 75476,
+      "sha256": "78e2639a0527a569237bb4d111238fd2d6bba411a98c3df26a2429c926eaa1ef"
+    },
+    {
+      "path": "model-mask-native.png",
+      "bytes": 671,
+      "sha256": "25318892ae746ce48252c8cb5c1a98fd72bb3b98f43f5ecfac335e67d78ccf22"
+    },
+    {
+      "path": "object-mask.png",
+      "bytes": 5594,
+      "sha256": "79effd7a10be3f532717f012fd630c6997eb97c4b215d9887891b190bcfa6384"
+    },
+    {
+      "path": "object.png",
+      "bytes": 781314,
+      "sha256": "b27fe8af8284ae635cefdeea80bbc2c56b94d64f45e9a7bd00c07a3fc36ed5ad"
+    },
+    {
+      "path": "object.webm",
+      "bytes": 1131404,
+      "sha256": "3abd68be972e53bf2e0ecb8417270522562f183ff855439d9beff43f8cdf12f9"
+    },
+    {
+      "path": "prediction-chunk-final.png",
+      "bytes": 33459,
+      "sha256": "515ae406d42633c61526a4eed49ba8611eb4557ff54b9d2191e676d91f8cfe86"
+    },
+    {
+      "path": "prediction-chunk.png",
+      "bytes": 32982,
+      "sha256": "0edc5d72a09be11f7d1db9e467917a1be46e547690d74e828d9b9ba0084e55f6"
+    },
+    {
+      "path": "prediction-chunk.webm",
+      "bytes": 542167,
+      "sha256": "5ff64403d5ce1248f49e9b526ea9a69506aba212cff1b90000166ec6e8e8b5eb"
+    },
+    {
+      "path": "processing-cloud-after.webm",
+      "bytes": 3146435,
+      "sha256": "711c7f751d202babb2e00cc36ce2765e6c182b9ef2777826f624d2104232ac36"
+    },
+    {
+      "path": "processing-cloud-before.webm",
+      "bytes": 3196725,
+      "sha256": "12b0e3d92a0ea56ae125b176d89f4540379651cd6ba7ba4a10619f8613ad2e31"
+    },
+    {
+      "path": "processing-mask.mp4",
+      "bytes": 214740,
+      "sha256": "cfeeb6c53ec725e75880b34fe998e0aab7559be905ea6a41d0a524af88806234"
+    },
+    {
+      "path": "processing-rgb.mp4",
+      "bytes": 8194342,
+      "sha256": "f69e8e5c48d60c2281cc613441fc284170fc5a02fa52722dd9607e34841b5674"
+    },
+    {
+      "path": "processing-sampled.webm",
+      "bytes": 12029109,
+      "sha256": "f566322ffe4219b4b1efbf8aaede8084d4b44473a65e1b05d1e46392cdf67f6a"
+    },
+    {
+      "path": "proprio.png",
+      "bytes": 30786,
+      "sha256": "4f8eaaccfe90fa92128eb6dd1f7ea8532d029b366926f0ed418f31077866822e"
+    },
+    {
+      "path": "proprio.webm",
+      "bytes": 535863,
+      "sha256": "70552928801c0ef485716e244bf790c3d7ed146914ac2bb039c1c7fd3ec66d1c"
+    },
+    {
+      "path": "record-rgb.png",
+      "bytes": 1000594,
+      "sha256": "ce1b585ebe501ffc9eb80bfc6fee28cd8137b4d8ff1891d1f2bc056232de06cf"
+    },
+    {
+      "path": "scene.png",
+      "bytes": 493702,
+      "sha256": "6975799fc39b0aab4a7c095ac6377d6d844634619f07506313f84757f6996bf2"
+    },
+    {
+      "path": "scene.webm",
+      "bytes": 3146435,
+      "sha256": "711c7f751d202babb2e00cc36ce2765e6c182b9ef2777826f624d2104232ac36"
+    },
+    {
+      "path": "prediction-chunk.npz",
+      "bytes": 28296,
+      "sha256": "ff2398402591f10234c5ceaaee5f34844ceb73ec1fd6d970825f7ffea49f7e38"
+    },
+    {
+      "path": "model-inputs.npz",
+      "bytes": 5970316,
+      "sha256": "79db347160d481f7b3ebec96a351ab6c7f6c7bc628e56bd21578b9f5411c4132"
+    },
+    {
+      "path": "anchor_scene.npz",
+      "bytes": 9593575,
+      "sha256": "e0e48aa53463e9d5bb298ab7d4165655bf9ffe9cfdfe29f07127d0cc731f08bb"
+    },
+    {
+      "path": "wuji_poses.npz",
+      "bytes": 108891,
+      "sha256": "2e04088b0b3e7cbae7d2133d1e849aaf26208340f04fcae70aec1785e8e93877"
+    },
+    {
+      "path": "camera.json",
+      "bytes": 808,
+      "sha256": "199019e7404ba5bb69e9bbdac9794e5b42a3c2e55f9b20761af2864e95ee1785"
+    }
+  ]
+}

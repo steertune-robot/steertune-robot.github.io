@@ -1,0 +1,61 @@
+/* Quiet moving filmstrips, with the dataset's scale kept separate from the imagery. */
+.dataset-layout { display:grid; grid-template-columns:minmax(0,2.2fr) minmax(260px,1fr); gap:48px; align-items:center; }
+.dataset-gallery { min-width:0; margin:0; }
+.dataset-toolbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:16px; color:var(--green); }
+.dataset-toolbar span,.dataset-toolbar button,.dataset-gallery figcaption { font:400 var(--type-label)/1.5 var(--serif); }
+.dataset-toolbar button { border:0; background:none; color:var(--green); padding:8px 0 8px 14px; min-height:44px; cursor:pointer; white-space:nowrap; }
+.dataset-toolbar button::before { content:'Ⅱ'; display:inline-block; width:20px; }
+.dataset-toolbar button[aria-pressed=true]::before { content:'▷'; }
+.dataset-toolbar button:focus-visible { outline:2px solid var(--green); outline-offset:5px; }
+.dataset-cloud { display:flex; flex-direction:column; gap:12px; overflow:hidden; padding:10px 0; isolation:isolate; }
+.dataset-rail { display:flex; flex:none; gap:12px; width:max-content; animation:dataset-pan var(--duration,48s) linear infinite alternate; animation-delay:var(--delay,0s); will-change:transform; }
+.dataset-rail:nth-child(even) { animation-direction:alternate-reverse; }
+.dataset-tile { position:relative; flex:0 0 152px; width:152px; aspect-ratio:4/3; overflow:hidden; border-radius:0; background:#e7e9df; }
+.dataset-tile video { display:block; width:100%; height:100%; object-fit:contain; }
+.dataset-cloud[data-paused=true] .dataset-rail { animation-play-state:paused; }
+.dataset-gallery figcaption { margin-top:14px; color:var(--muted); }
+.dataset-stats { margin:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 20px; }
+.dataset-stats > div { display:flex; flex-direction:column; min-width:0; }
+.dataset-stats > div:first-child { grid-column:1 / -1; margin-bottom:10px; }
+.dataset-stats dt { order:2; color:var(--muted); font:400 var(--type-label)/1.5 var(--serif); }
+.dataset-stats dd { margin:0 0 6px; color:var(--green); font:500 40px/1.05 var(--heading); font-variant-numeric:lining-nums; letter-spacing:-.025em; }
+.dataset-stats > div:first-child dd { font-size:88px; }
+.dataset-stats > div:first-child dt { font-size:var(--type-body); }
+.dataset-capture { margin:32px 0 0; color:var(--muted); font:400 var(--type-label)/1.5 var(--serif); }
+.dataset-capture strong { display:block; color:var(--green); font-weight:500; }
+.dataset-capture a { display:inline-block; margin-top:14px; }
+@keyframes dataset-pan { from { transform:translateX(0); } to { transform:translateX(calc(-1 * var(--travel,0px))); } }
+@media(hover:hover) and (pointer:fine) { .dataset-cloud:hover .dataset-rail { animation-play-state:paused; } }
+@media(max-width:900px) {
+ .dataset-layout { gap:28px; grid-template-columns:minmax(0,1.8fr) minmax(240px,1fr); }
+ .dataset-stats { gap:24px 14px; }
+ .dataset-stats dd { font-size:36px; }
+ .dataset-stats > div:first-child dd { font-size:76px; }
+}
+@media(max-width:760px) {
+ .dataset-layout { grid-template-columns:minmax(0,1fr); gap:28px; }
+ .dataset-tile { flex-basis:128px; width:128px; }
+ .dataset-cloud,.dataset-rail { gap:10px; }
+ .dataset-stats { grid-template-columns:1.2fr 1fr 1fr; gap:16px; }
+ .dataset-stats > div:first-child { grid-column:auto; margin-bottom:0; }
+ .dataset-stats > div:first-child dd { font-size:44px; }
+ .dataset-stats dd { font-size:40px; }
+ .dataset-stats > div:first-child dt { font-size:var(--type-label); }
+ .dataset-capture { margin-top:24px; }
+ .dataset-capture strong { display:inline; margin-right:8px; }
+ .dataset-capture a { margin-top:6px; }
+}
+@media(max-width:480px) {
+ .dataset-toolbar { flex-wrap:wrap; gap:0 16px; margin-bottom:8px; }
+ .dataset-toolbar button { padding-left:0; }
+ .dataset-tile { flex-basis:112px; width:112px; }
+ .dataset-stats { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+ .dataset-stats > div:first-child { grid-column:1 / -1; }
+ .dataset-stats > div:first-child dd { font-size:64px; }
+ .dataset-stats dd { font-size:40px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .dataset-cloud { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); }
+ .dataset-rail { display:contents; animation:none; }
+ .dataset-tile { width:100%; }
+}

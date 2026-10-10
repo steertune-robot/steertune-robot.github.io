@@ -1,0 +1,35 @@
+{
+  "eye": [
+    -0.1321038440074358,
+    -0.05917016346195156,
+    -1.6903214901669816
+  ],
+  "target": [
+    0.017896155992564194,
+    0.16082983653804844,
+    0.3096785098330185
+  ],
+  "right": [
+    0.9971993098884563,
+    0.0,
+    -0.07478994824163421
+  ],
+  "up": [
+    0.008154938616211272,
+    -0.9940375934457527,
+    0.10873251488281696
+  ],
+  "forward": [
+    0.0743440201640465,
+    0.10903789624060155,
+    0.9912536021872868
+  ],
+  "fovy_degrees": 15.609063025098997,
+  "size": [
+    960,
+    720
+  ],
+  "background": "#fcf8f3",
+  "coordinates": "Metres in fixed RGB camera frame at clip 4.0 seconds; head motion removed from observed hand and cloud display.",
+  "framing": "Fixed camera fitted to full observed and predicted hand envelope with margin; shared by all cloud and hand renders."
+}

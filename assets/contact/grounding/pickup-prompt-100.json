@@ -1,0 +1,1 @@
+{"frame": 100, "method": "Fresh SAM3 instance inference with visually reviewed bread box/positive point; background excludes plate", "box": [405.0, 316.0, 455.0, 363.0], "points": [[431.0, 332.0], [456.0, 330.0], [447.0, 369.0]], "labels": [1, 0, 0], "scores": [0.81640625, 0.90625, 0.9140625], "selected": 2, "area": 1769}

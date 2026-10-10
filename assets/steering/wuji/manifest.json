@@ -1,0 +1,101 @@
+{
+  "source": "Project-provided Wuji MJCF and STL visual geometry from yor-description",
+  "license_status": "The source YOR repository carries the MIT License, copyright 2026 NYU Generalizable Robotics and AI Lab (GRAIL), included as YOR-LICENSE.txt. No separate Wuji mesh notice was found. No independent third-party geometry rights audit is asserted.",
+  "scope": "Final human-landmark predictions retargeted offline by the project Wuji analytical retargeter. Not robot encoder measurements, physical execution, or intermediate diffusion geometry.",
+  "retargeting": "Existing h2r retarget_final.py: reset per pose; apply_filter=False; 20 joint angles per hand; root orientation from the project hand-frame estimator and OPERATOR2MANO transform.",
+  "sequences": [
+    "steered_final_landmarks_m",
+    "demo_clean_aligned_m",
+    "unsteered_final_landmarks_m"
+  ],
+  "poses_per_sequence": 15,
+  "hands_per_pose": 2,
+  "geometry": {
+    "triangles": 110770,
+    "buffer_bytes": 1997736,
+    "processing": "Exact float32 triangle positions retained; vertices deduplicated without quantization. Shared indexed geometry; normals recalculated for shading. Collision duplicates excluded."
+  },
+  "kinematics": "Original MJCF body transforms, normalized WXYZ quaternions, joint axes, and recorded joint angles. Joint ordering is finger1_joint1..4, then fingers2..5. No clamping or new retargeting.",
+  "validation": {
+    "fk_compared_against": "MuJoCo forward kinematics for all 15 poses, both hands, and all three sequences",
+    "max_body_position_error_m": 8.326672684688674e-17,
+    "max_body_rotation_matrix_error": 1.2212453270876722e-15,
+    "indexed_triangle_vertices_equal_original_stl_exactly": true,
+    "local_mjcf_and_mesh_sha256_match_h2r_sources": true
+  },
+  "source_sha256": {
+    "wuji_mjcf/left.xml": "7ce10b3c17729eef75b57e97b4f239369dac7f3dc97cdce7956e353e91892f51",
+    "wuji_meshes/left/left_palm_link.STL": "5a16d3510b49444857cc829a18202ce8bf62a129c20684190ccaedb545992298",
+    "wuji_meshes/left/left_finger1_link1.STL": "ef6226834aafe36a718c3bdedd6a8a53ac076d833f4c989c4259fe111098426e",
+    "wuji_meshes/left/left_finger1_link2.STL": "4b95c67bfb2d87a9f0bd6ab1cafcad27229eecdd7d22510681f1d394d4249e7c",
+    "wuji_meshes/left/left_finger1_link3.STL": "2a6ba5a4d292b33a972760cd2e536e3bb0b7ff11f3ba070d2ff6b9a4a347e9cb",
+    "wuji_meshes/left/left_finger1_link4.STL": "bcb512d59797e4da81d166c7118197a5f5c6b397091617ca189a56dbbd9b74c9",
+    "wuji_meshes/left/left_finger1_tip_link.STL": "83c92a6c07f7c3c9833d56c4cc2d4fc29d691ff458a75d766f16668aa3b7a906",
+    "wuji_meshes/left/left_finger2_link1.STL": "afb3cd29a430e31e1c972b0165f942e95e56e33da80fc234b5c474231f00ce63",
+    "wuji_meshes/left/left_finger2_link2.STL": "02c12143eabd598559b9893ba7e8642b2510abd25fa06d968c8183e625f19ec5",
+    "wuji_meshes/left/left_finger2_link3.STL": "764426f6623a6809565954770980dccfe5694d7c822b3035c75e3fad14712601",
+    "wuji_meshes/left/left_finger2_link4.STL": "32419448505112baa15a7c39613051bdb463cf0e0f235ce5583c582151c9aa4b",
+    "wuji_meshes/left/left_finger2_tip_link.STL": "ef47c5b835948311609616142247f6e764adf2fc1e060d620f64fd19efef9458",
+    "wuji_meshes/left/left_finger3_link1.STL": "92839a1448fad363032f9a2cff0e660846a89ff15cf1233ab88e0adab5670466",
+    "wuji_meshes/left/left_finger3_link2.STL": "b538ab9ce27e19931553f2ef2b001788cf75bd7503bf955febc3acc96b9f3074",
+    "wuji_meshes/left/left_finger3_link3.STL": "795ecf9b1fe67da36cea333d47bce7e7dc8339c058d9d6dc6dd954c93beb3ba6",
+    "wuji_meshes/left/left_finger3_link4.STL": "e2428e5723d829567c1905d0253a38075081472f1cf5b6a91622ccc23b66a915",
+    "wuji_meshes/left/left_finger3_tip_link.STL": "36b33404458a39a8e87dcc2e842f3d2679439f2a02dce37d441304060e6a235b",
+    "wuji_meshes/left/left_finger4_link1.STL": "34372b6d907d7a8d0b9c7ab776398b9b9ea034ba05a6e17bbd5cb4eb7ee26e1d",
+    "wuji_meshes/left/left_finger4_link2.STL": "d51b96912a9e127abdf89e5673ecaad6db373817b3cc85bd6bbc077dcff3b374",
+    "wuji_meshes/left/left_finger4_link3.STL": "18d23d11f4b8735bbc0a790a3d4493eeb0389afdbdc44665f77e4c6d604c16fb",
+    "wuji_meshes/left/left_finger4_link4.STL": "592c269cd9a47569084028096d3413289e68d3888cc756cb3d092674e137fdff",
+    "wuji_meshes/left/left_finger4_tip_link.STL": "67995957f5082af59a3d8745f435adc44133446b1574b7cfacf07ed02ff7aa09",
+    "wuji_meshes/left/left_finger5_link1.STL": "2ddd53a41d441fb1763585ddd031aaef1f30718f1afff3607c08a8065214d96b",
+    "wuji_meshes/left/left_finger5_link2.STL": "09f0d2e932c41f9aa678ff80d5f7a612e43f7d14b12ef38cd98bc330a11f5ed1",
+    "wuji_meshes/left/left_finger5_link3.STL": "2550cb770eba8132cab3208c10b6891de17b05c051555dea79dbb9e8dac2b011",
+    "wuji_meshes/left/left_finger5_link4.STL": "3f095a1ca1733b4769121a3be424ebfdc450a2c384623d079f9c159c4c8b0200",
+    "wuji_meshes/left/left_finger5_tip_link.STL": "6955f23515b68a893b6e1c9de7067c4852224e1cc8413211a948ec4c09dbf5aa",
+    "wuji_mjcf/right.xml": "8d490c38da053cb5ebfbf7b5c16a6e01ab1e71b54b00edfcf92b5ba278d8aacf",
+    "wuji_meshes/right/right_palm_link.STL": "1ba4495e3b7adc707d50150a8625a0ed3731fa42ab6d40e62ae7437da103ce5e",
+    "wuji_meshes/right/right_finger1_link1.STL": "0e32302a46cd00d6cc1e7fb03cc483988c639271708c2300a9aecc9de537e42b",
+    "wuji_meshes/right/right_finger1_link2.STL": "080015cce41de31954e53bbfca45f37f0439e2e689bca49e1910c70efc4f70b7",
+    "wuji_meshes/right/right_finger1_link3.STL": "52eef283d29c617fe4457151685386324bddbccf1598b8a7fc675bb8f28dc85a",
+    "wuji_meshes/right/right_finger1_link4.STL": "f0fb321c4abfd4ab7437caeb116f1935b94d1510fd921222eb49ba6c5a57f057",
+    "wuji_meshes/right/right_finger1_tip_link.STL": "25929e0c28a5c65afe88dbccaa697664a2385f8ead02126731a7e1b956ec1dea",
+    "wuji_meshes/right/right_finger2_link1.STL": "36e0471a0373a7634fc10911b33f3b30a5fe829f6526e656a911406cebf19731",
+    "wuji_meshes/right/right_finger2_link2.STL": "56bb1972b8cb1d63d48aa18283148ff6760e387dc64fe963b11209e07e243511",
+    "wuji_meshes/right/right_finger2_link3.STL": "48d70e865e2b49139028511808ae3ad25c5cf06e36fe959c6c71b5263dfcbbde",
+    "wuji_meshes/right/right_finger2_link4.STL": "3eede2c8e1eb1301bc23b4b453fb7014ca5965611b44b115a7330bf33e4d922e",
+    "wuji_meshes/right/right_finger2_tip_link.STL": "496039ce3f4f3fbe6bac466a01567797f741af95c6f11dc61626ec2de175900b",
+    "wuji_meshes/right/right_finger3_link1.STL": "558fac18be219c0e6bb6224b82c711b3efe762b547818ea074eda93dc38bad07",
+    "wuji_meshes/right/right_finger3_link2.STL": "338db71e2c1ec63fba860d5d2af52bcb1daff72349b0e03a45f82ae63539bd43",
+    "wuji_meshes/right/right_finger3_link3.STL": "3af337085d5f6430a471462c18b9132f1447eb8c0f3c68a8b1e69318ff8c3db8",
+    "wuji_meshes/right/right_finger3_link4.STL": "3b8efa21bafcae21119f243decf924dac51cc55181ed540e69ce6b85ecf03790",
+    "wuji_meshes/right/right_finger3_tip_link.STL": "7a99f65a6a473899913d4273e61319e3724fbf81ac8532969ed5c2ff1c1bde54",
+    "wuji_meshes/right/right_finger4_link1.STL": "508321fefaeae1ae0567f89acd2492fac27cc468a2f562d895afcff192b0d00c",
+    "wuji_meshes/right/right_finger4_link2.STL": "e0b28769389c33af6af73c6dbf506be126570fa6ca7cbaf08f85a51005c48cde",
+    "wuji_meshes/right/right_finger4_link3.STL": "b01668bab452260954faf8cbff94fb59c55ccb3e490ff6eb4b73e81e550c787f",
+    "wuji_meshes/right/right_finger4_link4.STL": "d673bf02761f722728eb1ee0e7cc79ee6afba7693c78f623c3a4a89d5a905453",
+    "wuji_meshes/right/right_finger4_tip_link.STL": "e8b1fbee8e019afe490e820b1cba5e02c5124bb4a09aa73896bd46db6586dfde",
+    "wuji_meshes/right/right_finger5_link1.STL": "85ce22b8285a7d85e4c866151c972cde0736d4f618f35015b0b96fe39e367e49",
+    "wuji_meshes/right/right_finger5_link2.STL": "9245362396a184e63af8d2707dc85a3250f1d7db4eeb079d5b3ee9b432939dd6",
+    "wuji_meshes/right/right_finger5_link3.STL": "1083dcec6df545d60c3f14af1113613ca89cc8964692dd624baa750491915f40",
+    "wuji_meshes/right/right_finger5_link4.STL": "6342d4562a8bfaef740850c02dc5418ade11dcbe04736b957d93522995080f35",
+    "wuji_meshes/right/right_finger5_tip_link.STL": "ebbf48ca7ba3bca5f329f95277ae392d0c1a09615eda23f1bf646c5112a38cee"
+  },
+  "pose_source_sha256": "8f3ec2d82d4780553d186f96573c2c731d0c38bc04006083384d1d7ec4f6a6f5",
+  "assets": {
+    "geometry.bin": {
+      "bytes": 1997736,
+      "sha256": "d61ccb51773b4a11602220be623506a177d4eb01ff20c7c8c774e0bbbb4e253d"
+    },
+    "model.json": {
+      "bytes": 20283,
+      "sha256": "adb7932dc27e5340a5a7490057ebf0fb5e3c03b209ce6cbd48bc57aa90e395d2"
+    },
+    "poses.json": {
+      "bytes": 49417,
+      "sha256": "8f3ec2d82d4780553d186f96573c2c731d0c38bc04006083384d1d7ec4f6a6f5"
+    },
+    "YOR-LICENSE.txt": {
+      "bytes": 1102,
+      "sha256": "c5614f2265aac587e11c35e1a8e4d585e6eeef24725f5ffb12de0e8e332d19b2"
+    }
+  }
+}

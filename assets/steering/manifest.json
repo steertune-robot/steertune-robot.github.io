@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "source": "Recorded flower-watering observation and fresh offline sampling with an existing task adapter",
+  "query_session": "flower_watering_1",
+  "query_anchor": 65,
+  "query_raw_frame": 65,
+  "selected_demo_session": "flower_watering_5",
+  "selected_demo_cursor": 56.0,
+  "base_checkpoint_training_step": 1000000,
+  "existing_adapter_training_steps": 2000,
+  "adapter_rank": 16,
+  "adapter_alpha": 32.0,
+  "adapter_training_sessions": [
+    "flower_watering_1",
+    "flower_watering_2",
+    "flower_watering_3",
+    "flower_watering_4",
+    "flower_watering_5"
+  ],
+  "seed": 20261009,
+  "steering_weight": 0.3,
+  "same_initial_noise": true,
+  "same_first_epsilon": true,
+  "scheduler_timesteps": [
+    84,
+    72,
+    60,
+    48,
+    36,
+    24,
+    12,
+    0
+  ],
+  "scheduler_config": {
+    "num_train_timesteps": 100,
+    "beta_start": 0.0001,
+    "beta_end": 0.02,
+    "beta_schedule": "squaredcos_cap_v2",
+    "trained_betas": null,
+    "clip_sample": false,
+    "set_alpha_to_one": true,
+    "steps_offset": 0,
+    "prediction_type": "epsilon",
+    "thresholding": false,
+    "dynamic_thresholding_ratio": 0.995,
+    "clip_sample_range": 1.0,
+    "sample_max_value": 1.0,
+    "timestep_spacing": "leading",
+    "rescale_betas_zero_snr": false,
+    "_use_default_values": [
+      "rescale_betas_zero_snr",
+      "clip_sample_range",
+      "trained_betas",
+      "timestep_spacing",
+      "dynamic_thresholding_ratio",
+      "thresholding",
+      "sample_max_value"
+    ]
+  },
+  "coordinates": "Metric XYZ in the query anchor RGB-camera frame; negative camera Y is the displayed up direction",
+  "normalization": {
+    "formula": "normalized = metric * scale + offset; metric = (normalized - offset) / scale",
+    "scale": [
+      0.4534163177013397,
+      0.5899458527565002,
+      0.4090272784233093
+    ],
+    "offset": [
+      -0.03578432276844978,
+      0.023668209090828896,
+      -0.4431038498878479
+    ]
+  },
+  "action_shape": [
+    15,
+    52,
+    3
+  ],
+  "scene_points": 40000,
+  "scene_colors": "Recorded RGB 0..255 divided by 255, rounded to six decimal places",
+  "scene_crop": "None: all 40,000 supplied scene points retained. Fixed camera frames final hand motion and the retrieved task-cluster center.",
+  "topology": {
+    "convention": "Aria21 hand blocks at offsets 0 and 28",
+    "wrists": [
+      5,
+      33
+    ],
+    "edges": [
+      [
+        5,
+        6
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        5,
+        8
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        9,
+        10
+      ],
+      [
+        10,
+        1
+      ],
+      [
+        5,
+        11
+      ],
+      [
+        11,
+        12
+      ],
+      [
+        12,
+        13
+      ],
+      [
+        13,
+        2
+      ],
+      [
+        5,
+        14
+      ],
+      [
+        14,
+        15
+      ],
+      [
+        15,
+        16
+      ],
+      [
+        16,
+        3
+      ],
+      [
+        5,
+        17
+      ],
+      [
+        17,
+        18
+      ],
+      [
+        18,
+        19
+      ],
+      [
+        19,
+        4
+      ],
+      [
+        8,
+        11
+      ],
+      [
+        11,
+        14
+      ],
+      [
+        14,
+        17
+      ],
+      [
+        33,
+        34
+      ],
+      [
+        34,
+        35
+      ],
+      [
+        35,
+        28
+      ],
+      [
+        33,
+        36
+      ],
+      [
+        36,
+        37
+      ],
+      [
+        37,
+        38
+      ],
+      [
+        38,
+        29
+      ],
+      [
+        33,
+        39
+      ],
+      [
+        39,
+        40
+      ],
+      [
+        40,
+        41
+      ],
+      [
+        41,
+        30
+      ],
+      [
+        33,
+        42
+      ],
+      [
+        42,
+        43
+      ],
+      [
+        43,
+        44
+      ],
+      [
+        44,
+        31
+      ],
+      [
+        33,
+        45
+      ],
+      [
+        45,
+        46
+      ],
+      [
+        46,
+        47
+      ],
+      [
+        47,
+        32
+      ],
+      [
+        36,
+        39
+      ],
+      [
+        39,
+        42
+      ],
+      [
+        42,
+        45
+      ]
+    ],
+    "omitted_non_hand_geometry": "Wrist-axis endpoints and head-frame points are not rendered as hand bones"
+  },
+  "fields": {
+    "steps.steered": "steered_post_blend_metric_embedding",
+    "steps.model": "steered_ddim_updated_metric_embedding",
+    "steps.demo": "Inverse-normalized steered_demo_at_next_noise_level_normalized",
+    "steps.cleanEstimate": "steered_scheduler_pred_original_sample_metric_embedding",
+    "demo": "demo_clean_aligned_m",
+    "baseline": "unsteered_final_landmarks_m",
+    "observation": "observed_landmarks_m",
+    "scene.positions": "scene_xyz_m",
+    "scene.colors": "scene_rgb / 255"
+  },
+  "state_interpretation": "Only the final post-blend state is the final action prediction. Earlier metric embeddings of noisy states can be nonphysical; scheduler clean estimates are estimates, not separate executed trajectories. No values are clipped into plausible hands.",
+  "timing": {
+    "chunk_stride_source_frames": 3,
+    "verified_source_fps": 10,
+    "pose_interval_seconds": 0.3,
+    "description": "Saved poses are separated by 3 source frames at 10 Hz.",
+    "source_timestamp_verification": {
+      "nominal_source_fps": 10,
+      "source": "raw_stream/frames.npz:ts_ns_rgb; preprocessed/kept_frame_indices.npy",
+      "median_rgb_frame_interval_seconds": 0.099999115,
+      "query_raw_anchor": 65,
+      "query_horizon_raw_frames": [
+        66,
+        69,
+        72,
+        75,
+        78,
+        81,
+        84,
+        87,
+        90,
+        93,
+        96,
+        99,
+        102,
+        105,
+        108
+      ],
+      "query_horizon_offsets_seconds": [
+        0.099999115,
+        0.399996458,
+        0.699993803,
+        0.999991146,
+        1.299988489,
+        1.599985782,
+        1.899983125,
+        2.19998047,
+        2.499977761,
+        2.799975104,
+        3.099972449,
+        3.400107178,
+        3.700104521,
+        4.000101866,
+        4.300099157
+      ],
+      "verified": "All 133 recorded frames retained; sensor timestamps support nominal 10 Hz and stride 3."
+    }
+  },
+  "limitations": [
+    "Query session excluded from retrieval bank, but included in the five sessions that trained this LoRA; not a held-out evaluation.",
+    "Existing task adapter is rank 16 / alpha 32, not manuscript rank 8 / alpha 16.",
+    "Runtime geometric object-cluster layout retrieval, not a new SAM3 object segmentation run.",
+    "Offline phase alignment uses global wrist/hand-shape search at this one recorded observation; not robot feedback.",
+    "Constant scalar w=.3 requested; phase-dependent deployment weighting and RTC are disabled.",
+    "The recorded model object-mask tensor is all zero; no new segmentation or object-mask point subset is displayed.",
+    "Scene is measured geometry. Hands show predicted human landmarks, not a retargeted robot or physical robot execution.",
+    "Animations may interpolate between stored samples for display; no added inference samples are claimed."
+  ],
+  "validation": {
+    "all_arrays_finite": true,
+    "max_normalized_blend_error": 0.0,
+    "max_inverse_normalization_error_m": 0.0,
+    "final_state_equals_saved_final_exactly": true,
+    "max_export_rounding_error_m": 4.999942779582156e-06,
+    "final_hand_edge_lengths_m": {
+      "minimum": 0.015499746426939964,
+      "maximum": 0.0914311558008194,
+      "median": 0.023987362161278725
+    }
+  },
+  "camera": {
+    "position": [
+      -0.3062962,
+      -0.2007394,
+      -0.5793286
+    ],
+    "target": [
+      0.0482608,
+      0.0762583,
+      0.4289428
+    ],
+    "up": [
+      0,
+      -1,
+      0
+    ]
+  },
+  "camera_focus_bounds_m": [
+    [
+      -0.17588954391906436,
+      -0.1594968340213266,
+      0.2179984333600483
+    ],
+    [
+      0.27241113315277926,
+      0.3120133910563316,
+      0.6398872636693494
+    ]
+  ],
+  "source_checksums": {
+    "trace_full_precision.npz": "613063df210c66c6ef65462aeded88b4a31159b44ad5d5c171ed4b1cb8a64ca3",
+    "preparation.json": "ac952b6ec0d4d35c562b54e824b475a44f3cb44c1927875dbea7023a423e5c22",
+    "run_report.json": "64dd3c9936ab3b815ddca42aa6f25a92586013cbdbef11da24e30770065f38bf",
+    "inference_implementation": "d31244c3317997f8f0d3f8cdaff927e8cb2c58ef4f669c184d44c2f741498e00",
+    "observation_inputs": "44976571219cc00418293ec8a1cf6aef378782dcd49b55e953d3033aefeffb73"
+  },
+  "assets": {
+    "scene.json": {
+      "bytes": 2738677,
+      "sha256": "88856accfa5d3026a829c7f3da23fec81f47193619c781092f3a8e16187a94a9"
+    }
+  }
+}

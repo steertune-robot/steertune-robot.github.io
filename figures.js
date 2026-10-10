@@ -3,109 +3,6 @@
   const figures = [...document.querySelectorAll("[data-science-figure]")];
   if (!figures.length) return;
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const states = new Map();
-  // Media are loaded only near the viewport and pause when offscreen or hidden.
-  for (const figure of figures) {
-    const button = figure.querySelector("[data-motion-toggle]");
-    if (!button) continue;
-    const state = {
-      figure,
-      button,
-      visible: false,
-      paused: reducedMotion.matches,
-      videos: [...figure.querySelectorAll("[data-figure-video]")],
-    };
-    states.set(figure, state);
-    button.hidden = false;
-    button.addEventListener("click", () => {
-      state.paused = !state.paused;
-      updateMotion(state);
-    });
-    for (const detail of figure.querySelectorAll("details"))
-      detail.addEventListener("toggle", () => updateMotion(state));
-    for (const video of state.videos) {
-      video.addEventListener("error", () => {
-        video.classList.add("media-unavailable");
-      });
-    }
-    updateMotion(state);
-  }
-  function updateMotion(state) {
-    const playing = state.visible && !state.paused && !document.hidden;
-    state.figure.classList.toggle("is-playing", playing);
-    state.button.setAttribute("aria-pressed", String(state.paused));
-    state.button.querySelector("[data-motion-label]").textContent = state.paused
-      ? "Play example clips"
-      : "Pause example clips";
-    state.button.querySelector("[data-motion-icon]").textContent = state.paused
-      ? "▷"
-      : "Ⅱ";
-    for (const video of state.videos) {
-      if (
-        playing &&
-        (!video.closest("details") || video.closest("details").open)
-      ) {
-        const source = video.querySelector("source[data-src]");
-        if (source) {
-          source.src = source.dataset.src;
-          source.removeAttribute("data-src");
-          video.load();
-        }
-        video.play().catch(() => {
-          /* Poster remains available when autoplay is blocked. */
-        });
-      } else video.pause();
-    }
-  }
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const state = states.get(entry.target);
-          state.visible = entry.isIntersecting;
-          updateMotion(state);
-        }
-      },
-      { threshold: 0.08 },
-    );
-    for (const figure of states.keys()) observer.observe(figure);
-  } else
-    for (const state of states.values()) {
-      state.visible = true;
-      updateMotion(state);
-    }
-  document.addEventListener("visibilitychange", () => {
-    for (const state of states.values()) updateMotion(state);
-  });
-  reducedMotion.addEventListener("change", () => {
-    for (const state of states.values()) {
-      state.paused = reducedMotion.matches;
-      updateMotion(state);
-    }
-  });
-  // All four modality exports share the same eight-second timeline.
-  const overviewState = states.get(document.getElementById("policy-figure"));
-  if (overviewState?.videos.length) {
-    const leader = overviewState.videos[0];
-    leader.addEventListener("timeupdate", () => {
-      if (!overviewState.figure.classList.contains("is-playing")) return;
-      const frame = Math.min(79, Math.floor(leader.currentTime * 10));
-      const instruction =
-        frame < 13 || frame > 75
-          ? "pouring food from pot into bowl"
-          : "transferring food from pot to bowl";
-      overviewState.figure.querySelector(
-        "[data-example-instruction]",
-      ).textContent = instruction;
-      for (const video of overviewState.videos.slice(1)) {
-        if (
-          video.readyState >= 2 &&
-          Math.abs(video.currentTime - leader.currentTime) > 0.22
-        )
-          video.currentTime = leader.currentTime;
-      }
-    });
-  }
   const stages = [
     {
       input: "record-rgb.png",
@@ -115,60 +12,48 @@
       output: "proprio.png",
       outputVideo: "proprio.webm",
       outputAlt: "Observed human hand landmarks retargeted to Wuji geometry",
-      outputCaption: "Observed hand pose · Wuji rendering",
+      outputCaption: "Tracked hands · Wuji rendering",
       eyebrow: "01 · Aria Gen 2",
       title: "Synchronized observation",
-      copy: "RGB, stereo, hand tracking, and head pose at 10 Hz.",
+      copy: "Record the scene and hand motion on the same timeline.",
       stat: "10 Hz",
       spec: "One common timeline",
     },
     {
-      input: "cloud-before.png",
-      inputVideo: "processing-cloud-before.webm",
-      inputAlt: "Measured point cloud before hand and arm removal",
-      inputCaption: "Before hand / arm removal",
-      output: "cloud-after.png",
-      outputVideo: "processing-cloud-after.webm",
-      outputAlt: "The same point cloud after removing annotated hands and arms",
-      outputCaption: "After hand / arm removal",
-      eyebrow: "02 · Contact-based segmentation",
-      title: "Remove body & segment",
-      copy: "Remove hands and arms. Stable contact within 5 cm defines a snippet.",
-      stat: "<5 cm",
-      spec: "Hand–scene contact",
+      assetBase: "assets/contact/processing/",
+      duration: 4.8,
+      input: "rgb.png", inputVideo: "rgb.mp4",
+      inputAlt: "Bread placement interaction from the same oven recording",
+      inputCaption: "Scene with hands",
+      output: "cloud.png", outputVideo: "cloud.webm",
+      outputAlt: "Matching measured scene geometry after recorded hand and arm removal",
+      outputCaption: "Hands removed",
+      copy: "Remove hands and arms.",
     },
     {
-      input: "record-rgb.png",
-      inputVideo: "processing-rgb.mp4",
-      inputAlt: "Original RGB frame matching the binary object annotation",
-      inputCaption: "Original RGB · matching crop",
-      output: "object-mask.png",
-      outputVideo: "processing-mask.webm",
-      outputAlt: "Binary mask of the manipulated object",
-      outputCaption: "Binary object mask",
-      eyebrow: "03 · Language & object grounding",
-      title: "Object grounding",
-      copy: "A task instruction and tracked object mask describe each snippet.",
-      stat: "48.7k",
-      spec: "Generated instructions",
+      assetBase: "assets/contact/processing/",
+      duration: 4.8,
+      input: "rgb.png", inputVideo: "rgb.mp4",
+      inputAlt: "Selected bread pickup and placement interaction clip",
+      inputCaption: "Interaction clip",
+      output: "overlay.png", outputVideo: "overlay.mp4",
+      outputAlt: "The bread mask highlighted in green over the matching clip frame",
+      outputCaption: "Bread mask",
+      copy: "Bread mask + “put the bread into the oven.”",
     },
     {
-      input: "cloud-after.png",
-      inputVideo: "processing-cloud-after.webm",
-      inputAlt: "Dense cloud after hand and arm removal",
-      inputCaption: "Dense cloud · detail view",
-      output: "cloud-sampled.png",
-      outputVideo: "processing-sampled.webm",
-      outputAlt: "Detail view of the saved 5000-point model input sample",
-      outputCaption: "5,000-point input · detail view",
-      eyebrow: "04 · A common camera frame",
-      title: "Camera-frame alignment",
-      copy: "Crop and sample 5,000 points; align observations and actions to the anchor camera.",
-      stat: "5,000",
-      spec: "Sampled scene points",
+      assetBase: "assets/contact/processing/",
+      duration: 4.8,
+      input: "cloud.png", inputVideo: "cloud.webm",
+      inputAlt: "Recorded 40000-point scene cloud in the matching RGB camera view",
+      inputCaption: "40,000 points",
+      output: "sampled.png", outputVideo: "sampled.webm",
+      outputAlt: "5000 measured points sampled from the same scene cloud",
+      outputCaption: "5,000 points",
+      copy: "Align geometry and motion; sample 5,000 points.",
     },
   ];
-  const processing = document.getElementById("processing-figure");
+  for (const processing of document.querySelectorAll("[data-processing-player]")) {
   const tabs = [...processing.querySelectorAll("[data-process-stage]")];
   const processClips = ["input", "output"].map((side) =>
     processing.querySelector(`[data-process-${side}]`),
@@ -184,14 +69,14 @@
     visible: false,
     paused: reducedMotion.matches,
     time: 0,
-    duration: 8,
+    duration: stages[Number(processing.dataset.processStage || 0)].duration || 8,
     version: 0,
     pendingSeek: true,
     starting: false,
     failed: false,
     frame: 0,
   };
-  const formatProcessTime = (time) => `0:${String(Math.floor(time)).padStart(2, "0")}`;
+  const formatProcessTime = (time) => `0:${time.toFixed(1).padStart(4, "0")}`;
   function processCanPlay() {
     return processState.visible && !processState.paused && !document.hidden;
   }
@@ -325,6 +210,7 @@
   }
   function selectStage(index) {
     const stage = stages[index];
+    const assetBase = stage.assetBase || "assets/figures/";
     if (hasProcessVideo) {
       if (!processState.pendingSeek && processClips[0].readyState >= 2)
         processState.time = processClips[0].currentTime;
@@ -339,9 +225,7 @@
       tab.setAttribute("aria-selected", String(i === index));
       tab.tabIndex = i === index ? 0 : -1;
     });
-    processing
-      .querySelector("[role=tabpanel]")
-      .setAttribute("aria-labelledby", tabs[index].id);
+    if (tabs.length) processing.querySelector("[role=tabpanel]").setAttribute("aria-labelledby", tabs[index].id);
     for (const side of ["input", "output"]) {
       const media = processing.querySelector(`[data-process-${side}]`);
       if (hasProcessVideo) {
@@ -349,24 +233,21 @@
         media.loop = true;
         media.playsInline = true;
         media.autoplay = false;
-        media.poster = `assets/figures/${stage[side]}`;
+        media.poster = `${assetBase}${stage[side]}`;
         media.setAttribute("aria-label", stage[`${side}Alt`]);
-        media.dataset.processSrc = `assets/figures/${stage[`${side}Video`]}`;
+        media.dataset.processSrc = `${assetBase}${stage[`${side}Video`]}`;
         media.dataset.processReady = "false";
-        media.parentElement.style.backgroundImage = `url("assets/figures/${stage[side]}")`;
+        media.parentElement.style.backgroundImage = `url("${assetBase}${stage[side]}")`;
       } else {
-        media.src = `assets/figures/${stage[side]}`;
+        media.src = `${assetBase}${stage[side]}`;
         media.alt = stage[`${side}Alt`];
       }
       processing.querySelector(`[data-process-${side}-caption]`).textContent =
         stage[`${side}Caption`];
     }
-    for (const name of ["eyebrow", "title", "copy"])
+    for (const name of ["copy"])
       processing.querySelector(`[data-process-${name}]`).textContent =
         stage[name];
-    const spec = processing.querySelector("[data-process-spec]");
-    spec.querySelector("strong").textContent = stage.stat;
-    spec.querySelector("span").textContent = stage.spec;
     showProcessTime();
     updateProcessMotion();
   }
@@ -425,7 +306,8 @@
       processObserver.observe(processing);
     } else processState.visible = true;
   }
-  selectStage(0);
+  selectStage(Number(processing.dataset.processStage || 0));
+  }
   const comparison = document.getElementById("object-figure");
   const objectDetails = {
     "flower-original":

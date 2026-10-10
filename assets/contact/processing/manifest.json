@@ -1,0 +1,32 @@
+{
+  "episode": "break_oven_3",
+  "sourceFrames": [
+    106,
+    153
+  ],
+  "contactInterval": "Both hands, frames 106\u2013153",
+  "fps": 10,
+  "duration": 4.8,
+  "crop": [
+    80,
+    120,
+    560,
+    480
+  ],
+  "source": "Same recorded bread-to-oven episode as the contact animation.",
+  "grounding": "Fresh SAM3 bread instance segmentation guided by boxes and foreground points from RGB inspection, reviewed on all clip frames. The original cached object mask is empty. Display masks do not overwrite the dataset or represent previous model conditioning.",
+  "geometry": "Existing measured 40,000-point world-space scene cloud, with original SAM3 hand/arm removal. Projected through each matching RGB camera calibration. No generated geometry or depth rerun.",
+  "sampling": "Deterministic 5,000-point subset from each measured cloud for this processing illustration; not a previously saved policy sample.",
+  "assets": {
+    "rgb.png": "8dab6b23f2916d46f614fd8d8d44c7ae9536f5bbbc9ec0136e545afcdc3af045",
+    "mask.png": "efc4f70b7d8d541290168a4fcd013aa57e3bbb9a6ced9202256eb41a3ccbc421",
+    "cloud.png": "4a0ef5c1d1c0899c2796379809706ebde4e3382dd9ef56e3d22a9f94244dcfe1",
+    "sampled.png": "12554b027b9d07c35475fd730f03aa6132145032058ebaaf0e2af9dab69b84bd",
+    "rgb.mp4": "f64321fa620e6ca3bd808d29cfd83a5b117868eca192f9166ddc787f94fdf815",
+    "mask.mp4": "68044e743e8d38e32c52bd3c6b9046d729508146f9bc4377850b5afa4f12bc7e",
+    "cloud.webm": "98483b2ec6109415952fdad7d15bcb2fd3ab3b8bd116ec3b3e7c18f222ea46e1",
+    "sampled.webm": "c9401d0c1c85716ce4b2236fa5b231e8465b4c97093b79c1424116e956dc2087",
+    "overlay.mp4": "433d427b02af0ec1ce423edfcf4dfffa724f573d324533c6ed8ff300f9a9242e",
+    "overlay.png": "6edf1b9250afd0b058ae8b7a337c6cd74e2f1c949f207efa6bb515ac74805c77"
+  }
+}

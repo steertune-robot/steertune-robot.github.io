@@ -1,0 +1,41 @@
+{
+  "source": {
+    "filename": "icra-copy(5).mp4",
+    "sha256": "fe7efee6dbe08da31c0cf3b547c99ac33dd553b7ddca6d45783885926bef29bf",
+    "duration_seconds": 165.566667,
+    "dimensions": [
+      3840,
+      2160
+    ],
+    "video_codec": "HEVC",
+    "audio_codec": "AAC"
+  },
+  "video": {
+    "file": "steertuning-teaser-20261009.mp4",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "video_codec": "H.264",
+    "pixel_format": "yuv420p",
+    "playback_speed": 1,
+    "audio": "original AAC, copied without re-encoding",
+    "edit": "complete source, no cuts, crops, or retiming",
+    "encoding": "libx264, preset medium, CRF 22, fast-start MP4",
+    "sha256": "ebc8dd1b0defe6510cc019f6d3148230511abd10b2056792ca7a74ea1fea8843",
+    "duration_seconds": 165.566667,
+    "bytes": 53967646
+  },
+  "poster": {
+    "file": "poster-20261009.jpg",
+    "source_timestamp_seconds": 8,
+    "sha256": "71f14fc99ebd71f2674d1ad3b53872eb4294e412f1b79ba5121a7af031b792cb"
+  },
+  "playback": {
+    "initially_muted": true,
+    "native_controls": true,
+    "loop": true,
+    "autoplay_only_when_visible": true,
+    "respects_reduced_motion": true
+  }
+}

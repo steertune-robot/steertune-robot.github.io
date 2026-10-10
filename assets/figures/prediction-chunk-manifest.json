@@ -1,0 +1,118 @@
+{
+  "sequence_id": "food-transfer-01",
+  "clip_frame": 40,
+  "input_freeze_time_seconds": 4,
+  "preprocessed_anchor": 180,
+  "raw_frame": 188,
+  "instruction": "transferring food from pot to bowl",
+  "future_time_seconds": [
+    0.1,
+    0.4,
+    0.7,
+    1.0,
+    1.3,
+    1.6,
+    1.9,
+    2.2,
+    2.5,
+    2.8,
+    3.1,
+    3.4,
+    3.7,
+    4.0,
+    4.3
+  ],
+  "saved_pose_count": 15,
+  "source_landmark_shape": [
+    15,
+    52,
+    3
+  ],
+  "source": "Existing saved offline base-policy prediction; no task LoRA, steering, or robot execution.",
+  "retargeting": "Existing saved Wuji joint/root poses from the project analytical retargeter with filtering disabled. No new retargeting.",
+  "coordinates": "Anchor RGB camera frame; source landmarks and root translations in metres; joint angles in radians.",
+  "display": {
+    "width": 640,
+    "height": 480,
+    "fps": 30,
+    "frames": 135,
+    "duration_seconds": 4.5,
+    "timing": "First pose at +0.1 s, remaining poses every 0.3 s through +4.3 s. First and last states hold briefly at video boundaries.",
+    "interpolation": "Display-only linear interpolation of joint angles and root positions; SLERP of root orientation. Original arrays used exactly at all 15 saved sample times.",
+    "camera_materials": "Original Wuji teaser renderer camera, lights, materials, and geometry; 2x supersampling with alpha-aware downsampling.",
+    "transparent_background": true,
+    "ghost_poses": false,
+    "distinction_from_previous_video": "The previous video advances through 80 observation anchors, displaying future poses 0/7/14 together. This clip advances through all 15 future poses from one fixed anchor."
+  },
+  "validation": {
+    "max_keyframe_interpolation_error_before_exact_assignment": 6.558365928110987e-08,
+    "keyframe_video_frames": [
+      3,
+      12,
+      21,
+      30,
+      39,
+      48,
+      57,
+      66,
+      75,
+      84,
+      93,
+      102,
+      111,
+      120,
+      129
+    ],
+    "all_frames_unclipped": true,
+    "min_alpha_bbox_margin_px": 48,
+    "complete_vp9_alpha_decode": true,
+    "decoded_frames": 135,
+    "decoded_duration_seconds": 4.5,
+    "decoded_alpha_checks": [
+      {
+        "frame": 3,
+        "transparent_corner": 0,
+        "max_alpha": 255,
+        "mean_alpha_error": 0.012353515625
+      },
+      {
+        "frame": 66,
+        "transparent_corner": 0,
+        "max_alpha": 255,
+        "mean_alpha_error": 0.0420703125
+      },
+      {
+        "frame": 129,
+        "transparent_corner": 0,
+        "max_alpha": 255,
+        "mean_alpha_error": 0.039228515625
+      }
+    ]
+  },
+  "source_sha256": {
+    "wuji_poses.npz": "d4a3de2ec1f242943d369f69ce308150eda69554e6743df6ae1dee4cd5e47214",
+    "record_0180.npz": "8805055f05b156bccfe1b43364545bf4c720ec6e77b2c8a1c3d9d82c37054930"
+  },
+  "assets": [
+    {
+      "path": "prediction-chunk.webm",
+      "sha256": "fc8fe3f83280153081c497bf20a362bab84b477e2be4573717ff11c5d2ea30e2",
+      "bytes": 541855
+    },
+    {
+      "path": "prediction-chunk.png",
+      "sha256": "72822e546302efa55940441ef67e0d262407619c1ff0fc8206db944e9ae5693b",
+      "bytes": 58940
+    },
+    {
+      "path": "prediction-chunk-final.png",
+      "sha256": "f293c632f11fd2d470e001d3eb1710dc701b73e76e1e3c4c93e5e5502a651f2f",
+      "bytes": 57065
+    },
+    {
+      "path": "prediction-chunk.npz",
+      "sha256": "39e29abe02da2bb36a65ac18eda30e2d33b015b524d5787f3796acb8276bb189",
+      "bytes": 13328
+    }
+  ]
+}

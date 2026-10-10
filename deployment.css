@@ -79,7 +79,7 @@
 .deploy-planner, .deploy-skill, .deploy-step {
   color: var(--ink);
   border: 1px solid var(--rule);
-  border-radius: 3px;
+  border-radius: 0;
   background: var(--paper);
   text-align: left;
   cursor: pointer;

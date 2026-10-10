@@ -131,7 +131,6 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
         .map((p, i) => `${i ? "L" : "M"}${x(i)},${y(p.mean)}`)
         .join(" "),
       class: "plot-curve scaling-curve",
-      pathLength: 1,
       "aria-hidden": "true",
     }),
   );
@@ -158,7 +157,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
   }
   for (const [index, point] of data.points.entries()) {
     svg.append(
-      plotText(x(index), 197, point.label, { "text-anchor": "middle" }),
+      plotText(x(index), 197, point.label, { "text-anchor": "middle", class: "plot-label plot-x-tick" }),
     );
     // A large transparent hit target keeps touch and keyboard inspection usable.
     const target = plotNode("g", {
@@ -193,7 +192,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
     });
     svg.append(target);
   }
-  svg.append(plotText(160, 225, data.xLabel, { "text-anchor": "middle" }));
+  svg.append(plotText(160, 225, data.xLabel, { "text-anchor": "middle", class: "plot-label plot-x-title" }));
   figure.append(svg, readout);
   scalingRoot.append(figure);
   selectPoint(data.defaultIndex);
@@ -277,12 +276,7 @@ steering.weights.forEach((weight, index) => {
 });
 weightSelect.value = activeWeight;
 weightLabel.append(weightSelect);
-const allLabel = htmlNode("label", "curve-all-label");
-const fullToggle = htmlNode("input");
-fullToggle.type = "checkbox";
-fullToggle.id = "show-all-budgets";
-allLabel.append(fullToggle, document.createTextNode("Show all 10 budgets"));
-controls.append(budgetLabel, weightLabel, allLabel);
+controls.append(budgetLabel, weightLabel);
 steeringFigure.append(controls);
 const legend = htmlNode("div", "steering-key");
 legend.setAttribute("aria-label", "Curve legend");
@@ -293,7 +287,7 @@ const svg = plotNode("svg", {
   class: "scientific-plot steering-svg",
   role: "group",
   "aria-label":
-    "Action prediction error across steering weights. Three key comparisons shown initially; all ten budgets are available.",
+    "Action prediction error across steering weights. Three key comparisons and the selected finetuning budget.",
 });
 const sx = (weight) => 58 + 780 * weight;
 const sy = (value) => 270 - (value - 220) * 1.7;
@@ -346,7 +340,6 @@ const paths = steering.series.map((series, index) => {
       })
       .join(" "),
     class: "plot-curve steering-curve",
-    pathLength: 1,
     stroke: curveColors[index],
     "aria-hidden": "true",
   });
@@ -407,7 +400,7 @@ function updateSteering(rebuild = true) {
     path.classList.toggle("is-key", keyBudgets.includes(i));
     path.classList.toggle(
       "is-hidden",
-      !fullToggle.checked && !keyBudgets.includes(i) && i !== activeBudget,
+      !keyBudgets.includes(i) && i !== activeBudget,
     );
   });
   svg.insertBefore(paths[activeBudget], defaultRing);
@@ -439,10 +432,6 @@ function updateSteering(rebuild = true) {
     legend.append(
       htmlNode("span", "steering-key-item is-replay", "Demonstration replay"),
     );
-    if (fullToggle.checked)
-      legend.append(
-        htmlNode("span", "legend-note", "Other budgets shown faintly"),
-      );
     pointLayer.replaceChildren();
     series.values.forEach((v, i) => {
       if (v === null) return;
@@ -499,6 +488,26 @@ weightSelect.addEventListener("change", () => {
   activeWeight = Number(weightSelect.value);
   updateSteering(false);
 });
-fullToggle.addEventListener("change", () => updateSteering());
 updateSteering();
 revealPlot(steeringFigure);
+
+// Keep SVG labels at the same visual size as the surrounding figure captions.
+// The chart geometry scales, but its type should not grow with a wider panel.
+const plotTypeObserver = new ResizeObserver((entries) => {
+  for (const { target } of entries) {
+    const width = target.getBoundingClientRect().width;
+    const viewWidth = target.viewBox.baseVal.width;
+    if (width > 0 && viewWidth > 0)
+      target.style.setProperty('--plot-font-size', `${18 * viewWidth / width}px`);
+    // Stagger crowded categorical ticks on small phones instead of shrinking them.
+    const ticks = target.querySelectorAll('.plot-x-tick');
+    if (ticks.length) {
+      const stagger = width < 300 && ticks.length > 5;
+      ticks.forEach((tick, index) => tick.setAttribute('y', 197 + (stagger && index % 2 ? 26 : 0)));
+      target.querySelector('.plot-x-title').setAttribute('y', stagger ? 253 : 225);
+      target.setAttribute('viewBox', `0 0 300 ${stagger ? 262 : 234}`);
+    }
+  }
+});
+for (const plot of document.querySelectorAll('.scientific-plot'))
+  plotTypeObserver.observe(plot);

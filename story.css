@@ -1,0 +1,77 @@
+/* Read the method in execution order, then evaluate it. */
+.story-route { display:flex; flex-wrap:wrap; gap:12px 0; margin-block:10px 32px; }
+.story-route a { font:400 var(--type-label)/1.5 var(--serif); white-space:nowrap; }
+.story-route a:not(:last-child)::after { content:'→'; display:inline-block; padding-inline:16px; color:#92a68d; }
+.story-lead { max-width:780px; margin:0 0 32px; font:400 var(--type-body)/1.65 var(--serif); }
+.story-transition { max-width:780px; margin:40px 0 0; color:var(--green); font:400 var(--type-body)/1.65 var(--serif); }
+.story-transition::before { content:'↓'; display:inline-block; margin-right:12px; color:#78916e; }
+.story-chapter > .subsection { margin-top:36px; }
+.story-chapter > .subsection + .subsection { margin-top:56px; }
+body .story-chapter [data-processing-player] { padding:0; }
+body [data-processing-player] .process-panel { display:flex; flex-direction:column; gap:18px; }
+body [data-processing-player] .process-image-pair { width:100%; }
+body .story-chapter .policy-context > :is(.finetuning-story,.steering-story) { margin-top:0; padding-top:0; }
+body #pretraining .architecture-media { margin-top:0; }
+body #pretraining .example-sequence { padding-top:16px; }
+body #deploy #deployment { margin-top:0; }
+body #experiments #generalization { padding-block:0; margin-top:64px; }
+body #experiments > .section-lead { margin:0 0 32px; }
+body #experiments > .story-lead { margin-bottom:16px; }
+@media(max-width:760px) {
+ .story-route a:not(:last-child)::after { padding-inline:10px; }
+ .story-lead { margin-bottom:24px; }
+ .story-transition { margin-top:28px; }
+ body .story-chapter > .subsection + .subsection { margin-top:44px; }
+ body #deploy #deployment { margin-top:0; }
+}
+
+/* Compact local flows within the larger chronological story. */
+body .story-chapter { padding-block:36px; }
+body .story-chapter .story-transition { margin-top:24px; }
+.preparation-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:32px; align-items:start; }
+body #prepare .preparation-grid > .subsection { min-width:0; margin:0; }
+body #prepare .preparation-grid h4 { margin:0; }
+body #prepare .preparation-grid .research-figure { margin-top:18px; }
+body #prepare .process-image-pair { grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr); gap:12px 8px; align-items:start; }
+body #prepare .process-image-pair > figure { min-width:0; }
+body #prepare .process-image-pair figcaption { min-height:3em; padding-top:8px; }
+.preparation-arrow { align-self:start; margin-top:42px; color:var(--green); text-align:center; font-size:24px; }
+body #prepare .process-playback { grid-column:1 / -1; margin-top:0; }
+body #prepare .process-description p { text-align:left; }
+body #prepare .process-panel { gap:12px; }
+body #finetune .ft-flow { margin-block:18px; }
+body #deploy #deployment { margin-top:0; }
+@container (min-width:801px) {
+ #overview .transfer-grid { --transfer-gap:28px; grid-template-columns:1.18fr 1fr 1fr 1.18fr; }
+ #overview .transfer-method { display:contents; }
+ #overview .transfer-step { min-height:210px; padding:18px 16px; }
+ #overview .transfer-arrow.arrow-next { width:var(--transfer-gap); height:2px; top:50%; left:100%; }
+ #overview .transfer-arrow.arrow-next::before { background:linear-gradient(90deg,transparent 25%,#244c3b 50%,transparent 75%); background-size:200% 100%; animation-name:flow-between-horizontal; }
+ #overview .transfer-arrow.arrow-next::after { top:-3px; right:0; bottom:auto; transform:rotate(45deg); }
+ #overview .transfer-caption { margin-top:20px; text-align:left; }
+}
+@keyframes flow-between-horizontal {
+ 0%,42% {background-position:200% 0; opacity:0;}
+ 43% {opacity:1;}
+ 52% {background-position:-200% 0; opacity:1;}
+ 53%,100% {background-position:-200% 0; opacity:0;}
+}
+@media(max-width:960px) {
+ .preparation-grid { grid-template-columns:minmax(0,1fr); gap:32px; }
+ body #prepare .preparation-grid > .subsection { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:28px; align-items:start; }
+ body #prepare .preparation-grid .research-figure { margin:0; }
+ .preparation-arrow { margin-top:54px; }
+}
+@media(max-width:600px) {
+ body .story-chapter { padding-block:28px; }
+ body #prepare .preparation-grid > .subsection { display:block; }
+ body #prepare .preparation-grid .research-figure { margin-top:18px; }
+ .preparation-arrow { margin-top:42px; }
+}
+
+body .overview-intro { padding-block:20px 36px; }
+
+/* Trimming precedes per-clip processing; the three input views stay compact. */
+body #prepare > .contact-story { margin-top:0; }
+.preparation-bridge { max-width:850px; margin:0 0 14px; }
+.preparation-example { margin:0 0 24px; color:var(--muted); font-size:var(--type-label); }

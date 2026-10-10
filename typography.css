@@ -1,0 +1,222 @@
+/* Authoritative site typography. Keep this after every component stylesheet.
+   Cormorant is reserved for editorial headings. All other text uses Source.
+   Components must consume this scale rather than introduce their own fonts. */
+:root {
+  --label: var(--serif);
+  --type-body: 1.111111rem;
+  --type-label: 1rem;
+  --type-meta: .888889rem;
+  --type-panel: 1.222222rem;
+  --type-subheading: 1.555556rem;
+  --type-section: 2.222222rem;
+  --type-value: 1.333333rem;
+}
+body { font: 400 var(--type-body)/1.65 var(--serif); }
+body :is(button, input, select, textarea) { font-family: var(--serif); }
+body h2 { font:600 var(--type-section)/1.15 var(--heading); letter-spacing:-.012em; }
+body h3, body .transfer-grid h3 { font:600 var(--type-subheading)/1.25 var(--heading); letter-spacing:-.008em; }
+body h4, body .result-chart .chart-title, body .curve-panel .chart-title,
+body .ablation-tables .chart-title { font:600 var(--type-panel)/1.35 var(--serif); letter-spacing:0; }
+body :is(.subsection > p,.ablation-tables > article > p,.section-lead,.abstract-text p,.transfer-caption) {
+  font:400 var(--type-body)/1.65 var(--serif);
+}
+body :is(.affiliations,.anonymous-authors,.resource-button,.teaser-caption,
+ .research-figure > figcaption,.figure-note,.subsection > .figure-note,
+ .table-note,.figure-details,.figure-details summary,.figure-control,
+ .example-toolbar,.example-toolbar > span,.example-provenance,.processing-provenance,
+ .process-description p,.process-playback,.process-media-status,.figure-footer,
+ .object-inspector,.object-score > span,.object-score strong small,
+ .plot-takeaway,.scaling-panel .plot-takeaway,.plot-readout-label,.plot-readout-detail,
+ .scaling-panel .plot-readout-label,.scaling-panel .plot-readout-detail,
+ .chart-select-label,.chart-select,.chart-replay,.chart-axis,.chart-axis-heading,
+ .chart-segments button,.bar-group-caption,.curve-all-label,.steering-key,.chart-tooltip,
+ .plot-scroll-hint,.transfer-topline,.transfer-topline > span,.transfer-topline button,
+ .transfer-step p,.robot-skill,.demo-count,.transfer-number,.page-footer) {
+  font-family:var(--serif);
+  font-size:var(--type-label);
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:0;
+}
+body :is(.contribution-note,.resource-button small) { font:400 var(--type-meta)/1.5 var(--serif); }
+body .transfer-topline > span { text-transform:none; }
+body .transfer-topline { align-items:center; }
+body .transfer-step { min-height:178px; }
+body .transfer-photo { height:374px; }
+body .transfer-step h3 { font-size:var(--type-subheading); }
+body .bar-name { font:600 var(--type-label)/1.4 var(--serif); }
+body .chart-segments { flex-wrap:wrap; max-width:100%; }
+body :is(.chart-value,.plot-readout-value,.scaling-panel .plot-readout-value) { font:600 var(--type-value)/1.35 var(--serif); }
+body .process-tabs strong,
+body .science-figure .process-image-pair figcaption { font:400 var(--type-label)/1.5 var(--serif); }
+body .process-playback button { font:400 var(--type-label)/1.5 var(--serif); }
+body #in-the-wild-rollouts :is([data-rollout-tabs] button,.rollout-pair h4,
+ .rollout-pair figcaption,[data-rollout-toggle],[data-rollout-replay],.rollout-playback-note,
+ [data-rollout-count],[data-rollout-status]) { font:400 var(--type-label)/1.5 var(--serif); }
+body :is(.deploy-controls button,.deploy-brand,.deploy-skill small,.deploy-step small,
+ .deploy-step b,.deploy-step-number,.deploy-output small,.deploy-inspector [data-deploy-status],
+ .deploy-inspector p,.deploy-video-card figcaption) { font:400 var(--type-label)/1.5 var(--serif); }
+body :is(.deploy-planner b,.deploy-skill b,.deploy-output b,.deploy-inspector strong) {
+  font:600 var(--type-panel)/1.35 var(--serif);
+}
+body .deploy-command q { font:600 var(--type-subheading)/1.3 var(--heading); }
+body :is(#policy-figure,.policy-context) :is(.ag-tabs button,.ag-pause,.ag-reset,.ag-status,.ag-detail,.ag-detail strong,
+ .example-toolbar,.example-toolbar > span,.figure-control,.figure-details summary,
+ .architecture-example .overview-modality > span,.architecture-example .overview-prediction > span,
+ .architecture-example .overview-modality > strong,.architecture-example .overview-prediction > strong,
+ [data-motion-label],
+ .architecture-example .language-strip,.architecture-example .language-strip q,.example-provenance) {
+  font:400 var(--type-label)/1.5 var(--serif);
+}
+body :is(#policy-figure,.policy-context) .ag-detail strong { font-weight:600; }
+body :is(#policy-figure,.policy-context) .ag-detail { gap:8px; }
+body :is(#policy-figure,.policy-context) .ag-toolbar h4 { margin:0; color:var(--green); }
+body :is(#policy-figure,.policy-context) :is(.s3-header > span,.s3-loading,.s3-view-hint,.s3-reset,.s3-legend,
+ .s3-playback,.s3-playback button,.s3-inspect,.s3-inspect-controls select,.s3-inspect-controls button,
+ .s3-provenance,.s3-reference figcaption,.s3-comparison,.s3-comparison button) { font:400 var(--type-label)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) .s3-intro { font:400 var(--type-body)/1.5 var(--serif); }
+/* Enlarge the architecture canvas, without widening the prose or other figures. */
+#pretraining .research-figure:has(#policy-figure) {
+  width:min(1280px,calc(100vw - 64px));
+  max-width:none;
+  margin-left:50%;
+  transform:translateX(-50%);
+}
+body #policy-figure { padding:32px; }
+body :is(#policy-figure,.policy-context) .ag-toolbar { gap:24px; flex-wrap:wrap; }
+body :is(#policy-figure,.policy-context) .ag-tabs { gap:24px; }
+body :is(#policy-figure,.policy-context) .ag-host[data-compact=true] { max-width:520px; }
+body :is(#policy-figure,.policy-context) .ag-host[data-view=sampling][data-compact=true] { max-width:460px; }
+/* SVG units are adjusted in architecture.js, keeping labels readable at every size. */
+body :is(#policy-figure,.policy-context) .av-svg text {
+  font-family:var(--serif); font-weight:400; letter-spacing:0;
+  font-size:calc(var(--diagram-unit,1px) * 20);
+}
+body :is(#policy-figure,.policy-context) .av-svg :is(.av-input-title,.av-node-title) { font-size:calc(var(--diagram-unit,1px) * 22); }
+body :is(#policy-figure,.policy-context) .av-svg :is(.av-small,.av-port,.av-edge-label,.av-stage,.av-dimension) { font-size:calc(var(--diagram-unit,1px) * 18); }
+body :is(#policy-figure,.policy-context) .av-svg .av-core-title { font:600 calc(var(--diagram-unit,1px) * 22) var(--serif); }
+body :is(#policy-figure,.policy-context) .av-svg .av-timestep { font:italic 400 calc(var(--diagram-unit,1px) * 28) var(--serif); }
+body :is(#policy-figure,.policy-context) .av-svg .av-quote { font:400 calc(var(--diagram-unit,1px) * 32) var(--serif); }
+body :is(#policy-figure,.policy-context) .av-sampling-node .av-node-title { font-size:calc(var(--diagram-unit,1px) * 20); font-weight:600; }
+body .scientific-plot .plot-label, body .scaling-panel .scientific-plot .plot-label {
+  font-family:var(--serif); font-weight:400; font-size:var(--plot-font-size,18px);
+}
+@media(max-width:760px) {
+ body h2 { font-size:2rem; }
+ body #policy-figure { padding:20px; }
+ body .transfer-photo { height:310px; }
+ body .deploy-plan { gap:10px; }
+}
+@media(max-width:480px) {
+ #pretraining .research-figure:has(#policy-figure) { width:calc(100vw - 24px); }
+ body #policy-figure { padding:12px; }
+ body :is(#policy-figure,.policy-context) .ag-toolbar { gap:12px; }
+ body :is(#policy-figure,.policy-context) .ag-tabs { gap:12px; flex-direction:column; align-items:flex-start; }
+ body :is(#policy-figure,.policy-context) .ag-controls { flex-wrap:wrap; }
+ body .transfer-topline { flex-wrap:wrap; }
+ body .transfer-topline > span { max-width:none; flex:1 1 100%; }
+ body .transfer-topline button { margin-left:auto; }
+ body .transfer-photo { height:240px; }
+ body .transfer-method .transfer-step { min-height:164px; }
+ body .transfer-grid h3 { font-size:1.444444rem; }
+ body .transfer-caption { font-size:var(--type-body); }
+ body .demo-count { gap:4px; }
+ body .demo-count b { font-size:32px; }
+ body .robot-skill { padding-inline:10px; }
+ body .chart-select-label { gap:8px; }
+}
+@media(max-width:360px) {
+ body :is(#policy-figure,.policy-context) .av-svg :is(.av-input-title,.av-node-title) { font-size:calc(var(--diagram-unit,1px) * 18); }
+}
+
+/* Recorded XYZ trajectories share the site’s readable type scale. */
+body :is(#policy-figure,.policy-context) :is(.sc-header > span,.sc-legend,.sc-coordinate-heading,.sc-coordinate-unit,
+.sc-plot .sc-tick,.sc-time-label,.sc-playback,.sc-playback button,.sc-inspection,
+.sc-settings select,.sc-settings button,.sc-provenance) { font:400 var(--type-label)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) :is(.sc-intro,.sc-result) { font:400 var(--type-body)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) .sc-coordinate-name { font:600 var(--type-panel)/1.35 var(--serif); }
+
+/* Finetuning and steering use the same figure typography. */
+body :is(#policy-figure,.policy-context) :is(.ft-header button,.ft-demos span,.ft-base span,.ft-adapter span,.ft-ready span,.ft-footer span) {
+  font:400 var(--type-label)/1.5 var(--serif);
+}
+body :is(#policy-figure,.policy-context) :is(.ft-intro,.ft-footer) { font:400 var(--type-body)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) :is(.ft-base strong,.ft-adapter strong,.ft-ready strong) { font:600 var(--type-panel)/1.35 var(--serif); }
+body :is(#policy-figure,.policy-context) .ft-demos strong { font:600 var(--type-section)/1.1 var(--serif); }
+
+/* The input/output example keeps language and phase labels prominent. */
+body :is(#policy-figure,.policy-context) :is(.ex-controls button,.ex-language span,.ex-flow h4 span,.ex-number,.ex-card-status,.ex-output-cover) { font:400 var(--type-label)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) :is(.ex-language q,.ex-card-heading strong) { font:600 var(--type-panel)/1.4 var(--serif); }
+body :is(#policy-figure,.policy-context) .ex-status { font:400 var(--type-label)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) .ex-caption { font:400 var(--type-body)/1.5 var(--serif); }
+body :is(#policy-figure,.policy-context) .ex-arrow { font:400 var(--type-subheading)/1 var(--serif); }
+
+/* Content hierarchy: section → topic → figure. Keep the existing font families,
+   and use layout and color as redundant cues alongside the type scale. */
+body .paper-section.ruled { border-top:0; }
+body .paper-section > h2 {
+  width:100%;
+  max-width:none;
+  margin-inline:0;
+  justify-content:flex-start;
+  display:flex;
+  align-items:baseline;
+  gap:18px;
+  font-size:2.666667rem;
+  line-height:1.12;
+  text-align:left;
+  color:var(--green);
+  margin:0 0 36px;
+  padding:0 0 20px;
+  border-bottom:2px solid var(--green);
+}
+body .paper-section > h2 .section-number {
+  flex:0 0 2ch;
+  font:400 var(--type-label)/1 var(--serif);
+  font-variant-numeric:tabular-nums;
+  color:var(--muted);
+}
+body .paper-section > h2 .section-heading-text { min-width:0; text-align:left; }
+body .paper-section :is(h3,h4) { text-align:left; }
+body :is(.subsection,.ablation-tables > article) > h3 {
+  font-size:1.888889rem;
+  line-height:1.22;
+  color:var(--ink);
+  border-left:3px solid #92a68d;
+  padding-left:16px;
+  margin:0 0 18px;
+  text-align:left;
+}
+body .subsection + .subsection { margin-top:64px; }
+body .paper-section h4,
+body #in-the-wild-rollouts .rollout-pair h4,
+body .paper-section :is(.chart-title,.ag-toolbar h4,.ft-header h4,.sc-header h4,.ex-header h4) {
+  font:600 var(--type-panel)/1.35 var(--serif);
+  color:var(--green);
+  letter-spacing:0;
+}
+body .paper-section .chart-title {
+  padding-bottom:0;
+  border-bottom:0;
+  margin-bottom:14px;
+}
+body .chart-header > div { min-width:0; }
+@media(max-width:760px) {
+  body .paper-section > h2 { font-size:2.222222rem; gap:12px; padding-bottom:16px; margin-bottom:28px; }
+  body :is(.subsection,.ablation-tables > article) > h3 { font-size:1.666667rem; padding-left:12px; }
+  body .subsection + .subsection { margin-top:48px; }
+}
+@media(max-width:480px) {
+  body .paper-section > h2 { font-size:2rem; }
+  body :is(.subsection,.ablation-tables > article) > h3 { font-size:1.555556rem; }
+  body .chart-header { flex-wrap:wrap; gap:8px 16px; }
+}
+
+/* Contact segmentation shares the labels, captions, and controls of every figure. */
+body .contact-story :is(.contact-legend,.contact-recording figcaption,.contact-hand,.contact-hand span,
+ .contact-status p,.contact-clips-heading span,.contact-clip,.contact-controls button,
+ .contact-controls label,.contact-controls output,.contact-source) {
+ font:400 var(--type-label)/1.5 var(--serif); letter-spacing:0;
+}
+body .contact-story .contact-hand strong {font-weight:600;}
+body .contact-story .contact-chart svg text {font:400 var(--type-label)/1.3 var(--serif); letter-spacing:0;}

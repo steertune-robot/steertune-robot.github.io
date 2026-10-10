@@ -26,9 +26,9 @@
   --green: #244c3b;
   --rule: #d9d0c3;
   --surface: #f2eee6;
-  --halftone-dot: rgba(58, 49, 42, 0.07);
+  --halftone-dot: rgba(58, 49, 42, 0.11);
   --halftone-size: 5px;
-  --label: Arial, Helvetica, sans-serif;
+  --label: var(--serif);
   --serif: Source, Georgia, serif;
   --heading: Cormorant, Georgia, serif;
   --content-width: 1034px;
@@ -62,8 +62,8 @@ body::before {
   background-image:
     radial-gradient(
       circle at 50% 50%,
-      var(--halftone-dot) 0.75px,
-      transparent 0.76px
+      var(--halftone-dot) 0.9px,
+      transparent 1px
     ),
     radial-gradient(
       ellipse 120% 80% at 50% 0%,
@@ -245,7 +245,7 @@ h1 {
   align-items: center;
   gap: 8px;
   border: 1px solid #cfc5b6;
-  border-radius: 25px;
+  border-radius: 0;
   padding: 8px 14px;
   font: 500 0.75rem/1.5 var(--label);
   min-height: 37px;
@@ -511,7 +511,7 @@ p + p {
   border: 1px solid transparent;
   background: transparent;
   color: var(--muted);
-  border-radius: 3px;
+  border-radius: 0;
 }
 .task-tabs button:hover {
   color: var(--green);
@@ -720,7 +720,7 @@ tbody tr:last-child > * {
   color: var(--green);
   background: #fcfaf5 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23244c3b' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center;
   border: 1px solid #d6cebf;
-  border-radius: 3px;
+  border-radius: 0;
   min-height: 31px;
   padding: 4px 34px 4px 9px;
   cursor: pointer;
@@ -737,7 +737,7 @@ tbody tr:last-child > * {
   gap: 2px;
   padding: 3px;
   border: 1px solid #ded7ca;
-  border-radius: 4px;
+  border-radius: 0;
   background: #f5f1e9;
 }
 .chart-segments button {
@@ -745,7 +745,7 @@ tbody tr:last-child > * {
   color: var(--muted);
   background: transparent;
   border: 0;
-  border-radius: 2px;
+  border-radius: 0;
   padding: 6px 12px;
   cursor: pointer;
 }
@@ -790,7 +790,7 @@ tbody tr:last-child > * {
   align-items: center;
   column-gap: var(--chart-gap);
   min-height: 47px;
-  border-radius: 2px;
+  border-radius: 0;
 }
 .chart-row:hover,
 .chart-row:focus-visible {
@@ -823,7 +823,7 @@ tbody tr:last-child > * {
 .chart-bar {
   height: 16px;
   background: #b7a58a;
-  border-radius: 0 2px 2px 0;
+  border-radius: 0;
   transform-origin: left center;
   transform: scaleX(0);
   transition:
@@ -862,7 +862,7 @@ tbody tr:last-child > * {
   padding: 10px 13px;
   background: #314b3e;
   color: #fcf8f3;
-  border-radius: 3px;
+  border-radius: 0;
   box-shadow: 0 5px 18px #39332d15;
   font: 500 0.6875rem/1.7 var(--label);
   opacity: 0;
@@ -1006,53 +1006,65 @@ tbody tr:last-child > * {
   background: rgba(254, 251, 246, 0.94);
 }
 .scientific-plot {
+  --plot-stroke-curve: 1.5px;
+  --plot-stroke-key: 2px;
+  --plot-stroke-selected: 2.8px;
+  --plot-stroke-point: 1.2px;
+  --plot-stroke-point-active: 1.7px;
+  --plot-stroke-error: 0.85px;
+  --plot-stroke-grid: 0.65px;
+  --plot-stroke-guide: 0.8px;
   display: block;
   width: 100%;
   height: auto;
   margin: 14px 0 9px;
   overflow: visible;
 }
+/* The 300-unit scaling plots and 880-unit steering plot share screen-space
+   stroke weights, even when responsive panels enlarge their SVG geometry. */
+.scientific-plot :is(.plot-curve, .plot-dot, .plot-grid, .plot-default-guide,
+  .replay-baseline, .default-setting-ring),
+.scientific-plot .plot-error-bars path {
+  vector-effect: non-scaling-stroke;
+}
 .plot-label {
   stroke: none;
   fill: var(--muted);
   font:
-    600 0.75rem Arial,
-    Helvetica,
-    sans-serif;
+    400 1rem var(--serif);
   letter-spacing: 0;
 }
 .plot-grid {
   stroke: #e3ddd1;
-  stroke-width: 1;
+  stroke-width: var(--plot-stroke-grid);
 }
 .plot-default-guide {
   stroke: #b8c5ac;
-  stroke-width: 1;
+  stroke-width: var(--plot-stroke-guide);
   stroke-dasharray: 4 5;
 }
 .plot-error-bars {
   stroke: #b3a28a;
-  stroke-width: 1.5;
+  stroke-width: var(--plot-stroke-error);
 }
 .plot-curve {
   fill: none;
-  stroke-width: 2.3;
+  stroke-width: var(--plot-stroke-curve);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
+  /* Solid geometry stays complete at every responsive SVG scale. */
+  stroke-dasharray: none;
 }
 .scaling-curve {
   stroke: var(--green);
 }
 .is-visible .plot-curve {
-  animation: draw-research-curve 1000ms cubic-bezier(0.25, 0.8, 0.25, 1)
-    forwards;
+  animation: draw-research-curve 1000ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .plot-dot {
   fill: #fcfaf5;
   stroke: var(--point-color, var(--green));
-  stroke-width: 2;
+  stroke-width: var(--plot-stroke-point);
   transition:
     fill 160ms,
     stroke-width 160ms;
@@ -1075,7 +1087,7 @@ tbody tr:last-child > * {
 }
 .plot-point:focus-visible .plot-dot,
 .plot-point:hover .plot-dot {
-  stroke-width: 4;
+  stroke-width: var(--plot-stroke-point-active);
   fill: var(--point-color, var(--green));
 }
 .plot-readout {
@@ -1149,7 +1161,7 @@ tbody tr:last-child > * {
   gap: 7px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 0;
   padding: 7px 9px;
   color: var(--muted);
   font: 500 0.6875rem/1.4 var(--label);
@@ -1174,11 +1186,11 @@ tbody tr:last-child > * {
 }
 .steering-curve.is-selected {
   opacity: 1;
-  stroke-width: 3;
+  stroke-width: var(--plot-stroke-selected);
 }
 .replay-baseline {
   stroke: #b28c59;
-  stroke-width: 1.5;
+  stroke-width: var(--plot-stroke-curve);
   stroke-dasharray: 4 5;
 }
 .replay-label {
@@ -1188,7 +1200,7 @@ tbody tr:last-child > * {
 .default-setting-ring {
   fill: #fcfaf5;
   stroke: var(--green);
-  stroke-width: 1.5;
+  stroke-width: var(--plot-stroke-curve);
 }
 .steering-controls {
   display: flex;
@@ -1225,10 +1237,12 @@ tbody tr:last-child > * {
   grid-template-columns: minmax(0, 1fr);
   gap: 30px;
 }
+/* Reveal by clipping, not dash length: non-scaling strokes make normalized
+   dashes shorter than enlarged SVG paths in some browsers. The clip disappears
+   after the animation, so endpoints and round caps remain fully visible. */
 @keyframes draw-research-curve {
-  to {
-    stroke-dashoffset: 0;
-  }
+  from { clip-path: inset(-4px 100% -4px -4px); }
+  to { clip-path: inset(-4px -4px -4px -4px); }
 }
 @media (min-width: 761px) and (max-width: 900px) {
   .scaling-grid {
@@ -1280,7 +1294,6 @@ tbody tr:last-child > * {
 }
 @media (prefers-reduced-motion: reduce) {
   .plot-curve {
-    stroke-dashoffset: 0;
     animation: none !important;
   }
 }
@@ -1718,15 +1731,15 @@ tbody tr:last-child > * {
 }
 .steering-curve {
   opacity: 0.24;
-  stroke-width: 1.5;
+  stroke-width: var(--plot-stroke-curve);
 }
 .steering-curve.is-key {
   opacity: 0.8;
-  stroke-width: 2;
+  stroke-width: var(--plot-stroke-key);
 }
 .steering-curve.is-selected {
   opacity: 1;
-  stroke-width: 2.8;
+  stroke-width: var(--plot-stroke-selected);
 }
 .steering-curve.is-hidden {
   display: none;
@@ -1737,7 +1750,7 @@ tbody tr:last-child > * {
 }
 .scaling-panel .plot-dot.is-active:not(.is-default) {
   fill: #fcfaf5;
-  stroke-width: 3;
+  stroke-width: var(--plot-stroke-point-active);
 }
 .chart-row.is-zero .bar-track::before {
   content: "";
@@ -2011,29 +2024,5 @@ tbody tr:last-child > * {
   }
   .scaling-panel .plot-takeaway {
     min-height: 0;
-  }
-  /* Single-column plots grow wider; keep their strokes light at every size. */
-  .scaling-panel :is(.plot-curve, .plot-dot, .plot-grid, .plot-default-guide),
-  .scaling-panel .plot-error-bars path {
-    vector-effect: non-scaling-stroke;
-  }
-  .scaling-panel .plot-curve {
-    stroke-width: 1.4;
-  }
-  .scaling-panel .plot-dot {
-    stroke-width: 1.2;
-  }
-  .scaling-panel .plot-error-bars {
-    stroke-width: 0.85;
-  }
-  .scaling-panel .plot-grid {
-    stroke-width: 0.65;
-  }
-  .scaling-panel .plot-default-guide {
-    stroke-width: 0.8;
-  }
-  .scaling-panel .plot-dot.is-active:not(.is-default),
-  .scaling-panel .plot-point:is(:hover, :focus-visible) .plot-dot {
-    stroke-width: 1.7;
   }
 }

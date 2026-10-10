@@ -1,0 +1,64 @@
+/* Real coordinate trajectories. The shared typography system remains last. */
+.steering-coordinates {
+  --sc-guide: #ad8650;
+  --sc-after: #285640;
+  margin: 28px 0 12px;
+  color: var(--ink);
+  font-family: var(--serif);
+}
+.sc-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px 28px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+  font-size: var(--type-label);
+  line-height: 1.45;
+}
+.sc-legend-item { display: inline-flex; align-items: center; gap: 9px; }
+.sc-legend-item[hidden] { display: none; }
+.sc-legend-item > svg { display: block; flex: 0 0 36px; overflow: visible; }
+.sc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
+.sc-coordinate { min-width: 0; margin: 0; padding: 0; }
+.sc-coordinate-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 13px 64px;
+  font-family: var(--serif);
+  font-size: var(--type-label);
+  line-height: 1.35;
+  text-align: left;
+}
+.sc-coordinate-name { color: var(--green); font-weight: 600; font-size: var(--type-panel); }
+.sc-coordinate-unit { color: var(--muted); font-size: var(--type-label); }
+.sc-plot { display: block; width: 100%; height: auto; overflow: visible; }
+.sc-plot .sc-tick { fill: var(--muted); font-family: var(--serif); font-size: var(--type-label); }
+.sc-gridline { stroke: var(--rule); stroke-width: 1; opacity: .53; }
+.sc-gridline-zero { stroke: #c1c8bd; opacity: .72; }
+.sc-axis-rule, .sc-axis-tick { stroke: #b9bdaf; stroke-width: 1; }
+.sc-line { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.sc-line-guide { stroke: var(--sc-guide); stroke-width: 2.2; opacity: .85; }
+.sc-line-after { stroke: var(--sc-after); stroke-width: 3.3; }
+.sc-sample { fill: var(--sc-after); stroke: var(--paper); stroke-width: 1; }
+.sc-time-label {
+  margin: 5px 0 0 64px;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: var(--type-label);
+  line-height: 1.45;
+  text-align: center;
+}
+@media (max-width: 1000px) {
+  .sc-grid { gap: 18px; }
+}
+@media (max-width: 800px) {
+  .sc-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .sc-coordinate { width: 100%; max-width: 620px; margin-inline: auto; }
+  .sc-legend { gap: 10px 22px; margin-bottom: 24px; }
+  .sc-plot { max-height: none; }
+}
+@media (max-width: 420px) {
+  .sc-legend { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .sc-grid { gap: 28px; }
+}

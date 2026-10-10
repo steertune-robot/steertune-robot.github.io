@@ -1,0 +1,8 @@
+Wuji hand visual geometry and kinematics
+
+Source: project-provided YOR/yor-description Wuji MJCF/STL assets.
+The source YOR repository carries the MIT License, copyright 2026 NYU Generalizable Robotics and AI Lab (GRAIL). See YOR-LICENSE.txt.
+No separate Wuji mesh notice was found; no independent third-party geometry rights audit is asserted.
+
+Poses: actual final offline predictions retargeted with the project Wuji retargeter.
+This visualization is not a recording of robot execution.

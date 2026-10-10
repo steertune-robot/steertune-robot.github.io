@@ -38,8 +38,8 @@ window.STEERTUNING_ROLLOUTS = [
     "id": "wiping",
     "label": "Counter wiping",
     "human": {
-      "src": "assets/rollouts/wiping-human.mp4?v=0da319b6c562",
-      "poster": "assets/rollouts/wiping-human.jpg?v=d90cd9ee0fec",
+      "src": "assets/rollouts/wiping-human.mp4?v=7c2290e37f33",
+      "poster": "assets/rollouts/wiping-human.jpg?v=37f562a49d87",
       "duration": 7.633333,
       "speed": 4
     },
@@ -47,22 +47,6 @@ window.STEERTUNING_ROLLOUTS = [
       "src": "assets/rollouts/wiping-robot.mp4?v=0e6b4a009ea9",
       "poster": "assets/rollouts/wiping-robot.jpg?v=61722451f084",
       "duration": 6.033333,
-      "speed": 4
-    }
-  },
-  {
-    "id": "trash",
-    "label": "Trash disposal",
-    "human": {
-      "src": "assets/rollouts/trash-human.mp4?v=aae28e526d1f",
-      "poster": "assets/rollouts/trash-human.jpg?v=7b970ee88c7e",
-      "duration": 10.6,
-      "speed": 4
-    },
-    "robot": {
-      "src": "assets/rollouts/trash-robot.mp4?v=611a5fc44ff7",
-      "poster": "assets/rollouts/trash-robot.jpg?v=cab1c8239721",
-      "duration": 6.0,
       "speed": 4
     }
   },

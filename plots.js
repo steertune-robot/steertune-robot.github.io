@@ -65,19 +65,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
   const title = htmlNode("h4", "chart-title", scalingNotes[data.id].title);
   title.id = `${data.id}-title`;
   figure.setAttribute("aria-labelledby", title.id);
-  const note = scalingNotes[data.id];
-  const takeaway = htmlNode("p", "plot-takeaway");
-  const [before, after] = note.takeaway.split(note.emphasis);
-  takeaway.append(before, htmlNode("em", "text-accent", note.emphasis), after);
-  figure.append(
-    htmlNode(
-      "span",
-      "chart-source",
-      `Figure 6${"abcd"[panelIndex]} · 3 lab tasks`,
-    ),
-    title,
-    takeaway,
-  );
+  figure.append(title);
   const svg = plotNode("svg", {
     viewBox: "0 0 300 234",
     class: "scientific-plot",
@@ -148,7 +136,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
         : data.id === "demonstrations"
           ? "demos"
           : "updates";
-    label.textContent = `${point.label} ${unit}${index === data.defaultIndex ? " · chosen" : ""}`;
+    label.textContent = `${point.label} ${unit}${index === data.defaultIndex ? ": chosen" : ""}`;
     value.textContent = `≈ ${point.mean.toFixed(1)}%`;
     uncertainty.textContent = `±${point.std.toFixed(1)} pp across tasks`;
     circles.forEach((circle, i) =>
@@ -223,7 +211,7 @@ const curveColors = [
   "#77766b",
 ];
 steeringFigure.append(
-  htmlNode("span", "chart-source", "Figure 7 · action prediction on 12 tasks"),
+  htmlNode("span", "chart-source", "Figure 7: action prediction on 12 tasks"),
 );
 const steeringTitle = htmlNode(
   "h4",
@@ -251,7 +239,7 @@ steering.series.forEach((series, index) => {
     "",
     series.label === "None"
       ? "None"
-      : `${series.label} steps${index === defaultBudget ? " · ours" : ""}`,
+      : `${series.label} steps`,
   );
   option.value = index;
   budgetSelect.append(option);
@@ -269,7 +257,7 @@ steering.weights.forEach((weight, index) => {
   const option = htmlNode(
     "option",
     "",
-    `${weight.toFixed(1)}${weight === 0.3 ? " · chosen" : weight === 0 ? " · model only" : weight === 1 ? " · replay demo" : ""}`,
+    `${weight.toFixed(1)}`,
   );
   option.value = index;
   weightSelect.append(option);
@@ -291,7 +279,7 @@ const svg = plotNode("svg", {
 });
 const sx = (weight) => 58 + 780 * weight;
 const sy = (value) => 270 - (value - 220) * 1.7;
-svg.append(plotText(58, 25, "Action error (MSE) · lower is better"));
+svg.append(plotText(58, 25, "Action error (MSE) ↓"));
 for (const tick of [220, 240, 260, 280, 300, 320, 340]) {
   svg.append(
     plotNode("line", {
@@ -408,15 +396,15 @@ function updateSteering(rebuild = true) {
   guide.setAttribute("x2", sx(weight));
   budgetSelect.value = activeBudget;
   weightSelect.value = activeWeight;
-  selectedLabel.textContent = `${series.label === "None" ? "No finetuning" : `${series.label} steps`} · steering strength ${weight.toFixed(1)}`;
+  selectedLabel.textContent = `${series.label === "None" ? "No finetuning" : `${series.label} steps`}: steering strength ${weight.toFixed(1)}`;
   selectedValue.textContent =
     value === null ? "> 350 MSE" : `≈ ${value.toFixed(1)} MSE`;
   selectedDetail.textContent =
     value === null
       ? "Above the plot limit; exact value unavailable."
       : activeBudget === defaultBudget && weight === 0.3
-        ? "Our setting · approximately 2 minutes of finetuning"
-        : "Held-out demonstrations · lower is better";
+        ? "Our setting: approximately 2 minutes of finetuning"
+        : "Held-out demonstrations: lower is better";
   status.textContent = `${selectedLabel.textContent}. ${selectedValue.textContent}. ${selectedDetail.textContent}`;
   if (rebuild) {
     legend.replaceChildren();
@@ -424,7 +412,7 @@ function updateSteering(rebuild = true) {
       const name =
         i === 0
           ? "No finetuning"
-          : `${steering.series[i].label} steps${i === defaultBudget ? " · ours" : ""}`;
+          : `${steering.series[i].label} steps${i === defaultBudget ? ": ours" : ""}`;
       const item = htmlNode("span", "steering-key-item", name);
       item.style.setProperty("--curve-color", curveColors[i]);
       legend.append(item);

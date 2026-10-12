@@ -219,7 +219,7 @@
     detail.textContent = description.body;
     status.textContent = inspected
       ? "Inspecting"
-      : `Step ${current + 1} / 4${paused ? " · Paused" : ""}`;
+      : `Step ${current + 1} / 4${paused ? ": Paused" : ""}`;
     play.textContent = paused ? "Play walkthrough" : "Pause walkthrough";
     play.setAttribute("aria-pressed", String(paused));
     buttons.forEach((button, index) => {

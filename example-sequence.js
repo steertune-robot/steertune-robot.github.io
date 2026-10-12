@@ -63,10 +63,10 @@
     cover.hidden=phase==='output'||phase==='done';
     if(phase==='ready')status.textContent='Hold one observation, then play its predicted future.';
     else if(phase==='preparing')status.textContent='Preparing the recorded example…';
-    else if(phase==='input'||phase==='freezing')status.textContent=`Hold input ${index+1} of 3 · ${names[index]}`;
-    else if(phase==='hold')status.textContent=`Input ${index+1} of 3 fixed · ${names[index]}`;
-    else if(phase==='output')status.textContent='Playing the saved prediction · inputs stay fixed';
-    else if(phase==='done')status.textContent='Prediction complete · replay to see the sequence again';
+    else if(phase==='input'||phase==='freezing')status.textContent=`Hold input ${index+1} of 3: ${names[index]}`;
+    else if(phase==='hold')status.textContent=`Input ${index+1} of 3 fixed: ${names[index]}`;
+    else if(phase==='output')status.textContent='Playing the saved prediction: inputs stay fixed';
+    else if(phase==='done')status.textContent='Prediction complete: replay to see the sequence again';
     if(phase!=='output'&&phase!=='done')future.textContent='Future +0.1–4.3 s';
   }
   function sync(){

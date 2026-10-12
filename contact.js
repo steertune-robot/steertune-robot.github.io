@@ -76,7 +76,7 @@
  }
 
  const flights=[...annotation.querySelectorAll('.annotation-clips img')].map((image,i)=>({image,src:image.getAttribute('src'),target:annotation.querySelector('.qwen-model'),start:3400+i*850,length:1150}));
- flights.push({image:video,src:'assets/contact/grounding/frame-123.jpg',target:annotation.querySelector('.gemini-model'),start:12800,length:1300});
+ flights.push({image:video,src:'assets/contact/grounding/frame-123.jpg?v=29579191bd69',target:annotation.querySelector('.gemini-model'),start:12800,length:1300});
  flights.forEach(flight=>{const ghost=document.createElement('img');ghost.src=flight.src;ghost.alt='';ghost.className='annotation-feed-clip';ghost.setAttribute('aria-hidden','true');annotation.append(ghost);flight.ghost=ghost;});
  const pointGhost=document.createElement('i');pointGhost.className='annotation-prompt-flight';pointGhost.setAttribute('aria-hidden','true');annotation.append(pointGhost);
  function paintFeed(t){
@@ -103,9 +103,9 @@
    maskImage.setAttribute('href',`assets/contact/grounding/prompt-mask-${selected}.png`);
   }else if(!annotationStarted)annotationVideoFrame=null;
   const titles={bounds:'Select the interaction',qwen:'Describe the clip',instruction:'Text annotation',contact:'Select contact frame',gemini:'Locate the bread',point:'Locate the bread',sam:'Prompt SAM',propagate:'Propagate the mask',complete:'Mask before grasp'};
-  swapCopy(recording.querySelector('h4'),annotationStarted?titles[step]:`Recording · ${scanPlaybackRate}×`);
-  recording.querySelector(':scope > figcaption').textContent=!annotationStarted?'Open → pick up → place':t<10500?'Right-hand pickup · 9.5–12.3 s':step==='propagate'?`Mask propagation · ${timeAt(selected).toFixed(1)} s`:done?'Bread on the plate · before the hand grasps it':'Strongest right-hand contact · 12.3 s';
-  swapCopy(root.querySelector('[data-contact-stage-title]'),annotationStarted?'Hand–scene contact':`Detect contact · ${scanPlaybackRate}×`);
+  swapCopy(recording.querySelector('h4'),annotationStarted?titles[step]:`Recording: ${scanPlaybackRate}×`);
+  recording.querySelector(':scope > figcaption').textContent=!annotationStarted?'Open → pick up → place':t<10500?'Right-hand pickup: 9.5–12.3 s':step==='propagate'?`Mask propagation: ${timeAt(selected).toFixed(1)} s`:done?'Bread on the plate: before the hand grasps it':'Strongest right-hand contact: 12.3 s';
+  swapCopy(root.querySelector('[data-contact-stage-title]'),annotationStarted?'Hand–scene contact':`Detect contact: ${scanPlaybackRate}×`);
   annotation.dataset.phase=annotationStarted?(done?'complete':annotationPlaying&&annotationIsVisible()&&!document.hidden?'playing':'paused'):'waiting';
   annotation.dataset.point=String(annotationStarted&&t>=17500);
   annotation.dataset.mask=String(annotationStarted&&t>=20200);
@@ -119,18 +119,24 @@
   }
   swapCopy(root.querySelector('.contact-status p'),annotationStarted&&t<10500?'Approach → grasp → lift. Right-hand contact starts at 10.6 s.':annotationStarted?'Track masks before grasp and through lift.':'Long gaps split clips; short gaps stay.');
   annotationReplay.disabled=frame<data.totalFrames;
-  annotationPause.hidden=!annotationStarted||done;annotationPause.textContent=annotationPlaying?'Pause':'Continue';annotationPause.setAttribute('aria-pressed',String(annotationPlaying));
-  const messages={bounds:'01 · Select the pickup clip.',qwen:'02 · Frames → Qwen → task text.',instruction:'Task text ready.',contact:'03 · Select strongest contact.',gemini:'04 · Gemini locates the bread.',point:'A point on the bread.',sam:'05 · Point → SAM → mask.',propagate:'06 · Track backward, then forward.',complete:'Mask before grasp.'};
+  annotationPause.hidden=!annotationStarted;annotationPause.textContent=annotationPlaying?'Pause':'Continue';annotationPause.setAttribute('aria-pressed',String(annotationPlaying));
+  const messages={bounds:'01: Select the pickup clip.',qwen:'02: Frames → Qwen → task text.',instruction:'Task text ready.',contact:'03: Select strongest contact.',gemini:'04: Gemini locates the bread.',point:'A point on the bread.',sam:'05: Point → SAM → mask.',propagate:'06: Track backward, then forward.',complete:'Mask before grasp.'};
   swapCopy(annotationStatus,annotationStarted?messages[step]:'');
   paintFeed(t);if(draw)draw();
   if(annotationStarted){play.textContent=done?'Replay sequence':annotationPlaying?'Pause animation':'Continue animation';play.setAttribute('aria-pressed',String(annotationPlaying));}
  }
+ let completionHold=0;
  function annotationTick(now){
   annotationRaf=0;
   if(!annotationPlaying||!annotationIsVisible()||document.hidden){annotationLast=0;paintAnnotation();return;}
-  if(annotationLast)annotationTime=Math.min(annotationLength,annotationTime+(now-annotationLast)*annotationPlaybackRate);
+  if(annotationLast){
+   if(annotationTime>=annotationLength)completionHold+=now-annotationLast;
+   else annotationTime=Math.min(annotationLength,annotationTime+(now-annotationLast)*annotationPlaybackRate);
+  }
   annotationLast=now;
-  if(annotationTime>=annotationLength)annotationPlaying=false;
+  if(annotationTime>=annotationLength&&completionHold>=2000&&!reduced.matches){
+   completionHold=0;frame=0;video.currentTime=0;resetAnnotation();playing=true;sync();return;
+  }
   paintAnnotation();
   if(annotationPlaying&&annotationIsVisible())annotationRaf=requestAnimationFrame(annotationTick);else {annotationLast=0;paintAnnotation();}
  }
@@ -141,9 +147,9 @@
   else if(!annotationRaf){annotationLast=0;annotationRaf=requestAnimationFrame(annotationTick);}
   paintAnnotation();
  }
- function resetAnnotation(){clearFrameFade();annotationStarted=false;annotationPlaying=false;annotationTime=0;syncAnnotation();}
+ function resetAnnotation(){completionHold=0;clearFrameFade();annotationStarted=false;annotationPlaying=false;annotationTime=0;syncAnnotation();}
  function startAnnotation(){
-  playing=false;video.pause();annotationStarted=true;annotationTime=reduced.matches?annotationLength:0;annotationPlaying=!reduced.matches;syncAnnotation();
+  completionHold=0;playing=false;video.pause();annotationStarted=true;annotationTime=reduced.matches?annotationLength:0;annotationPlaying=!reduced.matches;syncAnnotation();
  }
  annotationPause.addEventListener('click',()=>{annotationPlaying=!annotationPlaying;syncAnnotation();});
  annotationReplay.addEventListener('click',()=>{if(!data||frame<data.totalFrames)return;startAnnotation();});
@@ -197,7 +203,7 @@
   el('rect',{x:x(pickup.start),y:top,width:x(pickup.end)-x(pickup.start),height:bottom-top,fill:'#c8d8c3',opacity:.25},focus);
   const boundaries=el('g',{class:'contact-plot-boundaries'},focus);
   const boundaryParts=[pickup.start,pickup.end].map(f=>({f,line:el('line',{x1:x(f),x2:x(f),y1:bottom,y2:bottom,stroke:'#244c3b','stroke-width':1.5},boundaries),arrow:el('path',{fill:'none',stroke:'#244c3b'},boundaries)}));
-  const boundLabel=el('text',{x:(x(pickup.start)+x(pickup.end))/2,y:top-9,'text-anchor':'middle'},boundaries);boundLabel.textContent='Pickup · 9.5–12.3 s';
+  const boundLabel=el('text',{x:(x(pickup.start)+x(pickup.end))/2,y:top-9,'text-anchor':'middle'},boundaries);boundLabel.textContent='Pickup: 9.5–12.3 s';
   const contactFocus=el('g',{class:'contact-plot-seed'},focus);
   const contactY=y(sample('right',pickup.seed,plotSamples));
   const seedLine=el('line',{x1:x(pickup.seed),x2:x(pickup.seed),y1:contactY,y2:contactY,stroke:'#7448c7','stroke-width':1.5,'stroke-dasharray':'3 4'},contactFocus);
@@ -264,7 +270,7 @@
  const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&scanVisible&&data&&!started){started=true;if(!reduced.matches)playing=true;}sync();},{threshold:0});observer.observe(root);
  const scanObserver=new IntersectionObserver(([entry])=>{scanVisible=entry.isIntersecting&&entry.intersectionRatio>=.15;if(scanVisible&&visible&&data&&!started){started=true;if(!reduced.matches)playing=true;sync();}},{threshold:.15});scanObserver.observe(svg);
  let plotWidth=0;const resize=new ResizeObserver(()=>{if(chart.clientWidth!==plotWidth){plotWidth=chart.clientWidth;build();}});resize.observe(chart);
- fetch('assets/contact/example.json').then(r=>{if(!r.ok)throw Error('Contact example could not load');return r.json();}).then(value=>{
+ fetch('assets/contact/example.json?v=813a70831e80').then(r=>{if(!r.ok)throw Error('Contact example could not load');return r.json();}).then(value=>{
   for(let f=pickup.start;f<=pickup.end;f++){const mask=new Image();maskFrames.set(f,mask);mask.src=`assets/contact/grounding/prompt-mask-${f}.png`;}
   data=value;plotSamples=emaSamples(data.samples,displayAlpha);frame=reduced.matches?data.totalFrames:0;seek.max=String(data.totalFrames);video.src=data.video;video.poster=data.poster;video.playbackRate=scanPlaybackRate;video.addEventListener('loadedmetadata',()=>{video.currentTime=timeAt(annotationStarted?annotationFrame():frame);sync();},{once:true});
   for(const c of data.clips){const button=document.createElement('button');button.type='button';button.className='contact-clip';button.style.setProperty('--clip-length',c.end-c.start);button.style.setProperty('--clip-color',colors[c.hand]);button.setAttribute('aria-label',`${names[c.hand]}${c.hand==='None'?' interval':' hand clip'}, frames ${c.start} to ${c.end}. Inspect this interval.`);const label=document.createElement('span');label.textContent=names[c.hand];button.append(label);button.addEventListener('click',()=>{jump(Math.round((c.start+c.end)/2));});clipsHost.append(button);}

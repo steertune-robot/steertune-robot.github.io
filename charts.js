@@ -5,7 +5,7 @@
 const experimentResults = {
   adaptation: {
     title: "Success by adaptation method",
-    source: "Table I · 3 lab tasks",
+    source: "Table I: 3 lab tasks",
     note: "10 trials per task; averages as reported.",
     rows: [
       {
@@ -37,7 +37,7 @@ const experimentResults = {
   },
   architecture: {
     title: "Architecture ablations",
-    source: "Table II · 3 lab tasks",
+    source: "Table II: 3 lab tasks",
     note: "Same training and evaluation across variants.",
     groups: { all: "All variants", encoder: "Encoder", decoder: "Decoder" },
     rows: [
@@ -62,7 +62,7 @@ const experimentResults = {
   },
   trajectory: {
     title: "Choosing a steering trajectory",
-    source: "Table III · 3 lab tasks",
+    source: "Table III: 3 lab tasks",
     note: "Same steering; different demonstration selection.",
     rows: [
       { name: "VINN", counts: [7, 2, 7], average: 53 },
@@ -72,7 +72,7 @@ const experimentResults = {
   },
   generalization: {
     title: "Transfer to unseen objects",
-    source: "Figure 8 · 10 trials per condition",
+    source: "Figure 8: 10 trials per condition",
     note: "Success drops 10 percentage points on each task.",
     groups: { all: "Both tasks", flower: "Flower", toy: "Toy" },
     rows: [
@@ -193,7 +193,7 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
       const option = chartElement(
         "option",
         "",
-        value === "average" ? "Average · 3 tasks" : name,
+        value === "average" ? "Average: 3 tasks" : name,
       );
       option.value = value;
       select.append(option);
@@ -309,7 +309,7 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
         row.value !== undefined
           ? `${row.count}/10 successful trials`
           : metric === "average"
-            ? `${row.average / 10}/10 reported average · Trash ${row.counts[0]}/10 · Flower ${row.counts[1]}/10 · Bread ${row.counts[2]}/10`
+            ? `${row.average / 10}/10 reported average: Trash ${row.counts[0]}/10: Flower ${row.counts[1]}/10: Bread ${row.counts[2]}/10`
             : `${row.counts[taskIndices[metric]]}/10 successful trials on ${context}`;
       bar.style.width = `${value}%`;
       element.classList.toggle("is-zero", value === 0);
@@ -327,8 +327,8 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
     }
     axisHeading.textContent =
       key === "generalization"
-        ? "Success rate (%) · higher is better"
-        : `${metricNames[metric]} success rate (%) · higher is better`;
+        ? "Success (%)"
+        : `${metricNames[metric]} success (%)`;
     status.textContent = `${data.title}. ${group && data.groups ? `${data.groups[group]}. ` : ""}${axisHeading.textContent}: ${summary.join(", ")}.`;
   }
 

@@ -12,8 +12,8 @@
       output: "proprio.png",
       outputVideo: "proprio.webm",
       outputAlt: "Observed human hand landmarks retargeted to Wuji geometry",
-      outputCaption: "Tracked hands · Wuji rendering",
-      eyebrow: "01 · Aria Gen 2",
+      outputCaption: "Tracked hands: Wuji rendering",
+      eyebrow: "01: Aria Gen 2",
       title: "Synchronized observation",
       copy: "Record the scene and hand motion on the same timeline.",
       stat: "10 Hz",
@@ -22,7 +22,7 @@
     {
       assetBase: "assets/contact/processing/",
       duration: 4.8,
-      input: "rgb.png", inputVideo: "rgb.mp4",
+      input: "rgb.png?v=060eddf08ed0", inputVideo: "rgb.mp4?v=bd43647421e0",
       inputAlt: "Bread placement interaction from the same oven recording",
       inputCaption: "Scene with hands",
       output: "cloud.png", outputVideo: "cloud.webm",
@@ -33,10 +33,10 @@
     {
       assetBase: "assets/contact/processing/",
       duration: 4.8,
-      input: "rgb.png", inputVideo: "rgb.mp4",
+      input: "rgb.png?v=060eddf08ed0", inputVideo: "rgb.mp4?v=bd43647421e0",
       inputAlt: "Selected bread pickup and placement interaction clip",
       inputCaption: "Interaction clip",
-      output: "overlay.png", outputVideo: "overlay.mp4",
+      output: "overlay.png?v=acd3cb81ceec", outputVideo: "overlay.mp4?v=0ffccf250f86",
       outputAlt: "The bread mask highlighted in green over the matching clip frame",
       outputCaption: "Bread mask",
       copy: "Bread mask + “put the bread into the oven.”",
@@ -308,29 +308,4 @@
   }
   selectStage(Number(processing.dataset.processStage || 0));
   }
-  const comparison = document.getElementById("object-figure");
-  const objectDetails = {
-    "flower-original":
-      "Flower · original object: 7 of 10 successful trials (70%).",
-    "flower-new":
-      "Flower · replacement object: 6 of 10 successful trials (60%); 10 percentage points below the original.",
-    "toy-original": "Toy · original object: 10 of 10 successful trials (100%).",
-    "toy-new":
-      "Toy · replacement object: 9 of 10 successful trials (90%); 10 percentage points below the original.",
-  };
-  const reset = comparison.querySelector("[data-object-reset]");
-  function selectObject(button) {
-    for (const sibling of comparison.querySelectorAll("[data-object]"))
-      sibling.setAttribute("aria-pressed", String(sibling === button));
-    comparison.querySelector("[data-object-detail]").textContent = button
-      ? objectDetails[button.dataset.object]
-      : "Successes in 10 trials.";
-    reset.hidden = !button;
-  }
-  for (const button of comparison.querySelectorAll("[data-object]"))
-    button.addEventListener("click", () => selectObject(button));
-  reset.addEventListener("click", () => {
-    selectObject(null);
-    comparison.querySelector("[data-object]").focus();
-  });
 })();

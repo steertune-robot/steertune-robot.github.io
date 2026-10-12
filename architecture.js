@@ -125,7 +125,7 @@
     const w=compact?360:1040,h=compact?1036:465;
     svg=d3.select(host).append('svg').attr('class','ag-svg av-svg av-model').attr('viewBox',`0 0 ${w} ${h}`).attr('role','group').attr('aria-label','Animated policy architecture with recorded inputs and schematic internal representations');
     model();host.dataset.view='model';host.dataset.compact=String(compact);
-    figure.querySelector('[data-graph-note]').textContent='Recorded inputs · schematic activations and connections.';
+    figure.querySelector('[data-graph-note]').textContent='Recorded inputs: schematic activations and connections.';
     fitType();select();paint();media();
   }
   function fitType(){
@@ -149,7 +149,7 @@
     });
     cells.forEach(({node,phase,seed})=>{node.style.opacity=String(.27+.58*(.5+.5*Math.sin(seconds*1.5-phase+seed*.65)));});
     const phase=cycle<1.6?0:cycle<3?1:2;
-    const next=['01 · Encode observations','02 · Condition the transformer','03 · Predict noise'][phase];
+    const next=['01: Encode observations','02: Condition the transformer','03: Predict noise'][phase];
     if(status.textContent!==next)status.textContent=next;
   }
   function tick(now){

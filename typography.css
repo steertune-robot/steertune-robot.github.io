@@ -4,12 +4,12 @@
 :root {
   --label: var(--serif);
   --type-body: 1.111111rem;
-  --type-label: 1rem;
-  --type-meta: .888889rem;
-  --type-panel: 1.222222rem;
+  --type-label: var(--type-body);
+  --type-meta: var(--type-body);
+  --type-panel: var(--type-body);
   --type-subheading: 1.555556rem;
   --type-section: 2.222222rem;
-  --type-value: 1.333333rem;
+  --type-value: var(--type-body);
 }
 body { font: 400 var(--type-body)/1.65 var(--serif); }
 body :is(button, input, select, textarea) { font-family: var(--serif); }
@@ -102,7 +102,7 @@ body .scientific-plot .plot-label, body .scaling-panel .scientific-plot .plot-la
   font-family:var(--serif); font-weight:400; font-size:var(--plot-font-size,18px);
 }
 @media(max-width:760px) {
- body h2 { font-size:2rem; }
+ body h2 { font-size:var(--type-section); }
  body #policy-figure { padding:20px; }
  body .transfer-photo { height:310px; }
  body .deploy-plan { gap:10px; }
@@ -118,7 +118,7 @@ body .scientific-plot .plot-label, body .scaling-panel .scientific-plot .plot-la
  body .transfer-topline button { margin-left:auto; }
  body .transfer-photo { height:240px; }
  body .transfer-method .transfer-step { min-height:164px; }
- body .transfer-grid h3 { font-size:1.444444rem; }
+ body .transfer-grid h3 { font-size:var(--type-subheading); }
  body .transfer-caption { font-size:var(--type-body); }
  body .demo-count { gap:4px; }
  body .demo-count b { font-size:32px; }
@@ -136,13 +136,8 @@ body :is(#policy-figure,.policy-context) :is(.sc-header > span,.sc-legend,.sc-co
 body :is(#policy-figure,.policy-context) :is(.sc-intro,.sc-result) { font:400 var(--type-body)/1.5 var(--serif); }
 body :is(#policy-figure,.policy-context) .sc-coordinate-name { font:600 var(--type-panel)/1.35 var(--serif); }
 
-/* Finetuning and steering use the same figure typography. */
-body :is(#policy-figure,.policy-context) :is(.ft-header button,.ft-demos span,.ft-base span,.ft-adapter span,.ft-ready span,.ft-footer span) {
-  font:400 var(--type-label)/1.5 var(--serif);
-}
-body :is(#policy-figure,.policy-context) :is(.ft-intro,.ft-footer) { font:400 var(--type-body)/1.5 var(--serif); }
-body :is(#policy-figure,.policy-context) :is(.ft-base strong,.ft-adapter strong,.ft-ready strong) { font:600 var(--type-panel)/1.35 var(--serif); }
-body :is(#policy-figure,.policy-context) .ft-demos strong { font:600 var(--type-section)/1.1 var(--serif); }
+/* Finetuning uses the shared figure label scale. */
+body .ft-training-node p { font:400 var(--type-label)/1.5 var(--serif); }
 
 /* The input/output example keeps language and phase labels prominent. */
 body :is(#policy-figure,.policy-context) :is(.ex-controls button,.ex-language span,.ex-flow h4 span,.ex-number,.ex-card-status,.ex-output-cover) { font:400 var(--type-label)/1.5 var(--serif); }
@@ -162,7 +157,7 @@ body .paper-section > h2 {
   display:flex;
   align-items:baseline;
   gap:18px;
-  font-size:2.666667rem;
+  font-size:var(--type-section);
   line-height:1.12;
   text-align:left;
   color:var(--green);
@@ -179,7 +174,7 @@ body .paper-section > h2 .section-number {
 body .paper-section > h2 .section-heading-text { min-width:0; text-align:left; }
 body .paper-section :is(h3,h4) { text-align:left; }
 body :is(.subsection,.ablation-tables > article) > h3 {
-  font-size:1.888889rem;
+  font-size:var(--type-subheading);
   line-height:1.22;
   color:var(--ink);
   border-left:3px solid #92a68d;
@@ -190,7 +185,7 @@ body :is(.subsection,.ablation-tables > article) > h3 {
 body .subsection + .subsection { margin-top:64px; }
 body .paper-section h4,
 body #in-the-wild-rollouts .rollout-pair h4,
-body .paper-section :is(.chart-title,.ag-toolbar h4,.ft-header h4,.sc-header h4,.ex-header h4) {
+body .paper-section :is(.chart-title,.ag-toolbar h4,.sc-header h4,.ex-header h4) {
   font:600 var(--type-panel)/1.35 var(--serif);
   color:var(--green);
   letter-spacing:0;
@@ -202,13 +197,13 @@ body .paper-section .chart-title {
 }
 body .chart-header > div { min-width:0; }
 @media(max-width:760px) {
-  body .paper-section > h2 { font-size:2.222222rem; gap:12px; padding-bottom:16px; margin-bottom:28px; }
-  body :is(.subsection,.ablation-tables > article) > h3 { font-size:1.666667rem; padding-left:12px; }
+  body .paper-section > h2 { font-size:var(--type-section); gap:12px; padding-bottom:16px; margin-bottom:28px; }
+  body :is(.subsection,.ablation-tables > article) > h3 { font-size:var(--type-subheading); padding-left:12px; }
   body .subsection + .subsection { margin-top:48px; }
 }
 @media(max-width:480px) {
-  body .paper-section > h2 { font-size:2rem; }
-  body :is(.subsection,.ablation-tables > article) > h3 { font-size:1.555556rem; }
+  body .paper-section > h2 { font-size:var(--type-section); }
+  body :is(.subsection,.ablation-tables > article) > h3 { font-size:var(--type-subheading); }
   body .chart-header { flex-wrap:wrap; gap:8px 16px; }
 }
 
@@ -220,3 +215,27 @@ body .contact-story :is(.contact-legend,.contact-recording figcaption,.contact-h
 }
 body .contact-story .contact-hand strong {font-weight:600;}
 body .contact-story .contact-chart svg text {font:400 var(--type-label)/1.3 var(--serif); letter-spacing:0;}
+
+/* Three shared reading sizes: body/figures, subsections, and chapters.
+   Diagram labels retain their screen-space normalization. */
+body :is(.text-underline,.text-accent,.text-key,.teaser-caption em,.paper-section em) {
+ text-decoration:none; font-style:normal;
+}
+body :is(.teaser-caption,.transfer-caption) strong {font-weight:400;}
+body .teaser-caption strong.text-key {font-weight:600;}
+body :is(.story-lead,.story-transition,.transfer-media-note,.dataset-capture,.chart-caption,.chart-source) {
+ font-size:var(--type-body);
+}
+body .object-example {cursor:default;}
+body .object-example:hover {transform:none;}
+
+body .dataset-stats dd {font:500 var(--type-subheading)/1.2 var(--serif);}
+body .dataset-stats > div:first-child dd {font-size:var(--type-section);}
+body .demo-count b {font-size:var(--type-section);}
+
+body .sm-sequence .is-active {text-decoration:none;font-weight:600;}
+
+body :is(.task-demo-toolbar,.task-demo-grid figcaption,[data-task-demo-status]) {
+ font:400 var(--type-label)/1.5 var(--serif);
+}
+body .task-demo-toolbar button {font:inherit;}

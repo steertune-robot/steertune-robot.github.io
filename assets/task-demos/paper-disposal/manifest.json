@@ -1,0 +1,153 @@
+{
+  "task": "Paper disposal",
+  "source": "Six user-supplied videos, 2026-10-11",
+  "review": "0908-copy.mp4 is the full human session. 0908-copy(1).mp4 is robot execution. The four remaining files are overlapping excerpts of the full human session. Five complete placements were reviewed and exported from the full session; setup frames are excluded from individual clips.",
+  "recordings": "Human demonstrations and robot execution are independent recordings.",
+  "processing": "Full frames, no crop. Silent 4\u00d7 browser copies, original files preserved. Browser playback stays at 1\u00d7.",
+  "sources": [
+    {
+      "filename": "0908-copy.mp4",
+      "sha256": "249aa0060b16cc26b9dc5c2b8f4771ddcb0b9aea40c1563d69855d5585d2664e",
+      "duration_seconds": 48.1
+    },
+    {
+      "filename": "0908-copy(1).mp4",
+      "sha256": "f385e8cb281bf0990be9d1ecbfe1e6cc82bda626033e2b6616478255406c9743",
+      "duration_seconds": 22.266667
+    },
+    {
+      "filename": "0908-copy(2).mp4",
+      "sha256": "51f8c52691b17522e7ee086d90ed06a335d34129d7716497def759d8c32e1a5a",
+      "duration_seconds": 9.633333
+    },
+    {
+      "filename": "0908-copy(3).mp4",
+      "sha256": "ded9ea95059631bdad8edbf4657c843f37d2ec17df341fc4591a7467ce1db73b",
+      "duration_seconds": 9.366667
+    },
+    {
+      "filename": "0908-copy(4).mp4",
+      "sha256": "b4acc3b5b399ba9595c4c4f75f29822add88b4990e5c4c38bb62ede6ad11ac3e",
+      "duration_seconds": 9.766667
+    },
+    {
+      "filename": "0908-copy(5).mp4",
+      "sha256": "0f69804c5760fb897ce96e76e11e35ea331534cfbfe16176e7362093aa2e543b",
+      "duration_seconds": 12.266667
+    }
+  ],
+  "outputs": [
+    {
+      "name": "human-five-demos",
+      "source_filename": "0908-copy.mp4",
+      "source_window_seconds": [
+        0,
+        null
+      ],
+      "video": "human-five-demos.mp4",
+      "poster": "human-five-demos.jpg",
+      "sha256": "5ea719d32670bbbe2e88974bc788bd3980c2575893955aea5b9418ecfc230fee",
+      "poster_sha256": "de233bdc654b1556efc7fc770dfe0dbf5b2bf49def7342f77c9fea6cc4483564",
+      "duration_seconds": 12.033333,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    },
+    {
+      "name": "robot-execution",
+      "source_filename": "0908-copy(1).mp4",
+      "source_window_seconds": [
+        0,
+        null
+      ],
+      "video": "robot-execution.mp4",
+      "poster": "robot-execution.jpg",
+      "sha256": "cb0bb26144d69b745c6c2adb6f325854b846168f55f5acc939bceb878802ba0b",
+      "poster_sha256": "a9da08595dab119f5a31308d9d487b4d8e636daf7e0170cbc547e89a5d1ec405",
+      "duration_seconds": 5.566667,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    },
+    {
+      "name": "human-demo-1",
+      "source_filename": "0908-copy.mp4",
+      "source_window_seconds": [
+        10.7,
+        16.8
+      ],
+      "video": "human-demo-1.mp4",
+      "poster": "human-demo-1.jpg",
+      "sha256": "8fe45dbcaf866f490f9ad6f6f1a564338f58542423b0f09fba877a5968a79293",
+      "poster_sha256": "973519dace9a9720465ca1893d79fbf93a963933f53e9ec8de75fa5324d4ed65",
+      "duration_seconds": 1.533333,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    },
+    {
+      "name": "human-demo-2",
+      "source_filename": "0908-copy.mp4",
+      "source_window_seconds": [
+        18.7,
+        25.3
+      ],
+      "video": "human-demo-2.mp4",
+      "poster": "human-demo-2.jpg",
+      "sha256": "1bdcac0bc65d3a305e0589accbb0d6ea8eaf5d12fb8c43b331d77c4613a480ca",
+      "poster_sha256": "f9e26537dbb00a822089d91a8dae82ca62d08490734524bee314e18943cf0a35",
+      "duration_seconds": 1.666667,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    },
+    {
+      "name": "human-demo-3",
+      "source_filename": "0908-copy.mp4",
+      "source_window_seconds": [
+        26.5,
+        33.7
+      ],
+      "video": "human-demo-3.mp4",
+      "poster": "human-demo-3.jpg",
+      "sha256": "c764a1274b413d7381e6f0d29ff335822532c6a4bd19005682fe516cf9d3f11d",
+      "poster_sha256": "22ef59391da480bdcebf4262751ebee025613841dfe252f90c7007abd10c82b8",
+      "duration_seconds": 1.8,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    },
+    {
+      "name": "human-demo-4",
+      "source_filename": "0908-copy.mp4",
+      "source_window_seconds": [
+        33.7,
+        39.7
+      ],
+      "video": "human-demo-4.mp4",
+      "poster": "human-demo-4.jpg",
+      "sha256": "28acbc8f66a93aa4204c50016eb4504f72a91d5ec3af8eddc68dbd0bb7716ee1",
+      "poster_sha256": "47fb9241f986c6f945d327f37bef84baf2262313e322f31860a6e9cd5900bfe2",
+      "duration_seconds": 1.5,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    },
+    {
+      "name": "human-demo-5",
+      "source_filename": "0908-copy.mp4",
+      "source_window_seconds": [
+        40.6,
+        46.0
+      ],
+      "video": "human-demo-5.mp4",
+      "poster": "human-demo-5.jpg",
+      "sha256": "c3f373faa5c5b855b8e62bdbf652e04f8c66783ee5c8164204cc68586f532985",
+      "poster_sha256": "caeb503be869b229188520f4a43dc03ffcb6f36b37dd4a900c5bb5e258b8dd9e",
+      "duration_seconds": 1.366667,
+      "encoded_speed": 4,
+      "browser_playback_rate": 1,
+      "full_frame": true
+    }
+  ]
+}

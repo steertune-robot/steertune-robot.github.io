@@ -2,6 +2,23 @@
 // Same-task examples; independent recordings, not synchronized trials.
 window.STEERTUNING_ROLLOUTS = [
   {
+    "id": "paper-disposal",
+    "label": "Paper disposal",
+    "human": {
+      "src": "assets/task-demos/paper-disposal/human-five-demos.mp4?v=5ea719d32670",
+      "poster": "assets/task-demos/paper-disposal/human-five-demos.jpg?v=de233bdc654b",
+      "duration": 12.033333,
+      "speed": 4,
+      "caption": "Five demonstrations in the supplied session."
+    },
+    "robot": {
+      "src": "assets/task-demos/paper-disposal/robot-execution.mp4?v=cb0bb26144d6",
+      "poster": "assets/task-demos/paper-disposal/robot-execution.jpg?v=a9da08595dab",
+      "duration": 5.566667,
+      "speed": 4
+    }
+  },
+  {
     "id": "paper-towel",
     "label": "Paper towel",
     "human": {

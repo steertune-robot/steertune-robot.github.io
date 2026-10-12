@@ -172,8 +172,6 @@ body :is(#policy-figure,.policy-context) .architecture-media { margin-top:48px; 
 body :is(#policy-figure,.policy-context) .sc-playback { background:#eef1e8; padding:12px 18px; }
 body :is(#policy-figure,.policy-context) .av-media-border { stroke:none; }
 body :is(#policy-figure,.policy-context) [data-pick][aria-pressed=true] .av-media-border { stroke:var(--green); }
-body .ft-policy { border:0; background:#f1f0e9; }
-body .ft-adapter { border-top:0; }
 body :is(.plot-readout,.process-tabs,.deploy-command,.deploy-inspector,.deploy-videos) { border:0; }
 body .scaling-grid { row-gap:48px; }
 body #prediction-example :is(.ex-group-header,.ex-language,.ex-media,.ex-policy strong) { border:0; }

@@ -201,10 +201,7 @@ body #prepare .process-playback {display:flex; flex-wrap:nowrap; gap:16px;}
 body #prepare .process-playback output {display:none;}
 body #prepare [data-process-play-label] {position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%);}
 body #prepare [data-process-toggle] {min-width:44px; width:44px; height:44px; padding:0; justify-content:center;}
-.processing-sequence-controls {display:flex; justify-content:space-between; align-items:center; max-width:860px; margin:0 auto 20px;}
-.processing-steps {display:flex; gap:20px; color:var(--muted);}
-.processing-steps span {padding:6px 0; border-bottom:2px solid transparent;}
-.processing-steps .is-active {color:var(--green); border-color:currentColor;}
+.processing-sequence-controls {display:flex; justify-content:flex-end; align-items:center; max-width:860px; margin:0 auto 20px;}
 body #prepare .processing-replay {margin:0; width:44px; height:44px; background:none; border:0; color:var(--green); cursor:pointer;}
 body #finetune .task-demo-toolbar {justify-content:flex-end;}
 body #pretraining .ag-detail:empty {display:none;}

@@ -58,15 +58,10 @@
   const controllers = [];
   let activeStep = 0;
   let completedSteps = new Set();
-  let stepIndicator;
   function showStep(index) {
     if (sequence) {
       sequence.dataset.activeStep = String(index + 1);
       players.forEach((player, i) => { player.closest("article").hidden = i !== index && !reducedMotion.matches; });
-      stepIndicator?.querySelectorAll("span").forEach((item, i) => {
-        item.classList.toggle("is-active", i === index);
-        item.setAttribute("aria-current", i === index ? "step" : "false");
-      });
     }
   }
   function completeStep(index) {
@@ -80,16 +75,10 @@
   }
   if (sequence) {
     const toolbar = document.createElement("div"); toolbar.className = "processing-sequence-controls";
-    stepIndicator = document.createElement("div"); stepIndicator.className = "processing-steps";
-    stepIndicator.setAttribute("aria-label", "Processing steps");
-    ["Object mask", "Hand removal", "Observation alignment"].forEach((label, index) => {
-      const item = document.createElement("span"); item.textContent = String(index + 1).padStart(2, "0");
-      item.setAttribute("aria-label", label); stepIndicator.append(item);
-    });
     const replay = document.createElement("button");
     replay.type = "button"; replay.className = "processing-replay";
     replay.textContent = "↻"; replay.title = "Replay processing"; replay.setAttribute("aria-label", "Replay all three processing steps in order");
-    toolbar.append(stepIndicator,replay); sequence.before(toolbar);
+    toolbar.append(replay); sequence.before(toolbar);
     replay.addEventListener("click", () => {
       completedSteps.clear(); activeStep = 0; showStep(0);
       controllers.forEach((controller, index) => controller.reset(index === 0));

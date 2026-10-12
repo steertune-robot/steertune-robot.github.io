@@ -250,6 +250,6 @@ body .task-demo-toolbar button {font:inherit;}
 body .processing-replay {font:400 var(--type-label)/1.4 var(--serif);}
 
 /* Compact controls and the matched steering comparison share the body scale. */
-body :is(.processing-steps,.processing-replay,.sc-reference figcaption,.sc-comparison-foot,.sc-comparison-foot button) {font:400 var(--type-label)/1.4 var(--serif);}
+body :is(.processing-replay,.sc-reference figcaption,.sc-comparison-foot,.sc-comparison-foot button) {font:400 var(--type-label)/1.4 var(--serif);}
 
 body #prepare [data-process-play-icon] {font:400 var(--type-label)/1 var(--serif);}

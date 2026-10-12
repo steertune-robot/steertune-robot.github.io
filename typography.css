@@ -239,3 +239,9 @@ body :is(.task-demo-toolbar,.task-demo-grid figcaption,[data-task-demo-status]) 
  font:400 var(--type-label)/1.5 var(--serif);
 }
 body .task-demo-toolbar button {font:inherit;}
+
+/* Phone architecture consumes the same type scale as the rest of the page. */
+@media(max-width:600px){
+ body #policy-figure :is(.ag-phone-input,.ag-phone-stage p){font:400 var(--type-label)/1.4 var(--serif);}
+ body #policy-figure .ag-phone-language {font:400 var(--type-section)/1.8 var(--serif);}
+}

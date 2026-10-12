@@ -131,3 +131,42 @@ body .task-demo-toolbar h4 {margin:0; margin-right:auto;}
  .task-demo-toolbar {gap:8px 16px;}
  .task-demo-toolbar h4 {flex-basis:100%;}
 }
+
+/* Phone figures use short reading paths instead of shrinking the desktop diagrams. */
+@media(max-width:600px){
+ body #pretraining .research-figure:has(#policy-figure) {width:100%; margin-left:0; transform:none;}
+ body #pretraining #policy-figure {padding:0;}
+ body #policy-figure .ag-toolbar {display:flex; gap:8px; margin-bottom:24px;}
+ body #policy-figure .ag-controls {width:auto; margin-left:auto;}
+ body #policy-figure .ag-pause {white-space:normal;}
+ body #steering-chart,body .scaling-panel {padding-inline:0;}
+ body #steering-chart .steering-svg {width:100%; min-width:0;}
+ body #steering-chart .steering-viewport {overflow:visible;}
+ body #steering-chart .plot-scroll-hint {display:none;}
+ body #steering-chart .steering-key {display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px;}
+ body #steering-chart .steering-key-item {align-items:flex-start;}
+ body #steering-chart .steering-key-item::before {flex-shrink:0; margin-top:14px;}
+ body #steering-deployment .sc-scrub {display:grid; grid-template-columns:1fr auto; gap:8px 12px; min-width:0;}
+ body #steering-deployment .sc-scrub input {grid-column:1 / -1; grid-row:2; min-width:0; margin:0;}
+ body #deployment-figure {padding-inline:0;}
+ body .deploy-flow {gap:32px;}
+ body .deploy-wires {display:none;}
+ body .deploy-column + .deploy-column::before {content:'↓'; position:absolute; top:-31px; left:50%; color:#78916e;}
+ body .deploy-planner {max-width:none; display:flex; align-items:center; justify-content:space-between; gap:12px; border:0; background:#eef1e8; padding:14px;}
+ body .deploy-brand {margin:0;}
+ body .deploy-plan {grid-template-columns:1fr; gap:8px;}
+ body .deploy-step {display:flex; align-items:center; gap:16px; min-height:60px; padding:10px 14px; text-align:left; border:0; background:#eeeae240;}
+ body .deploy-step-number {margin:0; flex:0 0 2ch;}
+ body .deploy-step > span:nth-child(2) {display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline;}
+ body .deploy-step small {margin:0;}
+ body .deploy-step[aria-pressed=true] {background:#e4ecdf; box-shadow:inset 3px 0 var(--green);}
+ body .deploy-skills {gap:12px;}
+ body .deploy-skill {padding:12px; border:0; background:#eeeae240;}
+ body .deploy-skill.is-active {background:#e4ecdf;}
+ body .deploy-output {width:100%;}
+ body .deploy-inspector-heading {flex-wrap:wrap;}
+ /* Keep the full action footage clear; sampled thumbnails are desktop detail. */
+ body .contact-story :is(.annotation-clips,.annotation-feed-clip,.annotation-prompt-flight) {display:none;}
+ body .contact-story .annotation-model span {display:none;}
+ body .contact-story .contact-stage-heading {flex-wrap:wrap; gap:4px 12px;}
+}

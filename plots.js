@@ -88,6 +88,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
       plotText(34, y(tick) + 4, tick, { "text-anchor": "end" }),
     );
   }
+  svg.dataset.defaultIndex = data.defaultIndex;
   const defaultPoint = data.points[data.defaultIndex];
   svg.append(
     plotNode("line", {
@@ -277,56 +278,39 @@ const svg = plotNode("svg", {
   "aria-label":
     "Action prediction error across steering weights. Three key comparisons and the selected finetuning budget.",
 });
-const sx = (weight) => 58 + 780 * weight;
+let phonePlot = false, steeringWidth = 880;
+const sx = (weight) => phonePlot ? 48 + (steeringWidth - 64) * weight : 58 + 780 * weight;
 const sy = (value) => 270 - (value - 220) * 1.7;
-svg.append(plotText(58, 25, "Action error (MSE) ↓"));
-for (const tick of [220, 240, 260, 280, 300, 320, 340]) {
-  svg.append(
-    plotNode("line", {
-      x1: 58,
-      x2: 838,
-      y1: sy(tick),
-      y2: sy(tick),
-      class: "plot-grid",
-    }),
-    plotText(44, sy(tick) + 4, tick, { "text-anchor": "end" }),
-  );
+const axes = plotNode('g');
+svg.append(axes);
+function drawSteeringAxes() {
+  axes.replaceChildren();
+  const left=sx(0),right=sx(1);
+  axes.append(plotText(left,25,'Action error (MSE) ↓'));
+  for (const tick of phonePlot ? [220,260,300,340] : [220,240,260,280,300,320,340]) {
+    axes.append(plotNode('line',{x1:left,x2:right,y1:sy(tick),y2:sy(tick),class:'plot-grid'}),
+      plotText(left-14,sy(tick)+4,tick,{'text-anchor':'end'}));
+  }
+  for(const weight of phonePlot ? [0,0.3,0.6,1] : steering.weights)
+    axes.append(plotText(sx(weight),292,weight.toFixed(1),{'text-anchor':phonePlot&&weight===0?'start':phonePlot&&weight===1?'end':'middle'}));
+  axes.append(plotText(phonePlot?(left+right)/2:448,323,'Steering strength w',{'text-anchor':'middle'}));
+  if(!phonePlot) axes.append(
+    plotText(58,323,'Model only',{class:'plot-label plot-endpoint'}),
+    plotText(838,323,'Replay demonstration',{'text-anchor':'end',class:'plot-label plot-endpoint'}));
+  axes.append(plotNode('line',{x1:left,x2:right,y1:sy(steering.replay),y2:sy(steering.replay),class:'replay-baseline'}));
 }
-for (const weight of steering.weights)
-  svg.append(
-    plotText(sx(weight), 292, weight.toFixed(1), { "text-anchor": "middle" }),
-  );
-svg.append(
-  plotText(448, 323, "Steering strength w", { "text-anchor": "middle" }),
-  plotText(58, 323, "Model only", { class: "plot-label plot-endpoint" }),
-  plotText(838, 323, "Replay demonstration", {
-    "text-anchor": "end",
-    class: "plot-label plot-endpoint",
-  }),
-);
-svg.append(
-  plotNode("line", {
-    x1: 58,
-    x2: 838,
-    y1: sy(steering.replay),
-    y2: sy(steering.replay),
-    class: "replay-baseline",
-  }),
-);
+function steeringPath(series) {
+  let connected=false;
+  return series.values.map((value,i)=>{
+    if(value===null){connected=false;return '';}
+    const command=connected?'L':'M';connected=true;
+    return `${command}${sx(steering.weights[i])},${sy(value)}`;
+  }).join(' ');
+}
+drawSteeringAxes();
 const paths = steering.series.map((series, index) => {
-  let connected = false;
   const path = plotNode("path", {
-    d: series.values
-      .map((value, i) => {
-        if (value === null) {
-          connected = false;
-          return "";
-        }
-        const command = connected ? "L" : "M";
-        connected = true;
-        return `${command}${sx(steering.weights[i])},${sy(value)}`;
-      })
-      .join(" "),
+    d: steeringPath(series),
     class: "plot-curve steering-curve",
     stroke: curveColors[index],
     "aria-hidden": "true",
@@ -479,6 +463,25 @@ weightSelect.addEventListener("change", () => {
 updateSteering();
 revealPlot(steeringFigure);
 
+// Redraw only the phone geometry; retain every measured point and the selected controls.
+let lastSteeringLayout='';
+function fitSteeringPlot(){
+  const nextPhone=matchMedia('(max-width:600px)').matches;
+  const width=nextPhone?Math.round(viewport.clientWidth):880;
+  if(!width)return;
+  const key=`${nextPhone}:${width}`;if(key===lastSteeringLayout)return;lastSteeringLayout=key;
+  phonePlot=nextPhone;steeringWidth=width;
+  svg.setAttribute('viewBox',`0 0 ${width} 340`);
+  drawSteeringAxes();
+  paths.forEach((path,i)=>path.setAttribute('d',steeringPath(steering.series[i])));
+  defaultRing.setAttribute('cx',sx(.3));
+  viewport.setAttribute('aria-label',phonePlot?'Steering comparison plot':'Steering comparison plot, scroll horizontally on narrow screens');
+  updateSteering();
+}
+new ResizeObserver(fitSteeringPlot).observe(viewport);
+matchMedia('(max-width:600px)').addEventListener('change',fitSteeringPlot);
+fitSteeringPlot();
+
 // Keep SVG labels at the same visual size as the surrounding figure captions.
 // The chart geometry scales, but its type should not grow with a wider panel.
 const plotTypeObserver = new ResizeObserver((entries) => {
@@ -490,8 +493,15 @@ const plotTypeObserver = new ResizeObserver((entries) => {
     // Stagger crowded categorical ticks on small phones instead of shrinking them.
     const ticks = target.querySelectorAll('.plot-x-tick');
     if (ticks.length) {
-      const stagger = width < 300 && ticks.length > 5;
-      ticks.forEach((tick, index) => tick.setAttribute('y', 197 + (stagger && index % 2 ? 26 : 0)));
+      const phone = matchMedia('(max-width:600px)').matches;
+      const stagger = !phone && width < 300 && ticks.length > 5;
+      const keep = new Set([0, Number(target.dataset.defaultIndex), ticks.length-1]);
+      if(keep.size<3)keep.add(Math.floor(ticks.length/2));
+      ticks.forEach((tick, index) => {
+        tick.setAttribute('y',197 + (stagger && index % 2 ? 26 : 0));
+        tick.style.display=phone&&ticks.length>4&&!keep.has(index)?'none':'';
+        tick.setAttribute('text-anchor',phone&&index===ticks.length-1?'end':'middle');
+      });
       target.querySelector('.plot-x-title').setAttribute('y', stagger ? 253 : 225);
       target.setAttribute('viewBox', `0 0 300 ${stagger ? 262 : 234}`);
     }

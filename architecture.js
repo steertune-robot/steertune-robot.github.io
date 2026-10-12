@@ -7,7 +7,7 @@
   const detail=figure.querySelector('[data-graph-detail]'),reset=figure.querySelector('[data-graph-reset]');
   const pause=figure.querySelector('[data-graph-pause]'),status=figure.querySelector('[data-graph-status]');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-  let compact,selected=null,svg,paths=[],cells=[],videos=[],visible=false,paused=reduce.matches,elapsed=0,previous=0,raf=0,painted=0;
+  let compact,phone,phoneStages=[],selected=null,svg,paths=[],cells=[],videos=[],visible=false,paused=reduce.matches,elapsed=0,previous=0,raf=0,painted=0;
   const colors=['#335b49','#819a89','#b49977'];
   const defaults=['Select a component to explore the policy.',''];
   function text(g,x,y,s,cls='av-label',anchor='middle'){return g.append('text').attr('x',x).attr('y',y).attr('class',cls).attr('text-anchor',anchor).text(s);}
@@ -21,6 +21,7 @@
     const info=selected?data.info[selected]:null;
     detail.replaceChildren();const a=document.createElement('strong'),b=document.createElement('span');
     a.textContent=info?.title||defaults[0];b.textContent=info?.body||defaults[1];detail.append(a,b);reset.disabled=!selected;
+    if(!svg)return;
     svg.selectAll('[data-pick]').attr('aria-pressed',function(){return String(this.dataset.pick===selected);});
     svg.selectAll('[data-route]').classed('av-selected-route',function(){return !!selected&&this.dataset.route.split(' ').includes(selected);});
   }
@@ -120,8 +121,39 @@
     matrix(core,mx,my,6,4,7,3.6);
     line(core,`M${mx+25},${my+39}C${mx+25},${y+h-10} ${x+w/2},${y+h-10} ${x+w/2},${y+h}`,'denoiser noiseHead',3.9);
   }
+  // A separate semantic layout for phones: retain the computation, remove dense wiring.
+  function phoneModel(){
+    const flow=d3.select(host).append('ol').attr('class','ag-phone-flow').attr('aria-label','Policy computation');
+    const stage=(title)=>{
+      const node=flow.append('li').attr('class','ag-phone-stage');
+      node.append('h4').text(title);phoneStages.push(node.node());return node;
+    };
+    const inputs=stage('Encode observations').append('div').attr('class','ag-phone-inputs');
+    const rows=[['Point cloud','Utonia','cloud-sampled.png','processing-sampled.webm'],['Object mask','ResNet-18','object-mask.png','processing-mask.mp4'],['Fingertips','FFN','proprio.png','proprio.webm'],['Language','SigLIP']];
+    rows.forEach(([title,encoder,poster,src])=>{
+      const item=inputs.append('div').attr('class','ag-phone-input');
+      if(src){
+        const v=item.append('video').attr('muted','').attr('loop','').attr('playsinline','').attr('preload','none').attr('poster',`assets/figures/${poster}`).attr('aria-hidden','true').attr('tabindex','-1').node();
+        v.muted=true;v.dataset.clip=`assets/figures/${src}`;videos.push(v);
+      }else item.append('span').attr('class','ag-phone-language').attr('aria-hidden','true').text('“');
+      const label=item.append('div');label.append('span').text(title);label.append('span').attr('class','ag-phone-encoder').text(encoder);
+    });
+    const core=stage('Diffusion transformer');
+    core.append('p').attr('class','ag-phone-conditioning').text('Context → AdaLN');
+    core.append('p').attr('class','ag-phone-conditioning').text('Tokens → Cross-attention');
+    core.append('p').text('Denoise actions using these observations and timestep t.');
+    const output=stage('Predict noise');
+    output.append('p').text('DDIM uses the predicted noise to update the action prediction.');
+  }
   function render(){
-    videos.forEach(v=>v.pause());host.replaceChildren();paths=[];cells=[];videos=[];
+    videos.forEach(v=>v.pause());host.replaceChildren();paths=[];cells=[];videos=[];phoneStages=[];svg=null;
+    figure.dataset.phone=String(phone);
+    detail.hidden=phone;reset.hidden=phone;status.hidden=phone;
+    const caption=figure.closest('figure').querySelector('figcaption');
+    if(caption)caption.textContent=phone?'Simplified computation with recorded inputs.':'Moving tokens illustrate computation; they are not measured activations.';
+    if(phone){
+      host.dataset.view='phone';host.dataset.compact='true';phoneModel();paint();media();return;
+    }
     const w=compact?360:1040,h=compact?1036:465;
     svg=d3.select(host).append('svg').attr('class','ag-svg av-svg av-model').attr('viewBox',`0 0 ${w} ${h}`).attr('role','group').attr('aria-label','Animated policy architecture with recorded inputs and schematic internal representations');
     model();host.dataset.view='model';host.dataset.compact=String(compact);
@@ -149,6 +181,7 @@
     });
     cells.forEach(({node,phase,seed})=>{node.style.opacity=String(.27+.58*(.5+.5*Math.sin(seconds*1.5-phase+seed*.65)));});
     const phase=cycle<1.6?0:cycle<3?1:2;
+    phoneStages.forEach((node,index)=>node.dataset.active=String(index===phase&&!paused));
     const next=['01: Encode observations','02: Condition the transformer','03: Predict noise'][phase];
     if(status.textContent!==next)status.textContent=next;
   }
@@ -162,7 +195,7 @@
   reset.addEventListener('click',()=>{selected=null;select();});pause.addEventListener('click',()=>{paused=!paused;media();});
   document.addEventListener('visibilitychange',media);reduce.addEventListener('change',()=>{paused=reduce.matches;media();});
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;media();},{threshold:.08}).observe(host);
-  new ResizeObserver(entries=>{const next=figure.clientWidth<1040;if(next!==compact){compact=next;render();}else fitType();}).observe(figure);
-  compact=figure.clientWidth<1040;render();
+  new ResizeObserver(()=>{const next=figure.clientWidth<1040,nextPhone=matchMedia('(max-width:600px)').matches;if(next!==compact||nextPhone!==phone){compact=next;phone=nextPhone;render();}else fitType();}).observe(figure);
+  compact=figure.clientWidth<1040;phone=matchMedia('(max-width:600px)').matches;render();
   document.fonts.ready.then(fitType);
 })();

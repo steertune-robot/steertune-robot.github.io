@@ -53,7 +53,51 @@
       copy: "Align geometry and motion; sample 5,000 points.",
     },
   ];
-  for (const processing of document.querySelectorAll("[data-processing-player]")) {
+  const players = [...document.querySelectorAll("[data-processing-player]")];
+  const sequence = document.querySelector("[data-processing-sequence]");
+  const controllers = [];
+  let activeStep = 0;
+  let completedSteps = new Set();
+  let stepIndicator;
+  function showStep(index) {
+    if (sequence) {
+      sequence.dataset.activeStep = String(index + 1);
+      players.forEach((player, i) => { player.closest("article").hidden = i !== index && !reducedMotion.matches; });
+      stepIndicator?.querySelectorAll("span").forEach((item, i) => {
+        item.classList.toggle("is-active", i === index);
+        item.setAttribute("aria-current", i === index ? "step" : "false");
+      });
+    }
+  }
+  function completeStep(index) {
+    if (completedSteps.has(index)) return;
+    completedSteps.add(index);
+    if (index + 1 < players.length) {
+      activeStep = index + 1;
+      showStep(activeStep);
+      controllers[activeStep]?.resume();
+    }
+  }
+  if (sequence) {
+    const toolbar = document.createElement("div"); toolbar.className = "processing-sequence-controls";
+    stepIndicator = document.createElement("div"); stepIndicator.className = "processing-steps";
+    stepIndicator.setAttribute("aria-label", "Processing steps");
+    ["Object mask", "Hand removal", "Observation alignment"].forEach((label, index) => {
+      const item = document.createElement("span"); item.textContent = String(index + 1).padStart(2, "0");
+      item.setAttribute("aria-label", label); stepIndicator.append(item);
+    });
+    const replay = document.createElement("button");
+    replay.type = "button"; replay.className = "processing-replay";
+    replay.textContent = "↻"; replay.title = "Replay processing"; replay.setAttribute("aria-label", "Replay all three processing steps in order");
+    toolbar.append(stepIndicator,replay); sequence.before(toolbar);
+    replay.addEventListener("click", () => {
+      completedSteps.clear(); activeStep = 0; showStep(0);
+      controllers.forEach((controller, index) => controller.reset(index === 0));
+    });
+    showStep(0);
+  }
+  for (const [playerIndex, processing] of players.entries()) {
+  if (sequence && playerIndex > 0 && !reducedMotion.matches) processing.closest("article").hidden = true;
   const tabs = [...processing.querySelectorAll("[data-process-stage]")];
   const processClips = ["input", "output"].map((side) =>
     processing.querySelector(`[data-process-${side}]`),
@@ -78,7 +122,7 @@
   };
   const formatProcessTime = (time) => `0:${time.toFixed(1).padStart(4, "0")}`;
   function processCanPlay() {
-    return processState.visible && !processState.paused && !document.hidden;
+    return processState.visible && !processState.paused && !document.hidden && (!sequence || playerIndex === activeStep || reducedMotion.matches);
   }
   function showProcessTime() {
     if (processTime)
@@ -133,6 +177,7 @@
       processButton.hidden = false;
       processButton.disabled = processState.failed;
       processButton.setAttribute("aria-pressed", String(processState.paused));
+      processButton.setAttribute("aria-label", processState.paused ? "Play current pair" : "Pause current pair");
       processButton.querySelector("[data-process-play-label]").textContent = processState.paused
         ? "Play clips"
         : "Pause clips";
@@ -153,6 +198,7 @@
         clip.src = clip.dataset.processSrc;
         clip.load();
       }
+      clip.playbackRate = sequence ? .65 : 1;
     }
     if (processClips.some((clip) => clip.readyState < 2)) return;
     const durations = processClips.map((clip) => clip.duration).filter(Number.isFinite);
@@ -230,7 +276,9 @@
       const media = processing.querySelector(`[data-process-${side}]`);
       if (hasProcessVideo) {
         media.muted = true;
-        media.loop = true;
+        media.loop = !sequence;
+        media.defaultPlaybackRate = sequence ? .65 : 1;
+        media.playbackRate = media.defaultPlaybackRate;
         media.playsInline = true;
         media.autoplay = false;
         media.poster = `${assetBase}${stage[side]}`;
@@ -242,12 +290,10 @@
         media.src = `${assetBase}${stage[side]}`;
         media.alt = stage[`${side}Alt`];
       }
-      processing.querySelector(`[data-process-${side}-caption]`).textContent =
-        stage[`${side}Caption`];
+      const caption = processing.querySelector(`[data-process-${side}-caption]`);
+      if (caption) caption.textContent = stage[`${side}Caption`];
     }
-    for (const name of ["copy"])
-      processing.querySelector(`[data-process-${name}]`).textContent =
-        stage[name];
+
     showProcessTime();
     updateProcessMotion();
   }
@@ -279,10 +325,13 @@
           processStatus.textContent = "Clip unavailable; showing recorded frames.";
           processStatus.hidden = false;
         }
+        if (sequence) completeStep(playerIndex);
         updateProcessMotion();
       });
     }
     processButton?.addEventListener("click", () => {
+      if (sequence) { activeStep = playerIndex; showStep(activeStep); controllers.forEach((controller, index) => { if (index !== playerIndex) controller.pause(); }); }
+      if (processClips[0].ended) { processState.time = 0; processState.pendingSeek = true; }
       processState.paused = !processState.paused;
       updateProcessMotion();
     });
@@ -305,6 +354,23 @@
       }, { threshold: 0.08 });
       processObserver.observe(processing);
     } else processState.visible = true;
+  }
+  controllers.push({
+    pause() { processState.paused = true; pauseProcessClips(); updateProcessMotion(); },
+    resume() { processState.paused = false; updateProcessMotion(); },
+    reset(run) {
+      pauseProcessClips(); processState.time = 0; processState.pendingSeek = true;
+      processState.paused = !run; showProcessTime(); updateProcessMotion();
+    }
+  });
+  if (sequence) {
+    processClips[0].addEventListener("ended", () => {
+      processState.paused = true; processState.time = processState.duration;
+      pauseProcessClips(); showProcessTime(); updateProcessMotion(); completeStep(playerIndex);
+    });
+    reducedMotion.addEventListener("change", () => {
+      if (reducedMotion.matches) players.forEach(player => { player.closest("article").hidden = false; });
+    });
   }
   selectStage(Number(processing.dataset.processStage || 0));
   }

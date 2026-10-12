@@ -17,8 +17,9 @@
  function update() {
   const running=visible&&!paused&&!document.hidden;
   cloud.dataset.paused=String(!running);
-  button.textContent=paused?'Play mosaic':'Pause mosaic';
-  button.setAttribute('aria-label',button.textContent);
+  button.textContent=paused?'▷':'Ⅱ';
+  button.setAttribute('aria-label',paused?'Play mosaic':'Pause mosaic');
+  button.title=paused?'Play mosaic':'Pause mosaic';
   button.setAttribute('aria-pressed',String(paused));
   for(const video of videos) {
    if(running) video.play().catch(()=>{});

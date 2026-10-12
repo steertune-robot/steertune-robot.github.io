@@ -245,3 +245,11 @@ body .task-demo-toolbar button {font:inherit;}
  body #policy-figure :is(.ag-phone-input,.ag-phone-stage p){font:400 var(--type-label)/1.4 var(--serif);}
  body #policy-figure .ag-phone-language {font:400 var(--type-section)/1.8 var(--serif);}
 }
+
+/* Shared type for the sequential processing replay control. */
+body .processing-replay {font:400 var(--type-label)/1.4 var(--serif);}
+
+/* Compact controls and the matched steering comparison share the body scale. */
+body :is(.processing-steps,.processing-replay,.sc-reference figcaption,.sc-comparison-foot,.sc-comparison-foot button) {font:400 var(--type-label)/1.4 var(--serif);}
+
+body #prepare [data-process-play-icon] {font:400 var(--type-label)/1 var(--serif);}

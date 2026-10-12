@@ -9,7 +9,6 @@
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
   let compact,phone,phoneStages=[],selected=null,svg,paths=[],cells=[],videos=[],visible=false,paused=reduce.matches,elapsed=0,previous=0,raf=0,painted=0;
   const colors=['#335b49','#819a89','#b49977'];
-  const defaults=['Select a component to explore the policy.',''];
   function text(g,x,y,s,cls='av-label',anchor='middle'){return g.append('text').attr('x',x).attr('y',y).attr('class',cls).attr('text-anchor',anchor).text(s);}
   function pick(g,id){
     g.attr('data-pick',id).attr('role','button').attr('tabindex',0).attr('aria-label',data.info[id]?.title||id).attr('aria-pressed','false')
@@ -20,7 +19,7 @@
   function select(){
     const info=selected?data.info[selected]:null;
     detail.replaceChildren();const a=document.createElement('strong'),b=document.createElement('span');
-    a.textContent=info?.title||defaults[0];b.textContent=info?.body||defaults[1];detail.append(a,b);reset.disabled=!selected;
+    if(info){a.textContent=info.title;b.textContent=info.body;detail.append(a,b);}reset.disabled=!selected;
     if(!svg)return;
     svg.selectAll('[data-pick]').attr('aria-pressed',function(){return String(this.dataset.pick===selected);});
     svg.selectAll('[data-route]').classed('av-selected-route',function(){return !!selected&&this.dataset.route.split(' ').includes(selected);});

@@ -177,6 +177,8 @@
     active = index;
     revision += 1;
     const task = tasks[index];
+    const playbackNote = root.querySelector(".rollout-playback-note");
+    if (playbackNote) playbackNote.textContent = task.playbackNote || "4× speed";
     tabs.forEach((tab, i) => {
       tab.setAttribute("aria-selected", String(i === index));
       tab.tabIndex = i === index ? 0 : -1;

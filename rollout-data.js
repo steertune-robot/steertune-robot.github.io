@@ -93,11 +93,12 @@ window.STEERTUNING_ROLLOUTS = [
       "speed": 4
     },
     "robot": {
-      "src": "assets/rollouts/flower-robot.mp4?v=499fc99aca00",
-      "poster": "assets/rollouts/flower-robot.jpg?v=77a8cff92113",
-      "duration": 15.566667,
-      "speed": 4,
-      "caption": "Includes human assistance near the end."
-    }
+      "src": "assets/rollouts/flower-robot-20261012.mp4?v=a45f658ca196",
+      "poster": "assets/rollouts/flower-robot-20261012.jpg?v=401d7bf642df",
+      "duration": 3.5035,
+      "speed": null,
+      "caption": "Includes human assistance."
+    },
+    "playbackNote": "Human: 4× · Robot: supplied edit"
   }
 ];

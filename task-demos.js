@@ -22,7 +22,9 @@
     function sync() {
       if (button) {
         button.hidden = false;
-        button.textContent = paused ? 'Play clips' : 'Pause clips';
+        button.textContent = paused ? '▷' : 'Ⅱ';
+        button.setAttribute('aria-label',paused ? 'Play all five demonstrations' : 'Pause all five demonstrations');
+        button.title = paused ? 'Play clips' : 'Pause clips';
         button.setAttribute('aria-pressed', String(paused));
       }
       for (const video of videos) {

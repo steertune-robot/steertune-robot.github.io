@@ -28,18 +28,18 @@
     }
   ],
   "selectedClip": [
-    95,
-    123
+    106,
+    153
   ],
   "contactFrame": 123,
-  "frameSelection": "Minimize raw right-hand scene distance within reviewed approach/grasp/lift frames 95\u2013123. Left-hand oven contact remains visible; do not label this as a right-only contact segment.",
+  "frameSelection": "Measured LR contact clip 106\u2013153. Frame 123 is a reviewed contact-rich bread frame with an existing foreground prompt; it is not the raw minimum across this full clip (frame 127).",
   "distancesCm": {
     "left": 2.041235688959343,
     "right": 0.34701473240891423
   },
   "point": "Reviewed frame-123 bread foreground point from the SAM3 export. Animation illustrates Gemini returning it; no new Gemini grounding inference. Contact selects the frame; object grounding selects the pixel.",
-  "masks": "Frames 95\u2013105: fresh SAM3 instance inference with reviewed bread foreground points/boxes, excluding the plate. Frames 106\u2013123: existing guided per-frame masks. Backward/forward display illustrates tracking, not new video propagation inference.",
-  "instruction": "Illustrative task annotation: pick up the bread with the right hand.",
+  "masks": "Existing guided per-frame masks 106\u2013153, registered to the privacy-edited recording. Backward/forward display illustrates tracking, not new propagation inference.",
+  "instruction": "Illustrative task annotation: move the bread toward the open oven.",
   "logoSource": "https://github.com/QwenLM/Qwen-MM-Plugins/blob/main/src/capabilities/video-edit/skill/assets/images/qwen-icon.svg",
   "promptPixelOriginal": [
     429,
@@ -368,5 +368,10 @@
       522
     ],
     "unchanged": "Recorded distances, capture timestamps, measured contact clips, 5 cm threshold, SAM masks, prompt point, scene geometry, and 5000-point display subset."
-  }
+  },
+  "sampleFrames": [
+    106,
+    131,
+    153
+  ]
 }

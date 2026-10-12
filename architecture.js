@@ -167,7 +167,7 @@
   function running(){return visible&&!paused&&!document.hidden;}
   function media(){
     const run=running();figure.classList.toggle('av-running',run);
-    pause.textContent=paused?'Play animation':'Pause animation';pause.setAttribute('aria-label',pause.textContent);pause.setAttribute('aria-pressed',String(paused));
+    window.SteertuningPlayback.set(pause,paused?'play':'pause',paused?'Play animation':'Pause animation');
     videos.forEach(v=>{if(run){if(!v.src){v.src=v.dataset.clip;v.load();}v.play().catch(()=>{});}else v.pause();});
     if(run&&!raf){previous=0;raf=requestAnimationFrame(tick);}else if(!run&&raf){cancelAnimationFrame(raf);raf=0;previous=0;}
   }

@@ -6,7 +6,6 @@
   const tablist = root.querySelector("[data-rollout-tabs]");
   const panel = root.querySelector("#rollout-panel");
   const toggle = root.querySelector("[data-rollout-toggle]");
-  const replay = root.querySelector("[data-rollout-replay]");
   const status = root.querySelector("[data-rollout-status]");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   let active = -1,
@@ -33,7 +32,6 @@
     !tablist ||
     !panel ||
     !toggle ||
-    !replay ||
     !status ||
     players.some((p) => !p.video)
   )
@@ -44,9 +42,8 @@
   }
   function updateControls() {
     const anyPlaying = players.some(intended);
-    toggle.textContent = anyPlaying ? "Pause both" : "Play both";
-    toggle.setAttribute("aria-pressed", String(!anyPlaying));
-    toggle.disabled = replay.disabled = players.every((p) => p.failed);
+    window.SteertuningPlayback.set(toggle, anyPlaying ? "pause" : "play", anyPlaying ? "Pause both videos" : "Play both videos");
+    toggle.disabled = players.every((p) => p.failed);
   }
   function updateStatus() {
     const failed = players
@@ -272,18 +269,6 @@
       p.userChoice = true;
       p.blocked = false;
       if (shouldPlay) loadPlayer(p, true);
-    });
-    updateStatus();
-    reconcile();
-  });
-  replay.addEventListener("click", () => {
-    players.forEach((p) => {
-      p.intent = true;
-      p.userChoice = true;
-      p.blocked = false;
-      loadPlayer(p, true);
-      if (p.video.readyState >= 1) p.video.currentTime = 0;
-      else p.resetTime = true;
     });
     updateStatus();
     reconcile();

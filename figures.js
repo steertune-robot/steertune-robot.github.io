@@ -16,6 +16,7 @@
       eyebrow: "01: Aria Gen 2",
       title: "Synchronized observation",
       copy: "Record the scene and hand motion on the same timeline.",
+      controlLabel: "observation videos",
       stat: "10 Hz",
       spec: "One common timeline",
     },
@@ -29,6 +30,7 @@
       outputAlt: "Matching measured scene geometry after recorded hand and arm removal",
       outputCaption: "Hands removed",
       copy: "Remove hands and arms.",
+      controlLabel: "hand-removal videos",
     },
     {
       assetBase: "assets/contact/processing/",
@@ -40,6 +42,7 @@
       outputAlt: "The bread mask highlighted in green over the matching clip frame",
       outputCaption: "Bread mask",
       copy: "Bread mask + “put the bread into the oven.”",
+      controlLabel: "object-mask videos",
     },
     {
       assetBase: "assets/contact/processing/",
@@ -51,42 +54,11 @@
       outputAlt: "5000 measured points sampled from the same scene cloud",
       outputCaption: "5,000 points",
       copy: "Align geometry and motion; sample 5,000 points.",
+      controlLabel: "observation-alignment videos",
     },
   ];
   const players = [...document.querySelectorAll("[data-processing-player]")];
-  const sequence = document.querySelector("[data-processing-sequence]");
-  const controllers = [];
-  let activeStep = 0;
-  let completedSteps = new Set();
-  function showStep(index) {
-    if (sequence) {
-      sequence.dataset.activeStep = String(index + 1);
-      players.forEach((player, i) => { player.closest("article").hidden = i !== index && !reducedMotion.matches; });
-    }
-  }
-  function completeStep(index) {
-    if (completedSteps.has(index)) return;
-    completedSteps.add(index);
-    if (index + 1 < players.length) {
-      activeStep = index + 1;
-      showStep(activeStep);
-      controllers[activeStep]?.resume();
-    }
-  }
-  if (sequence) {
-    const toolbar = document.createElement("div"); toolbar.className = "processing-sequence-controls";
-    const replay = document.createElement("button");
-    replay.type = "button"; replay.className = "processing-replay";
-    replay.textContent = "↻"; replay.title = "Replay processing"; replay.setAttribute("aria-label", "Replay all three processing steps in order");
-    toolbar.append(replay); sequence.before(toolbar);
-    replay.addEventListener("click", () => {
-      completedSteps.clear(); activeStep = 0; showStep(0);
-      controllers.forEach((controller, index) => controller.reset(index === 0));
-    });
-    showStep(0);
-  }
-  for (const [playerIndex, processing] of players.entries()) {
-  if (sequence && playerIndex > 0 && !reducedMotion.matches) processing.closest("article").hidden = true;
+  for (const processing of players) {
   const tabs = [...processing.querySelectorAll("[data-process-stage]")];
   const processClips = ["input", "output"].map((side) =>
     processing.querySelector(`[data-process-${side}]`),
@@ -111,7 +83,7 @@
   };
   const formatProcessTime = (time) => `0:${time.toFixed(1).padStart(4, "0")}`;
   function processCanPlay() {
-    return processState.visible && !processState.paused && !document.hidden && (!sequence || playerIndex === activeStep || reducedMotion.matches);
+    return processState.visible && !processState.paused && !document.hidden;
   }
   function showProcessTime() {
     if (processTime)
@@ -165,18 +137,11 @@
     if (processButton) {
       processButton.hidden = false;
       processButton.disabled = processState.failed;
-      processButton.setAttribute("aria-pressed", String(processState.paused));
-      processButton.setAttribute("aria-label", processState.paused ? "Play current pair" : "Pause current pair");
-      processButton.querySelector("[data-process-play-label]").textContent = processState.paused
-        ? "Play clips"
-        : "Pause clips";
-      processButton.querySelector("[data-process-play-icon]").textContent = processState.paused
-        ? "▷"
-        : "Ⅱ";
+      window.SteertuningPlayback.set(processButton, processState.paused ? "play" : "pause", processState.paused ? `Play ${stages[Number(processing.dataset.processStage)].controlLabel}` : `Pause ${stages[Number(processing.dataset.processStage)].controlLabel}`);
     }
     if (processSeek) processSeek.disabled = processState.failed;
     if (!shouldPlay) pauseProcessClips();
-    // Loading only the selected, visible pair also keeps reduced-motion users
+    // Loading only visible pairs also keeps reduced-motion users
     // on a still frame until they explicitly choose to play.
     if (!processState.visible || document.hidden || processState.failed) return;
     for (const clip of processClips) {
@@ -187,7 +152,7 @@
         clip.src = clip.dataset.processSrc;
         clip.load();
       }
-      clip.playbackRate = sequence ? .65 : 1;
+      clip.playbackRate = .65;
     }
     if (processClips.some((clip) => clip.readyState < 2)) return;
     const durations = processClips.map((clip) => clip.duration).filter(Number.isFinite);
@@ -265,8 +230,8 @@
       const media = processing.querySelector(`[data-process-${side}]`);
       if (hasProcessVideo) {
         media.muted = true;
-        media.loop = !sequence;
-        media.defaultPlaybackRate = sequence ? .65 : 1;
+        media.loop = true;
+        media.defaultPlaybackRate = .65;
         media.playbackRate = media.defaultPlaybackRate;
         media.playsInline = true;
         media.autoplay = false;
@@ -314,12 +279,10 @@
           processStatus.textContent = "Clip unavailable; showing recorded frames.";
           processStatus.hidden = false;
         }
-        if (sequence) completeStep(playerIndex);
         updateProcessMotion();
       });
     }
     processButton?.addEventListener("click", () => {
-      if (sequence) { activeStep = playerIndex; showStep(activeStep); controllers.forEach((controller, index) => { if (index !== playerIndex) controller.pause(); }); }
       if (processClips[0].ended) { processState.time = 0; processState.pendingSeek = true; }
       processState.paused = !processState.paused;
       updateProcessMotion();
@@ -343,23 +306,6 @@
       }, { threshold: 0.08 });
       processObserver.observe(processing);
     } else processState.visible = true;
-  }
-  controllers.push({
-    pause() { processState.paused = true; pauseProcessClips(); updateProcessMotion(); },
-    resume() { processState.paused = false; updateProcessMotion(); },
-    reset(run) {
-      pauseProcessClips(); processState.time = 0; processState.pendingSeek = true;
-      processState.paused = !run; showProcessTime(); updateProcessMotion();
-    }
-  });
-  if (sequence) {
-    processClips[0].addEventListener("ended", () => {
-      processState.paused = true; processState.time = processState.duration;
-      pauseProcessClips(); showProcessTime(); updateProcessMotion(); completeStep(playerIndex);
-    });
-    reducedMotion.addEventListener("change", () => {
-      if (reducedMotion.matches) players.forEach(player => { player.closest("article").hidden = false; });
-    });
   }
   selectStage(Number(processing.dataset.processStage || 0));
   }

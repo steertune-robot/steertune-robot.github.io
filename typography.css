@@ -253,3 +253,12 @@ body .processing-replay {font:400 var(--type-label)/1.4 var(--serif);}
 body :is(.processing-replay,.sc-reference figcaption,.sc-comparison-foot,.sc-comparison-foot button) {font:400 var(--type-label)/1.4 var(--serif);}
 
 body #prepare [data-process-play-icon] {font:400 var(--type-label)/1 var(--serif);}
+
+body #steer :is(.sc-prediction-caption,.sc-illustration-caption) {font:400 var(--type-label)/1.5 var(--serif);}
+
+/* Center the target letters within their fixed circular badges. */
+body :is(.sm-target-key b,.sm-target-labels span) {font:600 var(--type-label)/1 var(--serif);}
+
+/* Rollout gallery uses the shared readable label scale. */
+body :is(.deploy-gallery-select button,.deploy-gallery-arrows,.deploy-gallery-arrows button,.deploy-gallery-heading strong,.deploy-gallery-note) {font:400 var(--type-label)/1.4 var(--serif);}
+body .deploy-gallery-heading strong {font-weight:600;}

@@ -1,123 +1,55 @@
-/* Ordered deployment walkthrough. Connections illustrate the paper's system;
- * the animation does not replay measured robot state or invoke a model. */
+/* Diagram driven solely by the active recording's presentation time.
+ * Task intervals are visual annotations, not robot controller telemetry. */
 (() => {
   "use strict";
-  const figure = document.getElementById("deployment-figure");
-  const d3 = window.d3;
-  if (!figure || !d3) return;
-  const flow = figure.querySelector("[data-deploy-flow]");
-  const svgElement = figure.querySelector("[data-deploy-wires]");
-  const play = figure.querySelector("[data-deploy-play]");
-  const replay = figure.querySelector("[data-deploy-replay]");
-  const title = figure.querySelector("[data-deploy-detail-title]");
-  const detail = figure.querySelector("[data-deploy-detail]");
-  const status = figure.querySelector("[data-deploy-status]");
-  const buttons = [...figure.querySelectorAll("[data-deploy-step]")];
-  const inspectors = [...figure.querySelectorAll("[data-deploy-inspect]")];
-  const nodes = new Map(
-    [...figure.querySelectorAll("[data-deploy-node]")].map((el) => [
-      el.dataset.deployNode,
-      el,
-    ]),
-  );
-  if (
-    !flow ||
-    !svgElement ||
-    !play ||
-    !replay ||
-    !title ||
-    !detail ||
-    !status ||
-    buttons.length !== 4
-  )
-    return;
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const mobile = matchMedia("(max-width: 700px)");
-  const duration = 3500;
-  const steps = [
-    {
-      skill: "navigation",
-      title: "Navigate to the white cup",
-      body: "Locate the cup in the scene map; navigate to it.",
-    },
-    {
-      skill: "manipulation",
-      title: "Pick up the white cup",
-      body: "The adapted policy predicts the pickup motion; retargeting turns it into robot actions.",
-    },
-    {
-      skill: "navigation",
-      title: "Carry the cup to the trash",
-      body: "Navigate to the trash while holding the cup.",
-    },
-    {
-      skill: "manipulation",
-      title: "Drop the cup into the trash",
-      body: "The adapted policy predicts the placement motion; the robot releases the cup.",
-    },
-  ];
-  const descriptions = {
-    planner: {
-      title: "One command, ordered subtasks",
-      body: "Gemini splits the command into navigation and manipulation subtasks.",
-    },
-    navigation: {
-      title: "Object navigation",
-      body: "Find the target in a semantic scene map and move the mobile base to it.",
-    },
-    manipulation: {
-      title: "Learned manipulation",
-      body: "Observations + instruction → human motion → wrist IK and hand retargeting.",
-    },
-  };
-  const edges = [];
-  steps.forEach((step, index) => {
-    edges.push({
-      id: `plan-${index}`,
-      from: "planner",
-      to: `step-${index}`,
-      step: index,
-      skill: step.skill,
+  const figure=document.getElementById('deployment-figure'),d3=window.d3;
+  if(!figure||!d3)return;
+  const flow=figure.querySelector('[data-deploy-flow]'),svgElement=figure.querySelector('[data-deploy-wires]');
+  const plan=figure.querySelector('.deploy-plan'),title=figure.querySelector('[data-deploy-detail-title]'),detail=figure.querySelector('[data-deploy-detail]'),status=figure.querySelector('[data-deploy-status]');
+  const inspectors=[...figure.querySelectorAll('[data-deploy-inspect]')];
+  const mobile=matchMedia('(max-width:700px)'),reduced=matchMedia('(prefers-reduced-motion:reduce)');
+  let task=null,steps=[],buttons=[],edges=[],nodes=new Map(),current=0,progress=0,selectedPaths=[],resizeFrame=0;
+  const svg=d3.select(svgElement),routes=svg.append('g').attr('class','deploy-route-layer'),packets=svg.append('g').attr('class','deploy-packet-layer');
+  const dots=packets.selectAll('circle').data([0,1,2]).join('circle').attr('class','deploy-packet').attr('r',2.5).attr('opacity',0);
+  const color=skill=>`var(--deploy-${skill==='navigation'?'nav':'manip'})`;
+  const activeIds=()=>steps.length?[`plan-${current}`,`skill-${current}`,`execute-${steps[current].skill}`]:[];
+  function seekStep(index){
+    figure.dispatchEvent(new CustomEvent('deploy:seek',{detail:{time:steps[index].startFrame*task.fpsDenominator/task.fpsNumerator}}));
+  }
+  function selectTask(next){
+    task=next;steps=task.steps;current=0;progress=0;
+    figure.querySelector('.deploy-command q').textContent=task.command;
+    plan.replaceChildren();
+    buttons=steps.map((step,index)=>{
+      const button=document.createElement('button');button.type='button';button.className='deploy-step';button.dataset.deployNode=`step-${index}`;button.dataset.deployStep=String(index);
+      const number=document.createElement('span');number.className='deploy-step-number';number.textContent=String(index+1).padStart(2,'0');
+      const copy=document.createElement('span'),verb=document.createElement('b'),object=document.createElement('small');verb.textContent=step.verb;object.textContent=step.object;copy.append(verb,object);
+      const bar=document.createElement('span');bar.className='deploy-step-progress';bar.setAttribute('aria-hidden','true');button.append(number,copy,bar);
+      button.setAttribute('aria-label',`${step.title}: jump to ${(step.startFrame*task.fpsDenominator/task.fpsNumerator).toFixed(1)} seconds`);
+      button.style.setProperty('--route-color',color(step.skill));button.addEventListener('click',()=>seekStep(index));
+      button.addEventListener('keydown',event=>{
+        const next=event.key==='ArrowRight'?(index+1)%steps.length:event.key==='ArrowLeft'?(index+steps.length-1)%steps.length:event.key==='Home'?0:event.key==='End'?steps.length-1:null;
+        if(next===null)return;event.preventDefault();seekStep(next);buttons[next].focus();
+      });plan.append(button);return button;
     });
-    edges.push({
-      id: `skill-${index}`,
-      from: `step-${index}`,
-      to: step.skill,
-      step: index,
-      skill: step.skill,
-    });
-  });
-  ["navigation", "manipulation"].forEach((skill) =>
-    edges.push({ id: `execute-${skill}`, from: skill, to: "robot", skill }),
-  );
-  let current = 0,
-    elapsed = 0,
-    inspected = null,
-    paused = reduced.matches;
-  let visible = false,
-    frame = 0,
-    previous = null,
-    resizeFrame = 0;
-  let selectedPaths = [];
-  const svg = d3.select(svgElement);
-  const routes = svg.append("g").attr("class", "deploy-route-layer");
-  const packets = svg.append("g").attr("class", "deploy-packet-layer");
-  const dots = packets
-    .selectAll("circle")
-    .data([0, 1, 2])
-    .join("circle")
-    .attr("class", "deploy-packet")
-    .attr("r", 2.5)
-    .attr("opacity", 0);
-  const color = (skill) =>
-    `var(--deploy-${skill === "navigation" ? "nav" : "manip"})`;
-  const activeIds = () => [
-    `plan-${current}`,
-    `skill-${current}`,
-    `execute-${steps[current].skill}`,
-  ];
-  const running = () => visible && !paused && !document.hidden;
-
+    nodes=new Map([...figure.querySelectorAll('[data-deploy-node]')].map(node=>[node.dataset.deployNode,node]));
+    edges=steps.flatMap((step,index)=>[{id:`plan-${index}`,from:'planner',to:`step-${index}`,step:index,skill:step.skill},{id:`skill-${index}`,from:`step-${index}`,to:step.skill,step:index,skill:step.skill}]);
+    for(const skill of ['navigation','manipulation'])edges.push({id:`execute-${skill}`,from:skill,to:'robot',skill});
+    drawRoutes();scheduleGeometry();
+  }
+  function update(time,playing){
+    if(!task)return;
+    const sourceFrame=Math.min(task.frameCount-1,Math.max(0,Math.floor(time*task.fpsNumerator/task.fpsDenominator+1e-5)));
+    const index=steps.findIndex(step=>sourceFrame>=step.startFrame&&sourceFrame<step.endFrame);
+    const changed=current!==index;current=Math.max(0,index);const step=steps[current];
+    progress=Math.max(0,Math.min(1,(time-step.startFrame*task.fpsDenominator/task.fpsNumerator)/((step.endFrame-step.startFrame)*task.fpsDenominator/task.fpsNumerator)));
+    title.textContent=step.title;detail.textContent=step.body;status.textContent=`${current+1} / ${steps.length} · ${playing?'Playing':'Paused'}`;
+    figure.dataset.activeSkill=step.skill;figure.dataset.activeStep=String(current);figure.dataset.activeVideo=task.id;
+    buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===current)));
+    inspectors.forEach(button=>{button.classList.toggle('is-active',button.dataset.deployInspect===step.skill);button.style.setProperty('--route-color',color(button.dataset.deployInspect));button.setAttribute('aria-pressed',String(button.dataset.deployInspect===step.skill));});
+    const now=figure.querySelector('[data-deploy-now]');now.textContent=`${step.skill==='navigation'?'Navigation':'Manipulation'} · ${step.title}`;
+    if(changed)drawRoutes();else paint();
+  }
   function roundedRoute(points, radius = 5) {
     const path = d3.path();
     path.moveTo(...points[0]);
@@ -173,11 +105,6 @@
       [x2, y2],
     ]);
   }
-  function highlighted(edge) {
-    if (!inspected) return activeIds().includes(edge.id);
-    if (inspected === "planner") return edge.from === "planner";
-    return edge.skill === inspected;
-  }
   function drawRoutes() {
     const bounds = flow.getBoundingClientRect();
     if (!bounds.width || !bounds.height) return;
@@ -201,7 +128,7 @@
       d3.select(this)
         .selectAll("path")
         .attr("d", geometry(edge, bounds))
-        .classed("is-active", highlighted(edge));
+        .classed("is-active", activeIds().includes(edge.id));
     });
     selectedPaths = activeIds().map((id) => {
       const path = routes
@@ -213,166 +140,23 @@
     });
     paint();
   }
-  function updateDetail() {
-    const description = inspected ? descriptions[inspected] : steps[current];
-    title.textContent = description.title;
-    detail.textContent = description.body;
-    status.textContent = inspected
-      ? "Inspecting"
-      : `Step ${current + 1} / 4${paused ? ": Paused" : ""}`;
-    play.textContent = paused ? "Play walkthrough" : "Pause walkthrough";
-    play.setAttribute("aria-pressed", String(paused));
-    buttons.forEach((button, index) => {
-      button.setAttribute("aria-pressed", String(index === current));
-      button.style.setProperty("--route-color", color(steps[index].skill));
-    });
-    inspectors.forEach((button) => {
-      const id = button.dataset.deployInspect;
-      button.classList.toggle("is-inspected", inspected === id);
-      button.classList.toggle("is-active", id === steps[current].skill);
-      button.setAttribute("aria-pressed", String(inspected === id));
-      if (id !== "planner")
-        button.style.setProperty("--route-color", color(id));
+
+  function paint(){
+    if(!steps.length)return;
+    buttons.forEach((button,index)=>button.querySelector('.deploy-step-progress').style.width=index===current?`${progress*100}%`:'0%');
+    dots.style('--route-color',color(steps[current].skill)).each(function(index){
+      const route=selectedPaths[index],fraction=progress*3-index,show=!reduced.matches&&route&&fraction>=0&&fraction<1;
+      this.setAttribute('opacity',show?'1':'0');
+      if(show){const point=route.path.getPointAtLength(fraction*route.length);this.setAttribute('cx',point.x);this.setAttribute('cy',point.y);}
     });
   }
-  function paint() {
-    const progress = Math.max(0, Math.min(1, elapsed / duration));
-    buttons.forEach((button, index) => {
-      const bar = button.querySelector(".deploy-step-progress");
-      if (bar)
-        bar.style.width = index === current ? `${progress * 100}%` : "0%";
-    });
-    dots
-      .style("--route-color", color(steps[current].skill))
-      .each(function (index) {
-        const route = selectedPaths[index],
-          fraction = progress * 3 - index;
-        const show = !inspected && route && fraction >= 0 && fraction < 1;
-        this.setAttribute("opacity", show ? "1" : "0");
-        if (show) {
-          const point = route.path.getPointAtLength(fraction * route.length);
-          this.setAttribute("cx", point.x);
-          this.setAttribute("cy", point.y);
-        }
-      });
-  }
-  function tick(now) {
-    frame = 0;
-    if (!running()) {
-      previous = null;
-      return;
-    }
-    if (previous !== null) elapsed += Math.max(0, now - previous);
-    previous = now;
-    if (elapsed >= duration) {
-      const advance = Math.floor(elapsed / duration);
-      current = (current + advance) % steps.length;
-      elapsed %= duration;
-      inspected = null;
-      updateDetail();
-      drawRoutes();
-    } else paint();
-    frame = requestAnimationFrame(tick);
-  }
-  function reconcile() {
-    if (running() && !frame) {
-      previous = null;
-      frame = requestAnimationFrame(tick);
-    } else if (!running() && frame) {
-      cancelAnimationFrame(frame);
-      frame = 0;
-      previous = null;
-    }
-  }
-  function choose(index) {
-    current = index;
-    elapsed = 0;
-    inspected = null;
-    paused = true;
-    updateDetail();
-    drawRoutes();
-    reconcile();
-  }
-  buttons.forEach((button, index) => {
-    button.addEventListener("click", () => choose(index));
-    button.addEventListener("keydown", (event) => {
-      const next =
-        event.key === "ArrowRight"
-          ? (index + 1) % 4
-          : event.key === "ArrowLeft"
-            ? (index + 3) % 4
-            : event.key === "Home"
-              ? 0
-              : event.key === "End"
-                ? 3
-                : null;
-      if (next === null) return;
-      event.preventDefault();
-      choose(next);
-      buttons[next].focus();
-    });
+  figure.addEventListener('deploy:time',event=>{
+    if(task?.id!==event.detail.task.id)selectTask(event.detail.task);
+    update(event.detail.time,event.detail.playing);
   });
-  inspectors.forEach((button) =>
-    button.addEventListener("click", () => {
-      const id = button.dataset.deployInspect;
-      if (!descriptions[id]) return;
-      paused = true;
-      inspected = id;
-      if (id !== "planner" && steps[current].skill !== id) {
-        current = steps.findIndex((step) => step.skill === id);
-        elapsed = 0;
-      }
-      updateDetail();
-      drawRoutes();
-      reconcile();
-    }),
-  );
-  play.addEventListener("click", () => {
-    paused = !paused;
-    if (!paused) inspected = null;
-    updateDetail();
-    drawRoutes();
-    reconcile();
-  });
-  replay.addEventListener("click", () => {
-    current = 0;
-    elapsed = 0;
-    inspected = null;
-    paused = false;
-    updateDetail();
-    drawRoutes();
-    reconcile();
-  });
-  reduced.addEventListener("change", () => {
-    paused = true;
-    updateDetail();
-    reconcile();
-  });
-  document.addEventListener("visibilitychange", reconcile);
-  function scheduleGeometry() {
-    if (resizeFrame) return;
-    resizeFrame = requestAnimationFrame(() => {
-      resizeFrame = 0;
-      drawRoutes();
-    });
-  }
-  mobile.addEventListener("change", scheduleGeometry);
-  if ("ResizeObserver" in window) {
-    const resize = new ResizeObserver(scheduleGeometry);
-    resize.observe(flow);
-    nodes.forEach((node) => resize.observe(node));
-  } else window.addEventListener("resize", scheduleGeometry);
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(
-      (entries) => {
-        visible = entries[0].isIntersecting;
-        reconcile();
-      },
-      { threshold: 0.08 },
-    ).observe(flow);
-  } else visible = true;
-  document.fonts?.ready.then(scheduleGeometry);
-  updateDetail();
-  drawRoutes();
-  reconcile();
+  inspectors.forEach(button=>button.addEventListener('click',()=>{if(!task)return;const index=steps.findIndex(step=>step.skill===button.dataset.deployInspect);if(index>=0)seekStep(index);}));
+  function scheduleGeometry(){if(resizeFrame)return;resizeFrame=requestAnimationFrame(()=>{resizeFrame=0;if(task)drawRoutes();});}
+  const resize=new ResizeObserver(scheduleGeometry);resize.observe(flow);
+  mobile.addEventListener('change',scheduleGeometry);reduced.addEventListener('change',paint);document.fonts?.ready.then(scheduleGeometry);
+  window.addEventListener('pagehide',event=>{cancelAnimationFrame(resizeFrame);resizeFrame=0;if(!event.persisted)resize.disconnect();});
 })();

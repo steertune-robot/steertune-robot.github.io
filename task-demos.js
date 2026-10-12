@@ -22,10 +22,7 @@
     function sync() {
       if (button) {
         button.hidden = false;
-        button.textContent = paused ? '▷' : 'Ⅱ';
-        button.setAttribute('aria-label',paused ? 'Play all five demonstrations' : 'Pause all five demonstrations');
-        button.title = paused ? 'Play clips' : 'Pause clips';
-        button.setAttribute('aria-pressed', String(paused));
+        window.SteertuningPlayback.set(button, paused ? 'play' : 'pause', paused ? 'Play all five demonstrations' : 'Pause all five demonstrations');
       }
       for (const video of videos) {
         if (paused || document.hidden || !near.has(video) || manuallyPaused.has(video)) {

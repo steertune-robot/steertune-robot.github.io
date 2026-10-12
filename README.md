@@ -2,7 +2,7 @@
 
 Anonymous research project page for **Steertuning Policies from a Few Human Videos**, Paper ID 1039.
 
-Current release: **v2026.10.12.2-anonymous**. GitHub Pages publishes `main` from the repository root at https://steertune-robot.github.io/.
+Current release: **v2026.10.12.3-anonymous**. GitHub Pages publishes `main` from the repository root at https://steertune-robot.github.io/.
 
 The page shows anonymous authors, omits author affiliations and personal links, and retains the anonymous manuscript. Public provenance uses recording identifiers and checksums without private absolute paths. `robots.txt` and the page metadata discourage search indexing. Third-party licenses and attribution remain intact.
 
@@ -18,11 +18,11 @@ All non-teaser video files have no audio streams. The active teaser, `assets/tea
 
 Collection uses 28 genuine Dwild home-routine clips in four panning strips with pause, offscreen pause, and a static reduced-motion fallback. Manuscript statistics are 109.6 hours, 3.69M retained frames, and 48.7k instructions.
 
-Preparation uses the recorded bread-to-oven episode. The full contact video includes the supplied stronger face blur, preserves all 524 frames and the full 17.466667-second duration, and has no audio. `assets/contact/privacy-manifest.json` records frame registration and refreshed imagery. Raw hand–scene distances, measured contact intervals, SAM masks, and scene geometry are preserved. The contact graph stays fixed beside the video at 1× playback, with pause, replay and scrubbing. Annotation overlays were removed. Model-input preparation shows one enlarged before/after pair at a time at 0.65×, advancing after each pair finishes; reduced motion shows all three static pairs. The processing pairs retain placement frames 106–153.
+Preparation uses the recorded bread-to-oven episode. The full contact video includes the supplied stronger face blur, preserves all 524 frames and the full 17.466667-second duration, and has no audio. `assets/contact/privacy-manifest.json` records frame registration and refreshed imagery. Raw hand–scene distances, measured contact intervals, SAM masks, and scene geometry are preserved. The measured contact scan plays at 4×. The fixed graph remains beside the video while the Qwen → Gemini → SAM illustration uses the selected measured clip (frames 106–153), matching decoded frames and precomputed masks. The annotation sequence runs for 20 seconds plus decode waits. Three always-visible model-input rows each pair matching videos, run independently at 0.65×, and provide pause/scrub controls.
 
 The policy architecture retains the original pot-to-bowl example. The separate pretrained-policy prediction section remains removed.
 
-Steering uses genuine WUJI meshes and the controlled moved-bread experiment in `assets/steering/moved-bread/`. Right-hand guidance shifts 10 cm along world X; observations and left-hand guidance stay unchanged. Two matched views compare genuine unsteered and steered predictions, using identical framing, linked orbit/reset, and a shared replay clock. A recorded-scene still provides context; A/B markers identify the original bread and virtual target. Retargeted/interpolated poses and the absence of robot execution are labeled. The target-distance proxy changes 11.90→5.04 cm at a fixed grasp pose; it is not task success or contact accuracy. Replay, scrubbing, orbit/reset, translucent hand trails, and reduced-motion support remain available.
+Steering uses genuine WUJI meshes and the controlled moved-bread experiment in `assets/steering/moved-bread/`. Right-hand guidance shifts 10 cm along world X; observations and left-hand guidance stay unchanged. One viewer first replays the matched human trajectory, retargeted to WUJI, then interpolates between genuine unsteered/steered predictions and replays the steered prediction. The full animation takes approximately 12 seconds. A marks the original bread location; B marks the shifted steering target (+10 cm). The shifted target is a controlled guidance intervention; the observed scene is unchanged and there is no physical target relocation or robot execution. Replay, scrubbing, orbit/reset, translucent hand trails, and reduced-motion support remain available.
 
 Charts retain manuscript results and identify approximate digitized curves. Shared non-scaling strokes preserve readable line weights across viewport sizes. Third-party runtime, font, model-logo, and WUJI license attribution is retained with the corresponding assets.
 
@@ -33,3 +33,5 @@ At viewport widths of 600 CSS pixels or less, the architecture uses a three-stag
 Deployment spacing: diagram columns grow with their contents. Step cards keep 16 px vertical and 20 px horizontal padding; planner and skill cards use 20–24 px padding, with responsive wrapping and no fixed-height compression.
 
 Flower-watering robot rollout: the full user-supplied replacement edit, `flower-robot-20261012.mp4`, runs for 3.5035 seconds at its original timing and full 1280 × 720 frame. Browser playback remains 1×; the human demonstration is unchanged.
+
+Deployment presents Bag retrieval (default), Cup disposal, and Table wiping in a rolling gallery. Video presentation time drives the diagram using reviewed source-frame phase boundaries. Manipulation begins with task-directed hand motion. Bag and table play at browser 2×, cup at 3×; only the active video plays. Direct selection, step seeking, native controls, offscreen pause, and reduced-motion support remain available.

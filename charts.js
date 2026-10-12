@@ -144,20 +144,15 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
   let visible = false;
   let renderedRows = [];
 
+  const externalTitle = figure.getAttribute("aria-labelledby");
   const header = chartElement("div", "chart-header");
   const headingBlock = chartElement("div");
   headingBlock.append(chartElement("span", "chart-source", data.source));
   const title = chartElement("h4", "chart-title", data.title);
   title.id = `${key}-chart-title`;
-  figure.setAttribute("aria-labelledby", title.id);
+  if (!externalTitle) figure.setAttribute("aria-labelledby", title.id);
   headingBlock.append(title);
-  const replay = chartElement("button", "chart-replay", "↻ Replay");
-  replay.type = "button";
-  replay.setAttribute(
-    "aria-label",
-    `Replay ${data.title.toLowerCase()} animation`,
-  );
-  header.append(headingBlock, replay);
+  header.append(headingBlock);
 
   const controls = chartElement("div", "chart-controls");
   if (data.groups) {
@@ -225,8 +220,8 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
     trajectory: "How to choose the guiding demonstration.",
     generalization: "Original vs. replacement objects.",
   };
+  if (!externalTitle) figure.append(header);
   figure.append(
-    header,
     chartElement("p", "chart-guide", guides[key]),
     controls,
     axisHeading,
@@ -337,10 +332,6 @@ for (const figure of document.querySelectorAll("[data-result-chart]")) {
     figure.classList.add("is-visible");
     update(true);
   }
-  replay.addEventListener("click", () => {
-    figure.classList.remove("is-visible");
-    requestAnimationFrame(() => requestAnimationFrame(reveal));
-  });
   buildRows();
   update();
   if ("IntersectionObserver" in window && !chartReducedMotion.matches) {

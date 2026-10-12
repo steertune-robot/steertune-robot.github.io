@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="site-version" content="v2026.10.12.2-anonymous"/>
+<meta name="site-version" content="v2026.10.12.3-anonymous"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Steertuning Policies from a Few Human Videos | v2026.10.12.2-anonymous</title>
+<title>Steertuning Policies from a Few Human Videos | v2026.10.12.3-anonymous</title>
 <meta content="Anonymous authors" name="author"/>
 <meta content="noindex, nofollow" name="robots"/>
 <meta content="Steertuning combines two-minute LoRA finetuning with demonstration-guided action steering to adapt robot policies from five human demonstrations. Research project page." name="description"/>
@@ -18,25 +18,26 @@
 <link href="style.css?v=5747d7bb2765" rel="stylesheet"/>
 <link href="figures.css?v=dfeb8496237a" rel="stylesheet"/>
 <link href="processing-motion.css?v=d6f7134a6d91" rel="stylesheet"/>
-<link href="architecture.css?v=e6fe6cd056d1" rel="stylesheet"/>
+<link href="architecture.css?v=624da9d43ff0" rel="stylesheet"/>
 <link href="rollouts.css?v=3c7af7c0f2df" rel="stylesheet"/>
 <link href="teaser.css?v=be772bf6e670" rel="stylesheet"/>
 <link href="deployment.css?v=ae2500763345" rel="stylesheet"/>
 <link href="readability.css?v=de930b0d080e" rel="stylesheet"/>
+<script defer src="playback-controls.js?v=a95df9f8f5b9"></script>
 <script defer="" src="vendor/d3.v7.min.js?v=f2094bbf6141"></script>
-<script defer="" src="deployment.js?v=240e0fe7b326"></script>
-<script defer="" src="deployment-media.js?v=9d6bfeeaf141"></script>
+<script defer="" src="deployment.js?v=cc46741d2bb5"></script>
+<script defer="" src="deployment-media.js?v=194705d6486a"></script>
 <script defer="" src="teaser.js?v=5a2f2d5e54e9"></script>
 <script defer="" src="graph-layouts.js?v=2fe974c05c2b"></script>
-<script defer="" src="architecture.js?v=7c85945c2fb7"></script>
-<script defer="" src="figures.js?v=800615f5f516"></script>
+<script defer="" src="architecture.js?v=10235019d3c9"></script>
+<script defer="" src="figures.js?v=4ca031ced443"></script>
 <script defer="" src="rollout-data.js?v=143ff73ec8cb"></script>
-<script defer="" src="script.js?v=f2c4f8c4e076"></script>
-<script defer="" src="charts.js?v=45065c1481dd"></script>
+<script defer="" src="script.js?v=2cffed30c019"></script>
+<script defer="" src="charts.js?v=ae02b4f5dc0f"></script>
 <script defer="" src="plot-data.js?v=8da1460b7550"></script>
-<script defer="" src="plots.js?v=ad224bc0212f"></script>
-<link href="simplify.css?v=2b9516f16be7" rel="stylesheet"/><link href="transfer.css?v=e05e9e7faf32" rel="stylesheet"/><script defer="True" src="transfer.js?v=281160723836"></script><link href="steering.css?v=258e39d01426" rel="stylesheet"/><script defer="" src="steering.js?v=30516dd2955a"></script><link href="steering-coordinates.css?v=78d78edebc8f" rel="stylesheet"/><link href="story.css?v=d4b9ad73a306" rel="stylesheet"/><link href="dataset.css?v=b8ac4d398157" rel="stylesheet"/><link href="contact.css?v=1c7b4871741f" rel="stylesheet"/><script defer="" src="contact.js?v=277e21ae6a31"></script><link href="typography.css?v=ffb682ee6c73" rel="stylesheet"/>
-<script defer="" src="dataset.js?v=1d81e4eb01ba"></script><script defer src="task-demos.js?v=c6348938ed82"></script></head>
+<script defer="" src="plots.js?v=613e03c3695c"></script>
+<link href="simplify.css?v=2b9516f16be7" rel="stylesheet"/><link href="transfer.css?v=b52ed2d7eba9" rel="stylesheet"/><script defer="True" src="transfer.js?v=352a4388f45e"></script><link href="steering.css?v=f9aec4bf7426" rel="stylesheet"/><script defer="" src="steering.js?v=0317f3351a63"></script><link href="steering-coordinates.css?v=78d78edebc8f" rel="stylesheet"/><link href="story.css?v=372f0c00dc31" rel="stylesheet"/><link href="dataset.css?v=b8ac4d398157" rel="stylesheet"/><link href="contact.css?v=2b7e5ce8b559" rel="stylesheet"/><script defer="" src="contact.js?v=cd8fb9cc04a5"></script><link href="playback-controls.css?v=8ab6b22129cf" rel="stylesheet"/><link href="typography.css?v=c0abda12a9f3" rel="stylesheet"/>
+<script defer="" src="dataset.js?v=254c4e52189a"></script><script defer src="task-demos.js?v=b08401c40f14"></script></head>
 <body>
 <a class="skip-link" href="#abstract">Skip to research content</a>
 <main id="top"><header class="paper-header container">
@@ -63,38 +64,42 @@ Steertuning:
 </section><section aria-label="How Steertuning works" class="paper-section container overview-intro" id="overview">
 <figure class="research-figure">
 <div aria-label="Five human demonstrations first finetune the policy, then guide its actions at deployment" class="transfer-story" id="system-figure">
-<div class="transfer-topline"><span>Human experience → robot skill</span><button data-transfer-pause="" hidden="" type="button">Pause motion</button></div>
+<div class="transfer-topline"><span>TL;DR</span><button data-transfer-pause="" hidden="" type="button">Pause motion</button></div>
+<p class="transfer-caption">Introducing Steertuning, a method that combines finetuning with action steering at deployment, enabling a policy to adapt to a new task in a new environment with 5 human demonstrations in under 5 minutes.</p>
 <div class="transfer-grid">
 <div class="transfer-person">
 <div class="transfer-photo human-photo">
 
 <video aria-label="Paper disposal: five human demonstrations, shown at four times speed" data-transfer-video controls loop muted playsinline preload="none" width="1280" height="720" poster="assets/task-demos/paper-disposal/human-five-demos.jpg?v=de233bdc654b"><source data-src="assets/task-demos/paper-disposal/human-five-demos.mp4?v=5ea719d32670" type="video/mp4"/><a href="assets/task-demos/paper-disposal/human-five-demos.mp4?v=5ea719d32670">Open video</a></video>
-<span class="demo-count"><b>5</b> paper-disposal demos</span>
 </div>
-<h3>Show the task.</h3>
 <p class="transfer-media-note">4× speed</p>
 </div>
 <div class="transfer-method">
 <div class="transfer-step tune-step">
 <span class="transfer-number">01</span>
-<div aria-hidden="true" class="tune-cells"><i style="--cell:0"></i><i style="--cell:1"></i><i style="--cell:2"></i><i style="--cell:3"></i><i style="--cell:4"></i><i style="--cell:5"></i><i style="--cell:6"></i><i style="--cell:0"></i><i style="--cell:1"></i><i style="--cell:2"></i><i style="--cell:3"></i><i style="--cell:4"></i><i style="--cell:5"></i><i style="--cell:6"></i><i style="--cell:0"></i><i style="--cell:1"></i><i style="--cell:2"></i><i style="--cell:3"></i><i style="--cell:4"></i><i style="--cell:5"></i><i style="--cell:6"></i><i style="--cell:0"></i><i style="--cell:1"></i><i style="--cell:2"></i></div>
+<div class="tune-cells" role="img" aria-label="Schematic LoRA update: a few trainable adapter cells light up while the pretrained base remains frozen."><i></i><i></i><i></i><i></i><i></i><i></i><i class="is-adapter"></i><i class="is-adapter"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="is-adapter"></i><i class="is-adapter"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <h3>Finetune</h3><p>Two minutes to adapt</p>
 <span aria-hidden="true" class="transfer-arrow arrow-in"></span><span aria-hidden="true" class="transfer-arrow arrow-next"></span>
 </div>
 <div class="transfer-step steer-step">
 <span class="transfer-number">02</span>
-<div aria-hidden="true" class="steer-flow"><i></i><i></i><i></i></div>
+<svg class="steer-flow" viewBox="0 0 160 64" role="img" aria-labelledby="overview-steering-title overview-steering-description">
+<title id="overview-steering-title">Action steering toward a human demonstration</title>
+<desc id="overview-steering-description">Schematic animation: a green predicted trajectory bends toward an orange demonstration. The dashed path preserves the original prediction. These curves illustrate the method, not a recorded robot trajectory.</desc>
+<defs><marker id="overview-steer-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#244c3b"/></marker></defs>
+<path class="steer-original" d="M10 55 C28 51 24 10 61 16 C91 22 119 3 149 14"/>
+<path class="steer-demo" d="M10 55 C30 57 25 34 61 41 C91 49 122 24 149 40"/>
+<path class="steer-prediction" data-steer-path d="M10 55 C28 51 24 10 61 16 C91 22 119 3 149 14" marker-end="url(#overview-steer-arrow)"/>
+</svg>
 <h3>Steer</h3><p>Reuse a demo to guide actions</p>
 <span aria-hidden="true" class="transfer-arrow arrow-out"></span>
 </div>
 </div>
 <div class="transfer-robot">
 <div class="transfer-photo robot-photo"><video aria-label="Paper disposal: robot execution, shown at four times speed" data-transfer-video aria-describedby="overview-robot-note" controls loop muted playsinline preload="none" width="1280" height="720" poster="assets/task-demos/paper-disposal/robot-execution.jpg?v=a9da08595dab"><source data-src="assets/task-demos/paper-disposal/robot-execution.mp4?v=cb0bb26144d6" type="video/mp4"/><a href="assets/task-demos/paper-disposal/robot-execution.mp4?v=cb0bb26144d6">Open video</a></video></div>
-<h3>Transfer the skill.</h3>
 <p class="transfer-media-note" id="overview-robot-note">4× speed</p>
 </div>
 </div>
-<p class="transfer-caption">The same demonstrations first finetune the policy, then guide its predictions at deployment.</p>
 </div>
 </figure>
 </section><section aria-labelledby="abstract-title" class="paper-section reading-width" id="abstract">
@@ -121,12 +126,22 @@ Steertuning:
 </div></section><section aria-labelledby="prepare-title" class="paper-section container story-chapter" id="prepare"><h2 id="prepare-title"><span aria-hidden="true" class="section-number">02</span><span class="section-heading-text">Turn recordings into training data</span></h2><article aria-labelledby="contact-title" class="subsection contact-story" data-contact-story>
 <h3 id="contact-title">Our clip processing</h3>
 <div class="contact-layout">
-<figure class="contact-recording"><video data-contact-video muted playsinline preload="metadata" aria-label="Full bread-to-oven recording, synchronized with measured hand–scene distances"></video></figure>
+<figure class="contact-recording" data-step="scan"><div class="contact-video-stage contact-grounding" aria-label="Illustrated Qwen, Gemini and SAM annotation using recorded frames, a reviewed point and precomputed masks" data-contact-grounding data-step="waiting" data-phase="waiting">
+<video data-contact-video muted playsinline preload="metadata" aria-label="Bread-to-oven demonstration synchronized with the contact graph"></video>
+<div class="annotation-model qwen-model"><img src="assets/contact/grounding/qwen.svg" alt="Qwen logo" width="36" height="36"/><div><strong>Qwen</strong><span>Describe the clip</span></div></div>
+<div class="annotation-model gemini-model"><img src="assets/deployment/gemini.png" alt="Gemini logo" width="36" height="36"/><div><strong>Gemini</strong><span>Locate the bread</span></div></div>
+<div class="annotation-model sam-model"><div class="meta-symbol" role="img" aria-label="Meta symbol"><img class="meta-logo" src="assets/contact/grounding/meta-logo.webp" alt="" width="336" height="68"/></div><div><strong>SAM</strong><span data-sam-description>Point → mask</span></div></div>
+<div class="annotation-clips"><figure><img src="assets/contact/grounding/frame-106.jpg?v=8343afd8da59" alt="Start of the both-hand bread interaction"/><figcaption>10.6 s: Start</figcaption></figure><figure><img src="assets/contact/grounding/frame-131.jpg?v=3aa680eb9781" alt="Bread moving toward the open oven"/><figcaption>13.1 s: Transfer</figcaption></figure><figure><img src="assets/contact/grounding/frame-153.jpg?v=fcb86bbd58f1" alt="End of the measured both-hand clip"/><figcaption>15.3 s: End</figcaption></figure></div>
+<i class="annotation-point" aria-label="Foreground prompt point on the bread"></i>
+<svg class="annotation-mask-layer" viewBox="0 0 640 480" aria-hidden="true"><defs><mask id="contact-bread-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="480" style="mask-type:luminance"><image data-contact-mask x="80" y="120" width="480" height="360" href="assets/contact/grounding/prompt-mask-106.png" preserveAspectRatio="none"/></mask></defs><rect width="640" height="480" fill="#14aa80" opacity=".65" mask="url(#contact-bread-mask)"/></svg>
+<p class="annotation-instruction">“Move the bread toward the open oven.”</p>
+<span class="annotation-propagation-direction" data-propagation-direction></span>
+</div></figure>
 <div class="contact-analysis"><div class="contact-chart"><div class="contact-legend"><span><i aria-hidden="true"></i>Left hand</span><span><i aria-hidden="true"></i>Right hand</span></div><svg class="scientific-plot" aria-label="Measured hand–scene distance; colored intervals indicate interaction clips" role="img"></svg></div></div>
 </div>
 <div class="contact-controls"><button data-contact-play disabled type="button">Play</button><input aria-label="Recording timeline" data-contact-seek disabled min="0" max="174" step="1" value="0" type="range"/><output data-contact-time>0.0 / 17.4 s</output></div>
 <p data-contact-error hidden role="status"></p>
-</article><article aria-labelledby="clip-inputs-title" class="subsection preparation-inputs"><h3 id="clip-inputs-title">Prepare model inputs</h3><div class="preparation-grid" data-processing-sequence><article class="subsection"><h4>Ground the object</h4><figure class="research-figure"><div class="science-figure processing-figure" data-process-stage="2" data-processing-player="" data-science-figure="" id="processing-stage-2">
+</article><article aria-labelledby="clip-inputs-title" class="subsection preparation-inputs"><h3 id="clip-inputs-title">Prepare model inputs</h3><div class="preparation-grid"><article class="subsection" aria-labelledby="prepare-mask-description"><p class="preparation-description" id="prepare-mask-description">Generate a mask for the object.</p><figure class="research-figure"><div class="science-figure processing-figure" data-process-stage="2" data-processing-player="" data-science-figure="" id="processing-stage-2">
 <div aria-label="Ground the manipulated object" class="process-panel" role="group">
 <div class="process-image-pair">
 <figure>
@@ -150,7 +165,7 @@ Steertuning:
 </div>
 
 </div>
-</div></figure></article><article class="subsection"><h4>Remove hands</h4><figure class="research-figure"><div class="science-figure processing-figure" data-process-stage="1" data-processing-player="" data-science-figure="" id="processing-stage-1">
+</div></figure></article><article class="subsection" aria-labelledby="prepare-hands-description"><p class="preparation-description" id="prepare-hands-description">Remove hands and arms.</p><figure class="research-figure"><div class="science-figure processing-figure" data-process-stage="1" data-processing-player="" data-science-figure="" id="processing-stage-1">
 <div aria-label="Remove hands from the scene" class="process-panel" role="group">
 <div class="process-image-pair">
 <figure>
@@ -174,7 +189,7 @@ Steertuning:
 </div>
 
 </div>
-</div></figure></article><article class="subsection"><h4>Align observations</h4><figure class="research-figure"><div class="science-figure processing-figure" data-process-stage="3" data-processing-player="" data-science-figure="" id="processing-stage-3">
+</div></figure></article><article class="subsection" aria-labelledby="prepare-align-description"><p class="preparation-description" id="prepare-align-description">Align and sample 5,000 scene points.</p><figure class="research-figure"><div class="science-figure processing-figure" data-process-stage="3" data-processing-player="" data-science-figure="" id="processing-stage-3">
 <div aria-label="Bring the observations into one camera frame" class="process-panel" role="group">
 <div class="process-image-pair">
 <figure>
@@ -222,59 +237,38 @@ Steertuning:
 <div class="ft-training-node ft-training-result"><h4>Task-adapted policy</h4></div>
 </div>
 </div>
-</section></div></section><section aria-labelledby="steer-title" class="paper-section container story-chapter" id="steer"><h2 id="steer-title"><span aria-hidden="true" class="section-number">05</span><span class="section-heading-text">Steer with a matching demonstration</span></h2><div class="policy-context"><section aria-labelledby="steering-title" class="steering-story" id="steering-deployment">
-<header class="sc-header"><h4 id="steering-title">Steering comparison</h4><span class="sr-only" data-coordinate-example="">Virtual target: +10 cm</span></header>
-<div aria-label="3D WUJI hand trajectory and steering correction" class="sc-stage" data-coordinate-plots=""><p data-coordinate-loading="">Loading the recorded hand poses…</p></div>
+</section></div></section><section aria-labelledby="steer-title" class="paper-section container story-chapter" id="steer"><h2 id="steer-title"><span aria-hidden="true" class="section-number">05</span><span class="section-heading-text">Steer with a matching demonstration</span></h2><p class="story-lead">At deployment, the finetuned policy generates actions for the current scene, guided by a matched human trajectory during denoising.</p><div class="policy-context"><section aria-labelledby="steering-title" class="steering-story" id="steering-deployment">
+<header class="sc-header"><h4 id="steering-title">Action steering</h4><span class="sr-only" data-coordinate-example="">Virtual target: +10 cm</span></header>
+<div aria-label="Illustration of demonstration-guided WUJI hand predictions" class="sc-stage" data-coordinate-plots=""><p data-coordinate-loading="">Loading the recorded hand poses…</p></div>
 <div class="sc-playback">
 <button data-coordinate-play="" disabled="" type="button">Replay motion</button>
 <label class="sc-scrub"><span class="sr-only">Replay</span><input aria-label="Motion replay and steering" data-coordinate-progress="" disabled="" max="1000" min="0" step="1" type="range" value="1000"/><span class="sr-only">With steering</span></label>
 
 </div>
 <p class="sc-result sr-only" data-coordinate-result=""></p>
-<p class="sm-note">Virtual target · retargeted / interpolated poses · no robot execution.</p>
 <span aria-live="polite" class="sr-only" data-coordinate-announcement=""></span>
-</section></div></section><section aria-labelledby="deploy-title" class="paper-section container story-chapter" id="deploy"><h2 id="deploy-title"><span aria-hidden="true" class="section-number">06</span><span class="section-heading-text">Put the skill to work on the robot</span></h2><p class="story-lead">The learned manipulation policy is one part of deployment. Retargeting, navigation, and a task planner connect its predictions to complete robot actions.</p><article class="subsection" id="deployment">
-<h3>Connect the policy to the full robot system</h3>
+</section></div></section><section aria-labelledby="deploy-title" class="paper-section container story-chapter" id="deploy"><h2 id="deploy-title"><span aria-hidden="true" class="section-number">06</span><span class="section-heading-text">Full stack robot deployment</span></h2><p class="story-lead">We use Gemini ER 1.6 to orchestrate navigation and manipulation, coordinating the robot’s actions to complete the task.</p><article class="subsection" id="deployment">
 <figure class="research-figure">
 <div class="deployment-explainer" id="deployment-figure">
-<header class="deploy-heading">
-<div class="deploy-controls">
-<button data-deploy-play="" type="button">Pause walkthrough</button>
-<button data-deploy-replay="" type="button">Replay</button>
-</div>
-</header>
-<div class="deploy-command"><q>Put the white cup into the trash.</q></div>
+<div class="deploy-command"><q>Pick up the bag and bring it to the table.</q></div>
 <div class="deploy-flow" data-deploy-flow="">
 <svg aria-hidden="true" class="deploy-wires" data-deploy-wires=""></svg>
 <div class="deploy-column">
 <div class="deploy-column-body">
-<button aria-label="Inspect the vision-language orchestrator" class="deploy-planner" data-deploy-inspect="planner" data-deploy-node="planner" type="button">
+<div class="deploy-planner" data-deploy-node="planner">
 <b>Plan</b><span class="deploy-brand"><img alt="" height="22" src="assets/deployment/gemini.png" width="22"/><span>Gemini ER 1.6</span></span>
-</button>
+</div>
 </div>
 </div>
 <div class="deploy-column">
-<div aria-label="Select a deployment step" class="deploy-column-body deploy-plan" role="group">
-<button aria-label="Step 1: navigate white cup" aria-pressed="true" class="deploy-step" data-deploy-node="step-0" data-deploy-step="0" type="button">
-<span class="deploy-step-number">01</span><span><b>Navigate</b><small>white cup</small></span><span aria-hidden="true" class="deploy-step-progress"></span>
-</button>
-<button aria-label="Step 2: pick up white cup" aria-pressed="false" class="deploy-step" data-deploy-node="step-1" data-deploy-step="1" type="button">
-<span class="deploy-step-number">02</span><span><b>Pick up</b><small>white cup</small></span><span aria-hidden="true" class="deploy-step-progress"></span>
-</button>
-<button aria-label="Step 3: navigate trash" aria-pressed="false" class="deploy-step" data-deploy-node="step-2" data-deploy-step="2" type="button">
-<span class="deploy-step-number">03</span><span><b>Navigate</b><small>trash</small></span><span aria-hidden="true" class="deploy-step-progress"></span>
-</button>
-<button aria-label="Step 4: drop white cup" aria-pressed="false" class="deploy-step" data-deploy-node="step-3" data-deploy-step="3" type="button">
-<span class="deploy-step-number">04</span><span><b>Drop</b><small>white cup</small></span><span aria-hidden="true" class="deploy-step-progress"></span>
-</button>
-</div>
+<div aria-label="Select a deployment step" class="deploy-column-body deploy-plan" role="group"><button aria-label="Approach the bag" aria-pressed="true" class="deploy-step" data-deploy-node="step-0" data-deploy-step="0" type="button"><span class="deploy-step-number">01</span><span><b>Navigate</b><small>bag</small></span><span aria-hidden="true" class="deploy-step-progress"></span></button><button aria-label="Grasp and lift the bag" aria-pressed="false" class="deploy-step" data-deploy-node="step-1" data-deploy-step="1" type="button"><span class="deploy-step-number">02</span><span><b>Pick up</b><small>bag</small></span><span aria-hidden="true" class="deploy-step-progress"></span></button><button aria-label="Carry the bag to the table" aria-pressed="false" class="deploy-step" data-deploy-node="step-2" data-deploy-step="2" type="button"><span class="deploy-step-number">03</span><span><b>Carry</b><small>bag to table</small></span><span aria-hidden="true" class="deploy-step-progress"></span></button></div>
 </div>
 <div class="deploy-column">
 <div class="deploy-column-body deploy-skills">
-<button aria-label="Inspect object navigation" class="deploy-skill" data-deploy-inspect="navigation" data-deploy-node="navigation" type="button">
+<button aria-label="Jump to a navigation stage" class="deploy-skill" data-deploy-inspect="navigation" data-deploy-node="navigation" type="button">
 <b>Navigate</b><small>Locate in map → move base</small>
 </button>
-<button aria-label="Inspect the Steertuning manipulation policy" class="deploy-skill" data-deploy-inspect="manipulation" data-deploy-node="manipulation" type="button">
+<button aria-label="Jump to a manipulation stage" class="deploy-skill" data-deploy-inspect="manipulation" data-deploy-node="manipulation" type="button">
 <b>Manipulate</b><small>Predict landmarks → retarget</small>
 </button>
 </div>
@@ -286,40 +280,24 @@ Steertuning:
 </div>
 </div>
 <div class="deploy-inspector">
-<div class="deploy-inspector-heading"><strong data-deploy-detail-title="">Navigate to the white cup</strong><span data-deploy-status="">Step 1 / 4</span></div>
-<p data-deploy-detail="">Find the cup in the semantic scene map, then move the mobile base to its location.</p>
+<div class="deploy-inspector-heading"><strong data-deploy-detail-title="">Approach the bag</strong><span data-deploy-status="">1 / 3</span></div>
+<p data-deploy-detail="">The base approaches and settles in front of the bag before the hands begin the pickup.</p>
 </div>
-<section aria-label="Full-stack robot rollouts" class="deploy-videos">
-<div class="deploy-video-grid">
-<figure class="deploy-video-card">
-<video aria-label="Cup disposal: full-stack robot rollout" controls="" data-deploy-video="" data-src="assets/deployment/videos/trash.mp4" loop="" muted="" playsinline="" poster="assets/deployment/videos/poster-trash.jpg" preload="none" src="assets/deployment/videos/trash.mp4">
-<a href="assets/deployment/videos/trash.mp4">Watch cup disposal</a>.
-                    </video>
-<figcaption>Cup disposal</figcaption>
-</figure>
-<figure class="deploy-video-card">
-<video aria-label="Table wiping: full-stack robot rollout" controls="" data-deploy-video="" data-src="assets/deployment/videos/full-stack-2.mp4" loop="" muted="" playsinline="" poster="assets/deployment/videos/poster-full-stack-2.jpg" preload="none" src="assets/deployment/videos/full-stack-2.mp4">
-<a href="assets/deployment/videos/full-stack-2.mp4">Watch table wiping</a>.
-                    </video>
-<figcaption>Table wiping</figcaption>
-</figure>
-<figure class="deploy-video-card">
-<video aria-label="Bag retrieval: full-stack robot rollout" controls="" data-deploy-video="" data-src="assets/deployment/videos/full-stack-1.mp4" loop="" muted="" playsinline="" poster="assets/deployment/videos/poster-full-stack-1.jpg" preload="none" src="assets/deployment/videos/full-stack-1.mp4">
-<a href="assets/deployment/videos/full-stack-1.mp4">Watch bag retrieval</a>.
-                    </video>
-<figcaption>Bag retrieval</figcaption>
-</figure>
-</div>
+<section aria-label="Full-stack robot rollouts" class="deploy-videos" aria-roledescription="carousel">
+<div class="deploy-gallery-toolbar"><div class="deploy-gallery-select" role="group" aria-label="Choose a rollout"><button type="button" data-deploy-select="0" aria-pressed="true">Bag retrieval</button><button type="button" data-deploy-select="1" aria-pressed="false">Cup disposal</button><button type="button" data-deploy-select="2" aria-pressed="false">Table wiping</button></div><div class="deploy-controls"><button data-deploy-play type="button">Play rollout</button><button data-deploy-replay type="button">Replay rollout</button></div></div>
+<div class="deploy-gallery-heading"><strong data-deploy-now>Navigation · Approach the bag</strong><div class="deploy-gallery-arrows"><button type="button" data-deploy-previous aria-label="Previous rollout">←</button><span data-deploy-count>1 / 3</span><button type="button" data-deploy-next aria-label="Next rollout">→</button></div></div>
+<div class="deploy-gallery-window"><div class="deploy-video-grid" data-deploy-track><figure class="deploy-video-card" data-deploy-card="0" aria-label="1 of 3: Bag retrieval"><video controls muted playsinline preload="none" data-deploy-video data-src="assets/deployment/videos/full-stack-1.mp4" poster="assets/deployment/videos/poster-full-stack-1.jpg" aria-label="Bag retrieval: full-stack robot rollout"><a href="assets/deployment/videos/full-stack-1.mp4">Watch bag retrieval</a></video></figure><figure class="deploy-video-card" data-deploy-card="1" aria-label="2 of 3: Cup disposal"><video controls muted playsinline preload="none" data-deploy-video data-src="assets/deployment/videos/trash.mp4" poster="assets/deployment/videos/poster-trash.jpg" aria-label="Cup disposal: full-stack robot rollout"><a href="assets/deployment/videos/trash.mp4">Watch cup disposal</a></video></figure><figure class="deploy-video-card" data-deploy-card="2" aria-label="3 of 3: Table wiping"><video controls muted playsinline preload="none" data-deploy-video data-src="assets/deployment/videos/full-stack-2.mp4" poster="assets/deployment/videos/poster-full-stack-2.jpg" aria-label="Table wiping: full-stack robot rollout"><a href="assets/deployment/videos/full-stack-2.mp4">Watch table wiping</a></video></figure></div></div>
+<p data-deploy-error hidden role="status"></p>
 </section>
 </div>
 </figure>
-</article><p class="story-transition">With the complete pipeline in place, we can test how well the robot performs on new tasks and in new environments.</p></section><section aria-labelledby="experiments-title" class="paper-section container ruled" id="experiments">
-<h2 id="experiments-title"><span aria-hidden="true" class="section-number">07</span><span class="section-heading-text">Evaluate the learned skills</span></h2><p class="story-lead">We evaluate the complete approach, then isolate which parts contribute to its performance.</p>
-<p class="section-lead reading-width"><strong>71% success across 12 tasks</strong> in new environments, using five demonstrations per task.</p><article class="subsection" id="results">
-<h3>Finetuning + steering work together</h3>
-<p>On three lab tasks, Steertuning reaches 83% success after two minutes of finetuning.</p>
+</article></section><section aria-labelledby="experiments-title" class="paper-section container ruled" id="experiments">
+<h2 id="experiments-title"><span aria-hidden="true" class="section-number">07</span><span class="section-heading-text">Real-world robot evaluation</span></h2>
+<p class="section-lead reading-width"><strong>71% success across 12 tasks</strong> in new environments.</p><article class="subsection" id="results">
+<h3>Finetuning + steering</h3>
+<p>83% success on 3 lab tasks after 2 minutes of finetuning.</p>
 <figure class="result-chart" data-result-chart="adaptation"></figure>
-<p class="table-note">10 trials per lab task. The 71% headline includes all 12 tasks.</p>
+<p class="table-note">10 trials per lab task.</p>
 </article>
 <article class="subsection" id="in-the-wild-rollouts">
 <h3>In-the-wild task rollouts</h3>
@@ -344,7 +322,6 @@ Steertuning:
 </div>
 <div class="rollout-controls">
 <button data-rollout-toggle="" type="button">Play both</button>
-<button data-rollout-replay="" type="button">Replay</button>
 <p class="rollout-playback-note">4× speed</p>
 </div>
 <p aria-live="polite" data-rollout-status="" role="status"></p>
@@ -386,43 +363,28 @@ Steertuning:
 </article></section><section aria-labelledby="ablations-title" class="paper-section container ruled" id="ablations"><h2 id="ablations-title"><span aria-hidden="true" class="section-number">08</span><span class="section-heading-text">Detailed experiments</span></h2>
 <article class="subsection" id="scaling">
 <h3>Data and compute scaling</h3>
-<p>Success across three lab tasks, with ±1 standard deviation. Green marks our settings.</p>
+<p>3 lab tasks · mean ±1 SD · green: ours</p>
 <div class="scaling-grid" id="scaling-charts"></div>
-<p class="figure-note plot-provenance">Approximate values digitized from the manuscript. <a download="" href="assets/plot-data.json">Download values</a>.</p>
+<p class="figure-note plot-provenance"><a download="" href="assets/plot-data.json">Approximate plot data</a></p>
 </article>
 <article class="subsection" id="steering-study">
-<h3>Finetuning and steering</h3>
-<p>
-            Steering strength <i>w</i>: 0 uses the model alone;
-            1 replays the demonstration. We use
-            0.3.
-          </p>
+<h3 id="steering-study-title">Finetuning and steering</h3>
 <figure class="curve-panel steering-panel" id="steering-chart"></figure>
-<p class="figure-note plot-provenance">Approximate prediction error, not task success.</p>
+<p class="figure-note plot-provenance">Prediction error on 12 tasks · approximate values</p>
 </article>
 <div class="ablation-tables">
 <article>
-<h3 id="architecture-results">
-              Architecture: encoders and decoders
-            </h3>
-<p>
-<span class="text-key">Utonia + diffusion transformer</span>
-              performs best among tested variants.
-            </p>
-<figure class="result-chart" data-result-chart="architecture"></figure>
+<h3 id="architecture-results">Architecture</h3>
+<figure aria-labelledby="architecture-results" class="result-chart" data-result-chart="architecture"></figure>
 </article>
 <article>
 <h3 id="trajectory-results">Trajectory selection</h3>
-<p>
-              Selecting by <span class="text-key">object layout</span>
-              outperforms visual features and wrist pose.
-            </p>
-<figure class="result-chart" data-result-chart="trajectory"></figure>
+<figure aria-labelledby="trajectory-results" class="result-chart" data-result-chart="trajectory"></figure>
 </article>
 </div>
 </section></main>
 <footer class="page-footer container">
-<span>Steertuning v2026.10.12.2-anonymous</span><a href="#top">Back to top</a>
+<span>Steertuning v2026.10.12.3-anonymous</span><a href="#top">Back to top</a>
 </footer>
 </body>
 </html>

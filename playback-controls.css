@@ -1,0 +1,30 @@
+/* One visible affordance for play, pause and replay, including touch screens. */
+body :is(#overview,#collect,#prepare,#pretraining,#finetune,#steer,#deploy,#experiments,#ablations) button.playback-button:not([hidden]) {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 44px;
+  width:44px;
+  min-width:44px;
+  height:44px;
+  min-height:44px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:#e7ecdf;
+  color:var(--green);
+  cursor:pointer;
+  vertical-align:middle;
+  box-shadow:none;
+  text-decoration:none;
+}
+body button.playback-button[hidden] {display:none;}
+body :is(#overview,#collect,#prepare,#pretraining,#finetune,#steer,#deploy,#experiments,#ablations) button.playback-button::before,
+body :is(#overview,#collect,#prepare,#pretraining,#finetune,#steer,#deploy,#experiments,#ablations) button.playback-button::after {content:none; display:none;}
+body button.playback-button svg {display:block; width:18px; height:18px; fill:currentColor; pointer-events:none;}
+body :is(#overview,#collect,#prepare,#pretraining,#finetune,#steer,#deploy,#experiments,#ablations) button.playback-button:enabled:hover {
+  background:#d9e3d1; color:var(--green);
+}
+body :is(#overview,#collect,#prepare,#pretraining,#finetune,#steer,#deploy,#experiments,#ablations) button.playback-button:focus-visible {outline:2px solid var(--green); outline-offset:0;}
+body button.playback-button:disabled {opacity:.45; cursor:default;}
+body button.playback-button:enabled:active {transform:translateY(1px);}

@@ -17,10 +17,7 @@
  function update() {
   const running=visible&&!paused&&!document.hidden;
   cloud.dataset.paused=String(!running);
-  button.textContent=paused?'▷':'Ⅱ';
-  button.setAttribute('aria-label',paused?'Play mosaic':'Pause mosaic');
-  button.title=paused?'Play mosaic':'Pause mosaic';
-  button.setAttribute('aria-pressed',String(paused));
+  window.SteertuningPlayback.set(button,paused?'play':'pause',paused?'Play mosaic':'Pause mosaic');
   for(const video of videos) {
    if(running) video.play().catch(()=>{});
    else video.pause();

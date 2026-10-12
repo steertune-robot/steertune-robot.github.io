@@ -4,8 +4,6 @@
 #policy-figure .ag-tabs button,#policy-figure .ag-reset,#policy-figure .ag-pause{font:500 0.75rem/1.4 var(--label);color:var(--muted);border:0;border-radius:0;background:none;cursor:pointer;padding:6px 0}
 #policy-figure .ag-tabs button[aria-selected=true]{color:var(--green);box-shadow:0 1px var(--green)}
 #policy-figure .ag-pause{color:var(--green);white-space:nowrap}
-#policy-figure .ag-pause::before{content:'Ⅱ';margin-right:7px;font-size:0.625rem}
-#policy-figure .ag-pause[aria-pressed=true]::before{content:'▷'}
 #policy-figure .ag-controls{display:flex;align-items:center;gap:18px}
 #policy-figure .ag-reset{font-size:0.6875rem}
 #policy-figure .ag-reset:disabled{opacity:.45;cursor:default}

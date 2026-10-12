@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "kind": "Visual annotations of the supplied edited recordings; not measured controller telemetry or live action recognition.",
+    "review": "Reviewed full recordings with overview frames (cup every 2 seconds, short clips every 0.5 seconds), then 0.25-second samples around navigation/manipulation transitions and 0.5-second samples around cup disposal. Labels group visible task phases, including preparation and holding. Re-reviewed hand-motion onsets after user feedback: bag at 0.125-second spacing from4\u20136.5s and approximately one-frame spacing5.2\u20135.5s; cup reach6.5\u201310.5s and release31\u201335s at0.25-second spacing; cloth1\u20132.875s at0.125-second spacing, with the full clip reviewed for tabletop contact.",
+    "boundaryPrecision": "Approximate visual transitions, stored at encoded frame boundaries; uncertainty about 0.25 seconds. Arm preparation can overlap base navigation.",
+    "playback": "Original full edits at user-requested browser rates: Bag retrieval2\u00d7, Cup disposal3\u00d7, Table wiping2\u00d7. Rates multiply each edit\u2019s existing encoded speed. Phase boundaries remain in source-video time.",
+    "date": "2026-10-12",
+    "boundaryRule": "Navigation includes approach, settling and pre-action holding. Switch to manipulation at visible task-directed hand motion, not arrival proximity or a transport arm posture. Bag pickup starts at frame159 (5.3053s); cup reach frame270 (9.009s); cup release frame1049 (35.0016s); wiping frame159 (5.3053s)."
+  },
+  "tasks": [
+    {
+      "id": "full-stack-1",
+      "label": "Bag retrieval",
+      "command": "Pick up the bag and bring it to the table.",
+      "video": "assets/deployment/videos/full-stack-1.mp4",
+      "poster": "assets/deployment/videos/poster-full-stack-1.jpg",
+      "duration": 11.644967,
+      "frameCount": 349,
+      "fpsNumerator": 30000,
+      "fpsDenominator": 1001,
+      "sha256": "ddb9c3419c30b2eaf7152b50ff650176c55a28c1a604b39d431851e681ad40c3",
+      "steps": [
+        {
+          "startFrame": 0,
+          "endFrame": 159,
+          "skill": "navigation",
+          "verb": "Navigate",
+          "object": "bag",
+          "title": "Approach the bag",
+          "body": "The base approaches and settles in front of the bag before the hands begin the pickup."
+        },
+        {
+          "startFrame": 159,
+          "endFrame": 255,
+          "skill": "manipulation",
+          "verb": "Pick up",
+          "object": "bag",
+          "title": "Grasp and lift the bag",
+          "body": "The hands reach for the handles, close, and lift the bag from the seat."
+        },
+        {
+          "startFrame": 255,
+          "endFrame": 349,
+          "skill": "navigation",
+          "verb": "Carry",
+          "object": "bag to table",
+          "title": "Carry the bag to the table",
+          "body": "The base turns and transports the bag. The edit ends during the approach; no set-down is shown."
+        }
+      ],
+      "playbackRate": 2
+    },
+    {
+      "id": "trash",
+      "label": "Cup disposal",
+      "command": "Put the white cup into the trash.",
+      "video": "assets/deployment/videos/trash.mp4",
+      "poster": "assets/deployment/videos/poster-trash.jpg",
+      "duration": 42.042,
+      "frameCount": 1260,
+      "fpsNumerator": 30000,
+      "fpsDenominator": 1001,
+      "sha256": "176dd90201970a71f6c0f91c04c9590c9ce355227cf9957d819c93c77d76877d",
+      "steps": [
+        {
+          "startFrame": 0,
+          "endFrame": 270,
+          "skill": "navigation",
+          "verb": "Navigate",
+          "object": "white cup",
+          "title": "Approach the cup",
+          "body": "The base approaches and settles at the table before the hands reach for the cup."
+        },
+        {
+          "startFrame": 270,
+          "endFrame": 600,
+          "skill": "manipulation",
+          "verb": "Pick up",
+          "object": "white cup",
+          "title": "Pick up the cup",
+          "body": "The robot reaches, grasps the cup, and holds it above the table."
+        },
+        {
+          "startFrame": 600,
+          "endFrame": 1049,
+          "skill": "navigation",
+          "verb": "Navigate",
+          "object": "trash",
+          "title": "Carry the cup to the trash",
+          "body": "The base carries the cup to the bin and settles before the release motion."
+        },
+        {
+          "startFrame": 1049,
+          "endFrame": 1152,
+          "skill": "manipulation",
+          "verb": "Drop",
+          "object": "white cup",
+          "title": "Release the cup",
+          "body": "The robot positions the cup over the bin, releases it, and withdraws its hands."
+        },
+        {
+          "startFrame": 1152,
+          "endFrame": 1260,
+          "skill": "navigation",
+          "verb": "Move away",
+          "object": "from trash",
+          "title": "Move away from the bin",
+          "body": "The base turns and travels away after disposal."
+        }
+      ],
+      "playbackRate": 3
+    },
+    {
+      "id": "full-stack-2",
+      "label": "Table wiping",
+      "command": "Wipe the table with the cloth.",
+      "video": "assets/deployment/videos/full-stack-2.mp4",
+      "poster": "assets/deployment/videos/poster-full-stack-2.jpg",
+      "duration": 10.2102,
+      "frameCount": 306,
+      "fpsNumerator": 30000,
+      "fpsDenominator": 1001,
+      "sha256": "df31c29856fcbbb6bb917b0b10d8a666d7a1da470f36a5a3b0cae8588be6349d",
+      "steps": [
+        {
+          "startFrame": 0,
+          "endFrame": 159,
+          "skill": "navigation",
+          "verb": "Navigate",
+          "object": "table",
+          "title": "Approach the table",
+          "body": "The base approaches the table while carrying the cloth; manipulation begins with the tabletop motion."
+        },
+        {
+          "startFrame": 159,
+          "endFrame": 306,
+          "skill": "manipulation",
+          "verb": "Wipe",
+          "object": "table",
+          "title": "Wipe the table",
+          "body": "The hand moves the cloth across the tabletop."
+        }
+      ],
+      "playbackRate": 2
+    }
+  ]
+}

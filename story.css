@@ -47,7 +47,6 @@ body #deploy #deployment { margin-top:0; }
  #overview .transfer-arrow.arrow-next { width:var(--transfer-gap); height:2px; top:50%; left:100%; }
  #overview .transfer-arrow.arrow-next::before { background:linear-gradient(90deg,transparent 25%,#244c3b 50%,transparent 75%); background-size:200% 100%; animation-name:flow-between-horizontal; }
  #overview .transfer-arrow.arrow-next::after { top:-3px; right:0; bottom:auto; transform:rotate(45deg); }
- #overview .transfer-caption { margin-top:20px; text-align:left; }
 }
 @keyframes flow-between-horizontal {
  0%,42% {background-position:200% 0; opacity:0;}
@@ -69,6 +68,9 @@ body #deploy #deployment { margin-top:0; }
 }
 
 body .overview-intro { padding-block:20px 36px; }
+body #overview .transfer-topline { margin-bottom:8px; flex-wrap:nowrap; }
+body #overview .transfer-topline > span { flex:1 1 auto; }
+body #overview .transfer-caption { margin:0 0 28px; text-align:left; }
 
 /* Trimming precedes per-clip processing; the three input views stay compact. */
 body #prepare > .contact-story { margin-top:0; }
@@ -181,7 +183,7 @@ body .deploy-step > span:nth-child(2) {min-width:0;}
  body .deploy-skills {grid-template-columns:1fr;}
 }
 
-/* Irmak review: recordings first, one operation at a time. */
+/* Irmak review: minimal copy, with every processing pair visible. */
 body #collect .dataset-toolbar {gap:16px; align-items:center;}
 body #collect [data-dataset-toggle],body #finetune [data-task-demo-toggle] {width:44px; height:44px; min-width:44px; padding:0; flex:none;}
 body #collect [data-dataset-toggle]::before {content:none;}
@@ -190,9 +192,9 @@ body #prepare .contact-chart {min-height:0;}
 body #prepare .contact-controls {margin-top:16px; gap:16px;}
 body #prepare .contact-controls button {min-width:64px;}
 body #prepare .contact-controls input {flex:1; min-width:0; accent-color:var(--green);}
-body #prepare .preparation-grid {display:grid; grid-template-columns:1fr; max-width:860px; margin-inline:auto;}
-body #prepare .preparation-grid > article[hidden] {display:none;}
-body #prepare .preparation-grid h4 {display:none;}
+body #prepare .preparation-grid {display:grid; grid-template-columns:1fr; max-width:860px; margin-inline:auto; gap:40px;}
+body #prepare .preparation-description {margin:0 0 14px;}
+body #prepare .preparation-grid .process-panel {padding:0;}
 body #prepare .preparation-grid > .subsection {display:block;}
 body #prepare .preparation-grid .research-figure {margin:0;}
 body #prepare .process-image-pair {grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr); gap:16px 12px;}
@@ -201,8 +203,6 @@ body #prepare .process-playback {display:flex; flex-wrap:nowrap; gap:16px;}
 body #prepare .process-playback output {display:none;}
 body #prepare [data-process-play-label] {position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%);}
 body #prepare [data-process-toggle] {min-width:44px; width:44px; height:44px; padding:0; justify-content:center;}
-.processing-sequence-controls {display:flex; justify-content:flex-end; align-items:center; max-width:860px; margin:0 auto 20px;}
-body #prepare .processing-replay {margin:0; width:44px; height:44px; background:none; border:0; color:var(--green); cursor:pointer;}
 body #finetune .task-demo-toolbar {justify-content:flex-end;}
 body #pretraining .ag-detail:empty {display:none;}
 body #steer .sc-header {margin-bottom:20px;}
@@ -211,10 +211,9 @@ body #steer .sc-header {margin-bottom:20px;}
 .sc-reference img {width:120px; aspect-ratio:4/3; object-fit:contain;}
 .sc-reference figcaption {max-width:120px; color:var(--muted);}
 body #steer .sm-target-key {margin:0; gap:12px 24px;}
-.sc-comparison-grid {display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+.sc-comparison-grid {display:grid; grid-template-columns:minmax(0,1fr); gap:28px; scroll-margin-top:20px;}
 .sc-comparison-panel {min-width:0; margin:0;}
-body #steer .sc-comparison-panel h4 {margin:0 0 12px; text-align:left;}
-body #steer .sc-comparison-panel:first-child h4 {color:var(--muted);}
+body #steer .sc-illustration-caption {margin:20px 0 0; max-width:850px;}
 body #steer .sm-view {margin:0;}
 body #steer .sm-canvas {height:400px;}
 .sc-comparison-foot {display:flex; justify-content:space-between; align-items:center; gap:20px; color:var(--green); margin-top:12px; min-height:44px;}
@@ -225,17 +224,43 @@ body #steer .sm-note {margin:12px 0 0;}
 @media(max-width:600px){
  body #prepare .contact-controls {flex-wrap:wrap;}
  body #prepare .contact-controls input {flex-basis:100%; order:3;}
+ body #prepare .preparation-grid {gap:32px;}
  body #prepare .process-image-pair {gap:12px 6px; grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);}
  .sc-comparison-intro {align-items:flex-start; gap:16px; flex-direction:column;}
  .sc-reference img {width:96px;}
  .sc-reference figcaption {max-width:none;}
  .sc-comparison-grid {gap:12px;}
  body #steer .sm-canvas {height:280px;}
- body #steer .sc-comparison-panel h4 {min-height:2.7em;}
  body #steer .sm-target-key {display:flex; flex-wrap:wrap; gap:8px 16px;}
  .sc-comparison-foot {gap:8px;}
  body #steer .sc-playback {grid-template-columns:auto minmax(0,1fr);}
 }
-@media(prefers-reduced-motion:reduce){
- body #prepare .preparation-grid {gap:28px;}
+
+/* Compact experiment readouts retain the measured uncertainty. */
+body #ablations .plot-readout {display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; min-height:0;}
+
+/* Full-stack recordings roll in sequence; the active video owns diagram time. */
+body .deploy-videos {margin-top:24px; padding-top:0; border:0;}
+.deploy-gallery-toolbar,.deploy-gallery-heading {display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px;}
+.deploy-gallery-select {display:flex; flex-wrap:wrap; gap:8px;}
+.deploy-gallery-select button,.deploy-gallery-arrows button {border:0; background:transparent; color:var(--muted); min-height:44px; padding:8px 12px; cursor:pointer;}
+.deploy-gallery-select button[aria-pressed="true"] {background:#e4ecdf; color:var(--green);}
+.deploy-gallery-arrows {display:flex; align-items:center; gap:12px; flex:none;}
+.deploy-gallery-arrows button {width:44px; padding:0; color:var(--green);}
+.deploy-gallery-heading strong {color:var(--green);}
+.deploy-gallery-window {overflow:hidden;}
+body .deploy-video-grid {display:grid; grid-auto-flow:column; grid-auto-columns:100%; grid-template-columns:none; gap:0; transform:translateX(calc(var(--gallery-index,0) * -100%)); transition:transform .45s cubic-bezier(.22,1,.36,1);}
+body .deploy-video-card {width:100%;}
+body .deploy-video-card video {width:100%; height:auto; object-fit:contain; background:transparent;}
+body .deploy-gallery-note {margin:12px 0 0; color:var(--muted);}
+body .deploy-gallery-toolbar .deploy-controls {gap:8px;}
+@media(max-width:600px){
+ .deploy-gallery-toolbar {align-items:flex-start; flex-wrap:wrap;}
+ .deploy-gallery-select {flex:1 1 100%;}
+ .deploy-gallery-heading {align-items:flex-start; gap:8px;}
+ .deploy-gallery-arrows {gap:4px;}
+ .deploy-gallery-select button {padding:8px;}
 }
+@media(prefers-reduced-motion:reduce){body .deploy-video-grid {transition:none;}}
+
+body .deploy-planner:not(button) {cursor:default;}

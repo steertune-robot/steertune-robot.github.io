@@ -126,8 +126,7 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
   const readout = htmlNode("figcaption", "plot-readout");
   const label = htmlNode("span", "plot-readout-label");
   const value = htmlNode("strong", "plot-readout-value");
-  const uncertainty = htmlNode("span", "plot-readout-detail");
-  readout.append(label, value, uncertainty);
+  readout.append(label, value);
   const circles = [];
   function selectPoint(index) {
     const point = data.points[index];
@@ -137,9 +136,8 @@ for (const [panelIndex, data] of plotResults.scaling.entries()) {
         : data.id === "demonstrations"
           ? "demos"
           : "updates";
-    label.textContent = `${point.label} ${unit}${index === data.defaultIndex ? ": chosen" : ""}`;
-    value.textContent = `≈ ${point.mean.toFixed(1)}%`;
-    uncertainty.textContent = `±${point.std.toFixed(1)} pp across tasks`;
+    label.textContent = `${point.label} ${unit}`;
+    value.textContent = `≈ ${point.mean.toFixed(1)} ± ${point.std.toFixed(1)}%`;
     circles.forEach((circle, i) =>
       circle.classList.toggle("is-active", i === index),
     );
@@ -197,7 +195,7 @@ const keyBudgets = [
   defaultBudget,
   steering.series.findIndex((s) => s.label === "128k"),
 ];
-let activeBudget = defaultBudget;
+const activeBudget = defaultBudget;
 let activeWeight = steering.weights.indexOf(0.3);
 const curveColors = [
   "#b38f68",
@@ -211,62 +209,8 @@ const curveColors = [
   "#503c2b",
   "#77766b",
 ];
-steeringFigure.append(
-  htmlNode("span", "chart-source", "Figure 7: action prediction on 12 tasks"),
-);
-const steeringTitle = htmlNode(
-  "h4",
-  "chart-title",
-  "Brief finetuning approaches a longer run",
-);
-steeringTitle.id = "steering-plot-title";
-steeringFigure.setAttribute("aria-labelledby", steeringTitle.id);
-steeringFigure.append(
-  steeringTitle,
-  htmlNode(
-    "p",
-    "chart-guide",
-    "Mean prediction error across 12 tasks; lower is better.",
-  ),
-);
+steeringFigure.setAttribute("aria-labelledby", "steering-study-title");
 
-const controls = htmlNode("div", "steering-filters");
-const budgetLabel = htmlNode("label", "chart-select-label", "Finetuning");
-const budgetSelect = htmlNode("select", "chart-select");
-budgetSelect.setAttribute("aria-label", "Inspect finetuning budget");
-steering.series.forEach((series, index) => {
-  const option = htmlNode(
-    "option",
-    "",
-    series.label === "None"
-      ? "None"
-      : `${series.label} steps`,
-  );
-  option.value = index;
-  budgetSelect.append(option);
-});
-budgetSelect.value = activeBudget;
-budgetLabel.append(budgetSelect);
-const weightLabel = htmlNode(
-  "label",
-  "chart-select-label",
-  "Steering strength",
-);
-const weightSelect = htmlNode("select", "chart-select");
-weightSelect.setAttribute("aria-label", "Inspect steering weight");
-steering.weights.forEach((weight, index) => {
-  const option = htmlNode(
-    "option",
-    "",
-    `${weight.toFixed(1)}`,
-  );
-  option.value = index;
-  weightSelect.append(option);
-});
-weightSelect.value = activeWeight;
-weightLabel.append(weightSelect);
-controls.append(budgetLabel, weightLabel);
-steeringFigure.append(controls);
 const legend = htmlNode("div", "steering-key");
 legend.setAttribute("aria-label", "Curve legend");
 steeringFigure.append(legend);
@@ -276,7 +220,7 @@ const svg = plotNode("svg", {
   class: "scientific-plot steering-svg",
   role: "group",
   "aria-label":
-    "Action prediction error across steering weights. Three key comparisons and the selected finetuning budget.",
+    "Action prediction error across steering weights. No finetuning, 2k steps, and 128k steps compared with demonstration replay.",
 });
 let phonePlot = false, steeringWidth = 880;
 const sx = (weight) => phonePlot ? 48 + (steeringWidth - 64) * weight : 58 + 780 * weight;
@@ -356,8 +300,7 @@ steeringFigure.append(
 const readout = htmlNode("figcaption", "plot-readout steering-readout");
 const selectedLabel = htmlNode("span", "plot-readout-label");
 const selectedValue = htmlNode("strong", "plot-readout-value");
-const selectedDetail = htmlNode("span", "plot-readout-detail");
-readout.append(selectedLabel, selectedValue, selectedDetail);
+readout.append(selectedLabel, selectedValue);
 steeringFigure.append(readout);
 const status = htmlNode("span", "sr-only");
 status.setAttribute("aria-live", "polite");
@@ -378,18 +321,10 @@ function updateSteering(rebuild = true) {
   svg.insertBefore(paths[activeBudget], defaultRing);
   guide.setAttribute("x1", sx(weight));
   guide.setAttribute("x2", sx(weight));
-  budgetSelect.value = activeBudget;
-  weightSelect.value = activeWeight;
-  selectedLabel.textContent = `${series.label === "None" ? "No finetuning" : `${series.label} steps`}: steering strength ${weight.toFixed(1)}`;
+  selectedLabel.textContent = `${series.label === "None" ? "No finetuning" : `${series.label} steps`} · w = ${weight.toFixed(1)}`;
   selectedValue.textContent =
     value === null ? "> 350 MSE" : `≈ ${value.toFixed(1)} MSE`;
-  selectedDetail.textContent =
-    value === null
-      ? "Above the plot limit; exact value unavailable."
-      : activeBudget === defaultBudget && weight === 0.3
-        ? "Our setting: approximately 2 minutes of finetuning"
-        : "Held-out demonstrations: lower is better";
-  status.textContent = `${selectedLabel.textContent}. ${selectedValue.textContent}. ${selectedDetail.textContent}`;
+  status.textContent = `${selectedLabel.textContent}. ${selectedValue.textContent}. Lower prediction error is better.`;
   if (rebuild) {
     legend.replaceChildren();
     for (const i of [...new Set([...keyBudgets, activeBudget])]) {
@@ -452,18 +387,10 @@ function updateSteering(rebuild = true) {
       Number(point.getAttribute("data-weight")) === activeWeight,
     );
 }
-budgetSelect.addEventListener("change", () => {
-  activeBudget = Number(budgetSelect.value);
-  updateSteering();
-});
-weightSelect.addEventListener("change", () => {
-  activeWeight = Number(weightSelect.value);
-  updateSteering(false);
-});
 updateSteering();
 revealPlot(steeringFigure);
 
-// Redraw only the phone geometry; retain every measured point and the selected controls.
+// Redraw only the phone geometry; retain every measured point and the selected value.
 let lastSteeringLayout='';
 function fitSteeringPlot(){
   const nextPhone=matchMedia('(max-width:600px)').matches;

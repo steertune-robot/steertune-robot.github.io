@@ -2,7 +2,7 @@
 
 Anonymous research project page for **Steertuning Policies from a Few Human Videos**, Paper ID 1039.
 
-Current release: **v2026.10.11.6-anonymous**. GitHub Pages publishes `main` from the repository root at https://steertune-robot.github.io/.
+Current release: **v2026.10.11.7-anonymous**. GitHub Pages publishes `main` from the repository root at https://steertune-robot.github.io/.
 
 The page shows anonymous authors, omits author affiliations and personal links, and retains the anonymous manuscript. Public provenance uses recording identifiers and checksums without private absolute paths. `robots.txt` and the page metadata discourage search indexing. Third-party licenses and attribution remain intact.
 
@@ -29,3 +29,5 @@ Charts retain manuscript results and identify approximate digitized curves. Shar
 ## Phone layouts
 
 At viewport widths of 600 CSS pixels or less, the architecture uses a three-stage flow with the same recorded inputs and named encoders. Deployment uses a vertical numbered sequence without crossing wires. The steering comparison fits its full range into the available width; scaling charts use fewer tick labels while preserving every point, error bar, and selection control. Contact annotation keeps the full video, model badges, prompt, and mask, omitting thumbnail flights on phones. Narrow playback controls wrap onto two rows. Desktop and tablet layouts above this breakpoint remain unchanged.
+
+Deployment spacing: diagram columns grow with their contents. Step cards keep 16 px vertical and 20 px horizontal padding; planner and skill cards use 20–24 px padding, with responsive wrapping and no fixed-height compression.

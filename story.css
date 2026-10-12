@@ -152,16 +152,16 @@ body .task-demo-toolbar h4 {margin:0; margin-right:auto;}
  body .deploy-flow {gap:32px;}
  body .deploy-wires {display:none;}
  body .deploy-column + .deploy-column::before {content:'↓'; position:absolute; top:-31px; left:50%; color:#78916e;}
- body .deploy-planner {max-width:none; display:flex; align-items:center; justify-content:space-between; gap:12px; border:0; background:#eef1e8; padding:14px;}
+ body .deploy-planner {max-width:none; display:flex; align-items:center; justify-content:space-between; gap:12px; border:0; background:#eef1e8; padding:20px;}
  body .deploy-brand {margin:0;}
  body .deploy-plan {grid-template-columns:1fr; gap:8px;}
- body .deploy-step {display:flex; align-items:center; gap:16px; min-height:60px; padding:10px 14px; text-align:left; border:0; background:#eeeae240;}
+ body .deploy-step {display:flex; align-items:center; gap:16px; min-height:60px; padding:16px 20px; text-align:left; border:0; background:#eeeae240;}
  body .deploy-step-number {margin:0; flex:0 0 2ch;}
  body .deploy-step > span:nth-child(2) {display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline;}
  body .deploy-step small {margin:0;}
  body .deploy-step[aria-pressed=true] {background:#e4ecdf; box-shadow:inset 3px 0 var(--green);}
  body .deploy-skills {gap:12px;}
- body .deploy-skill {padding:12px; border:0; background:#eeeae240;}
+ body .deploy-skill {padding:20px; border:0; background:#eeeae240;}
  body .deploy-skill.is-active {background:#e4ecdf;}
  body .deploy-output {width:100%;}
  body .deploy-inspector-heading {flex-wrap:wrap;}
@@ -169,4 +169,14 @@ body .task-demo-toolbar h4 {margin:0; margin-right:auto;}
  body .contact-story :is(.annotation-clips,.annotation-feed-clip,.annotation-prompt-flight) {display:none;}
  body .contact-story .annotation-model span {display:none;}
  body .contact-story .contact-stage-heading {flex-wrap:wrap; gap:4px 12px;}
+}
+
+/* Let diagram cards size to their content, preserving room around 20 px labels. */
+body .deploy-step {padding:16px 20px;}
+body .deploy-step > span:nth-child(2) {min-width:0;}
+@media(min-width:601px) and (max-width:760px){
+ body .deploy-plan {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:380px){
+ body .deploy-skills {grid-template-columns:1fr;}
 }

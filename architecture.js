@@ -7,7 +7,8 @@
   const detail=figure.querySelector('[data-graph-detail]'),reset=figure.querySelector('[data-graph-reset]');
   const pause=figure.querySelector('[data-graph-pause]'),status=figure.querySelector('[data-graph-status]');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-  let compact,phone,phoneStages=[],selected=null,svg,paths=[],cells=[],videos=[],visible=false,paused=reduce.matches,elapsed=0,previous=0,raf=0,painted=0;
+  const scrollHint=document.createElement('p');scrollHint.className='ag-scroll-hint';scrollHint.textContent='Scroll to see the full diagram →';scrollHint.hidden=true;host.after(scrollHint);
+  let phone,phoneStages=[],selected=null,svg,paths=[],cells=[],videos=[],visible=false,paused=reduce.matches,elapsed=0,previous=0,raf=0,painted=0;
   const colors=['#335b49','#819a89','#b49977'];
   function text(g,x,y,s,cls='av-label',anchor='middle'){return g.append('text').attr('x',x).attr('y',y).attr('class',cls).attr('text-anchor',anchor).text(s);}
   function pick(g,id){
@@ -49,64 +50,47 @@
   function model(){
     const g=svg.append('g');
     const rows=[['scene','Point cloud','5,000 × 3','Utonia','Frozen','512','cloud-sampled.png','processing-sampled.webm'],['object','Object mask','255 × 255','ResNet-18','Trainable','1','object-mask.png','processing-mask.mp4'],['hand','Fingertips','2 × 5 × 3','FFN','Trainable','1','proprio.png','proprio.webm'],['language','Language','Instruction','SigLIP','Frozen','1']];
-    const enc=compact?224:252,tok=compact?311:377;
-    text(g,compact?8:12,21,'Observations','av-stage','start');if(!compact){text(g,enc,21,'Encoders','av-stage');text(g,tok,21,'Tokens','av-stage');}
-    if(!compact){text(g,584,21,'Conditioning','av-stage');}
+    const enc=226,tok=318;
+    text(g,12,21,'Observations','av-stage','start');text(g,enc,21,'Encoders','av-stage');text(g,tok,21,'Tokens','av-stage');
+    text(g,495,21,'Conditioning','av-stage');
     rows.forEach(([id,title,dim,encoder,state,count,poster,src],i)=>{
-      const cy=(compact?61:71)+i*(compact?94:90),size=compact?48:62;
-      if(src)preview(g,compact?8:12,cy-size/2,size,poster,src,id);
+      const cy=71+i*90,size=54;
+      if(src)preview(g,12,cy-size/2,size,poster,src,id);
       else{
-        const n=pick(g.append('g').attr('class','av-language'),id),x=compact?8:12,y=cy-size/2;
+        const n=pick(g.append('g').attr('class','av-language'),id),x=12,y=cy-size/2;
         n.append('rect').attr('x',x).attr('y',y).attr('width',size).attr('height',size).attr('rx',0).attr('class','av-media-border');
         text(n,x+size/2,y+size*.48,'“','av-quote');
         [0,1,2].forEach(j=>n.append('path').attr('d',`M${x+9},${y+size*.58+j*6}h${size-18-j*5}`).attr('class','av-language-line'));
       }
-      const tx=compact?65:86;
-      text(g,tx,cy-9,title,'av-input-title','start');
+      const tx=76;
+      text(g,tx,cy-9,title,'av-label','start');
       const e=pick(g.append('g').attr('class','av-encoder'),id);
       matrix(e,enc-20,cy-20,5,4,6,0,i===1?2:0);
       text(e,enc,cy+38,encoder,'av-node-title');
-      wire(g,[compact?170:196,cy],[enc-26,cy],`${id} encoders`,0);
+      wire(g,[184,cy],[enc-26,cy],`${id} encoders`,0);
       const t=pick(g.append('g').attr('class','av-representation'),'concat');
       matrix(t,tok-(i===0?25:7),cy-15,i===0?6:1,3,i===0?6:8,.75,i===1?2:0);
 
       wire(g,[enc+30,cy],[tok-32,cy],`${id} concat`,.7);
-      if(compact)line(g,`M${tok+29},${cy}C355,${cy} 355,424 184,424`,'concat context',1.3);
-      else wire(g,[tok+35,cy],[474,205],'concat context',1.3);
+      wire(g,[tok+35,cy],[400,205],'concat context',1.3);
     });
 
-    if(compact){
-      wire(g,[184,424],[76,535],'concat pooled',1.6);
-      wire(g,[184,424],[280,566],'concat memory',1.6,'av-memory-wire');
-      const s=pick(g.append('g'),'pooled');matrix(s,49,518,6,6,7,2);text(s,106,508,'Self-attention','av-node-title');
-      wire(g,[106,545],[150,545],'pooled',2.3);matrix(s,151,530,1,4,7,2.5);text(s,153,580,'Mean pool','av-small');
-      const f=pick(g.append('g'),'memory');matrix(f,253,550,6,4,7,2,2);text(f,280,536,'Full tokens','av-node-title');
-      line(g,'M160,545C192,545 191,610 34,610L34,763C34,777 59,777 78,777','pooled denoiser',2.8);
-      line(g,'M308,566C341,566 341,624 341,639L341,831C341,845 326,845 312,845','memory denoiser',2.8,'av-memory-wire');
-      denoiser(g,62,729,260,169,true);
-      text(g,180,627,'Diffusion transformer','av-stage');
-      const n=pick(g.append('g'),'actionNoise');matrix(n,126,678,6,3,6,3,1);text(n,149,670,'Noisy actions xₜ','av-small');
-      const t=pick(g.append('g'),'timestep');text(t,285,665,'t','av-timestep');text(t,285,706,'Timestep','av-small');
-      line(g,'M149,706C149,715 177,715 177,732','actionNoise denoiser',3);line(g,'M285,713C285,725 242,725 242,732','timestep denoiser',3);
-      line(g,'M195,898L195,933','denoiser noiseHead noise',4.2);text(g,228,922,'FFN','av-small','start');
-      const o=pick(g.append('g'),'noise');matrix(o,165,939,7,4,7,4.5);text(o,195,1008,'Predicted noise ε̂','av-node-title');
-    }else{
-      wire(g,[474,205],[538,144],'concat pooled',1.6);
-      wire(g,[474,205],[538,315],'concat memory',1.6,'av-memory-wire');
-      const s=pick(g.append('g'),'pooled');matrix(s,539,117,6,6,7,2);text(s,566,99,'Self-attention','av-node-title');
-      wire(g,[596,144],[644,144],'pooled',2.3);matrix(s,645,128,1,4,7,2.5);text(s,651,192,'Mean pool','av-small');
-      wire(g,[654,144],[786,207],'pooled denoiser',2.8);
-      const f=pick(g.append('g'),'memory');matrix(f,539,299,6,4,7,2,2);text(f,566,283,'Full tokens','av-node-title');
-      wire(g,[596,315],[786,287],'memory denoiser',2.8,'av-memory-wire');
-      denoiser(g,770,159,245,166,false);
-      const n=pick(g.append('g'),'actionNoise');matrix(n,800,65,6,4,7,3,1);text(n,827,49,'Noisy actions xₜ','av-small');
-      const t=pick(g.append('g'),'timestep');text(t,964,89,'t','av-timestep');text(t,964,113,'Timestep','av-small');
-      line(g,'M827,105C827,135 860,135 860,162','actionNoise denoiser',3);line(g,'M964,115C964,141 938,141 938,162','timestep denoiser',3);
-      text(g,892,182,'Diffusion transformer','av-core-title');
-      line(g,'M893,325L893,365','denoiser noiseHead noise',4.2);text(g,907,351,'FFN','av-small','start');
-      const o=pick(g.append('g'),'noise');matrix(o,863,370,7,4,7,4.5);text(o,893,438,'Predicted noise ε̂','av-node-title');
-    }
+    wire(g,[400,205],[438,144],'concat pooled',1.6);
+    wire(g,[400,205],[438,315],'concat memory',1.6,'av-memory-wire');
+    const s=pick(g.append('g'),'pooled');matrix(s,439,117,6,6,7,2);text(s,466,99,'Self-attention','av-node-title');
+    wire(g,[496,144],[552,144],'pooled',2.3);matrix(s,553,128,1,4,7,2.5);text(s,557,192,'Mean pool','av-small');
+    wire(g,[562,144],[662,207],'pooled denoiser',2.8);
+    const f=pick(g.append('g'),'memory');matrix(f,439,299,6,4,7,2,2);text(f,466,283,'Full tokens','av-node-title');
+    wire(g,[496,315],[662,287],'memory denoiser',2.8,'av-memory-wire');
+    denoiser(g,646,159,246,166,false);
+    const n=pick(g.append('g'),'actionNoise');matrix(n,680,65,6,4,7,3,1);text(n,707,49,'Noisy actions xₜ','av-small');
+    const t=pick(g.append('g'),'timestep');text(t,852,89,'t','av-timestep');text(t,852,113,'Timestep','av-small');
+    line(g,'M707,105C707,135 736,135 736,162','actionNoise denoiser',3);line(g,'M852,115C852,141 814,141 814,162','timestep denoiser',3);
+    text(g,769,182,'Diffusion transformer','av-core-title');
+    line(g,'M769,325L769,365','denoiser noiseHead noise',4.2);text(g,783,351,'FFN','av-small','start');
+    const o=pick(g.append('g'),'noise');matrix(o,739,370,7,4,7,4.5);text(o,769,438,'Predicted noise ε̂','av-node-title');
   }
+
   function denoiser(g,x,y,w,h,right){
     const core=pick(g.append('g').attr('class','av-denoiser'),'denoiser');
     core.append('path').attr('d',`M${x+15},${y}H${x}V${y+h}H${x+15}M${x+w-15},${y}H${x+w}V${y+h}H${x+w-15}`).attr('class','av-bracket');
@@ -147,15 +131,16 @@
   function render(){
     videos.forEach(v=>v.pause());host.replaceChildren();paths=[];cells=[];videos=[];phoneStages=[];svg=null;
     figure.dataset.phone=String(phone);
+    scrollHint.hidden=true;host.removeAttribute('tabindex');host.removeAttribute('role');host.removeAttribute('aria-label');
     detail.hidden=phone;reset.hidden=phone;status.hidden=phone;
     const caption=figure.closest('figure').querySelector('figcaption');
     if(caption)caption.textContent=phone?'Simplified computation with recorded inputs.':'Moving tokens illustrate computation; they are not measured activations.';
     if(phone){
       host.dataset.view='phone';host.dataset.compact='true';phoneModel();paint();media();return;
     }
-    const w=compact?360:1040,h=compact?1036:465;
+    const w=920,h=465;
     svg=d3.select(host).append('svg').attr('class','ag-svg av-svg av-model').attr('viewBox',`0 0 ${w} ${h}`).attr('role','group').attr('aria-label','Animated policy architecture with recorded inputs and schematic internal representations');
-    model();host.dataset.view='model';host.dataset.compact=String(compact);
+    model();host.dataset.view='model';host.dataset.compact='false';
     figure.querySelector('[data-graph-note]').textContent='Recorded inputs: schematic activations and connections.';
     fitType();select();paint();media();
   }
@@ -163,6 +148,9 @@
     if(!svg)return;
     const node=svg.node(),width=node.getBoundingClientRect().width;
     if(width>0)host.style.setProperty('--diagram-unit',`${node.viewBox.baseVal.width/width}px`);
+    const scrollable=host.scrollWidth>host.clientWidth+1;scrollHint.hidden=!scrollable;
+    if(scrollable){host.tabIndex=0;host.setAttribute('role','region');host.setAttribute('aria-label','Policy network diagram; scroll horizontally to explore.');}
+    else {host.removeAttribute('tabindex');host.removeAttribute('role');host.removeAttribute('aria-label');}
   }
   function running(){return visible&&!paused&&!document.hidden;}
   function media(){
@@ -194,7 +182,7 @@
   reset.addEventListener('click',()=>{selected=null;select();});pause.addEventListener('click',()=>{paused=!paused;media();});
   document.addEventListener('visibilitychange',media);reduce.addEventListener('change',()=>{paused=reduce.matches;media();});
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;media();},{threshold:.08}).observe(host);
-  new ResizeObserver(()=>{const next=figure.clientWidth<1040,nextPhone=matchMedia('(max-width:600px)').matches;if(next!==compact||nextPhone!==phone){compact=next;phone=nextPhone;render();}else fitType();}).observe(figure);
-  compact=figure.clientWidth<1040;phone=matchMedia('(max-width:600px)').matches;render();
+  new ResizeObserver(()=>{const nextPhone=matchMedia('(max-width:600px)').matches;if(nextPhone!==phone){phone=nextPhone;render();}else fitType();}).observe(figure);
+  phone=matchMedia('(max-width:600px)').matches;render();
   document.fonts.ready.then(fitType);
 })();

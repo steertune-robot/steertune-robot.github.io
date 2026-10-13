@@ -6,7 +6,7 @@
 .transfer-topline button:focus-visible { outline:2px solid var(--green); outline-offset:5px; }
 .transfer-grid { --transfer-gap:44px; --transfer-cycle:8s; display:grid; grid-template-columns:1fr .94fr 1fr; align-items:start; gap:var(--transfer-gap); }
 .transfer-person, .transfer-robot, .transfer-method { min-width:0; }
-.transfer-robot { align-self:start; margin-top:var(--transfer-robot-offset,0px); }
+.transfer-robot { align-self:start; margin-top:0; }
 /* Full video frames replace the old portrait cutouts. This also overrides the
    former fixed photo heights in typography.css without changing type rules. */
 #overview .transfer-photo { height:auto; position:relative; isolation:isolate; }

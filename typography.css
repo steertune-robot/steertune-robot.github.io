@@ -75,13 +75,6 @@ body :is(#policy-figure,.policy-context) :is(.s3-header > span,.s3-loading,.s3-v
  .s3-playback,.s3-playback button,.s3-inspect,.s3-inspect-controls select,.s3-inspect-controls button,
  .s3-provenance,.s3-reference figcaption,.s3-comparison,.s3-comparison button) { font:400 var(--type-label)/1.5 var(--serif); }
 body :is(#policy-figure,.policy-context) .s3-intro { font:400 var(--type-body)/1.5 var(--serif); }
-/* Enlarge the architecture canvas, without widening the prose or other figures. */
-#pretraining .research-figure:has(#policy-figure) {
-  width:min(1280px,calc(100vw - 64px));
-  max-width:none;
-  margin-left:50%;
-  transform:translateX(-50%);
-}
 body #policy-figure { padding:32px; }
 body :is(#policy-figure,.policy-context) .ag-toolbar { gap:24px; flex-wrap:wrap; }
 body :is(#policy-figure,.policy-context) .ag-tabs { gap:24px; }
@@ -108,7 +101,6 @@ body .scientific-plot .plot-label, body .scaling-panel .scientific-plot .plot-la
  body .deploy-plan { gap:10px; }
 }
 @media(max-width:480px) {
- #pretraining .research-figure:has(#policy-figure) { width:calc(100vw - 24px); }
  body #policy-figure { padding:12px; }
  body :is(#policy-figure,.policy-context) .ag-toolbar { gap:12px; }
  body :is(#policy-figure,.policy-context) .ag-tabs { gap:12px; flex-direction:column; align-items:flex-start; }

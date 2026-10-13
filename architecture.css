@@ -44,7 +44,9 @@
 #policy-figure .av-sampling-node .av-node-title{font-size:1rem}
 #policy-figure .av-sampling-node .av-small{font-size:0.875rem}
 #policy-figure .av-svg .av-edge-label{font-size:0.75rem;fill:var(--green);paint-order:stroke;stroke:var(--paper);stroke-width:4}
-@container(max-width:739px){#policy-figure .ag-host[data-view=model]{max-width:400px}#policy-figure .ag-host[data-view=sampling]{max-width:360px}}
+/* Keep the laptop diagram horizontal; narrow tablets can pan the full network. */
+#policy-figure .ag-host[data-view=model] {overflow-x:auto;}
+#policy-figure .ag-host[data-view=model] .av-svg {min-width:820px;}
 @media(max-width:550px){#policy-figure .ag-toolbar{flex-wrap:wrap;gap:9px}#policy-figure .ag-controls{justify-content:space-between;width:100%}#policy-figure .ag-reset{order:2}#policy-figure .ag-tabs{gap:18px}}
 
 /* Phone-only reading flow. Tablet and desktop retain the original SVG network. */
@@ -63,3 +65,6 @@
  .ag-phone-conditioning {color:var(--green);}
  .ag-phone-stage[data-active=true] h4 {color:var(--ink);}
 }
+
+#policy-figure .ag-scroll-hint {margin:8px 0 0; color:var(--muted); font:400 var(--type-label)/1.5 var(--serif);}
+#policy-figure .ag-host[tabindex]:focus-visible {outline:2px solid var(--green); outline-offset:0;}

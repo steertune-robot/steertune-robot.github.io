@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="site-version" content="v2026.10.12.4-anonymous"/>
+<meta name="site-version" content="v2026.10.13.1-anonymous"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Steertuning Policies from a Few Human Videos | v2026.10.12.4-anonymous</title>
+<title>Steertuning Policies from a Few Human Videos | v2026.10.13.1-anonymous</title>
 <meta content="Anonymous authors" name="author"/>
 <meta content="noindex, nofollow" name="robots"/>
 <meta content="Steertuning combines two-minute LoRA finetuning with demonstration-guided action steering to adapt robot policies from five human demonstrations. Research project page." name="description"/>
@@ -15,10 +15,10 @@
 <link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232f5d4a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Georgia' font-size='48' fill='%23fcf8f3'%3ES%3C/text%3E%3C/svg%3E" rel="icon" type="image/svg+xml"/>
 <link as="font" crossorigin="" href="assets/fonts/cormorant-garamond-normal-latin.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="assets/fonts/source-serif-4-normal-latin.woff2" rel="preload" type="font/woff2"/>
-<link href="style.css?v=5747d7bb2765" rel="stylesheet"/>
+<link href="style.css?v=e942786137eb" rel="stylesheet"/>
 <link href="figures.css?v=dfeb8496237a" rel="stylesheet"/>
 <link href="processing-motion.css?v=d6f7134a6d91" rel="stylesheet"/>
-<link href="architecture.css?v=624da9d43ff0" rel="stylesheet"/>
+<link href="architecture.css?v=35ebbe315011" rel="stylesheet"/>
 <link href="rollouts.css?v=3c7af7c0f2df" rel="stylesheet"/>
 <link href="teaser.css?v=be772bf6e670" rel="stylesheet"/>
 <link href="deployment.css?v=ae2500763345" rel="stylesheet"/>
@@ -29,14 +29,14 @@
 <script defer="" src="deployment-media.js?v=194705d6486a"></script>
 <script defer="" src="teaser.js?v=5a2f2d5e54e9"></script>
 <script defer="" src="graph-layouts.js?v=2fe974c05c2b"></script>
-<script defer="" src="architecture.js?v=10235019d3c9"></script>
+<script defer="" src="architecture.js?v=70a0bb8cf5e4"></script>
 <script defer="" src="figures.js?v=4ca031ced443"></script>
 <script defer="" src="rollout-data.js?v=143ff73ec8cb"></script>
 <script defer="" src="script.js?v=2cffed30c019"></script>
 <script defer="" src="charts.js?v=ae02b4f5dc0f"></script>
 <script defer="" src="plot-data.js?v=8da1460b7550"></script>
 <script defer="" src="plots.js?v=613e03c3695c"></script>
-<link href="simplify.css?v=2b9516f16be7" rel="stylesheet"/><link href="transfer.css?v=b52ed2d7eba9" rel="stylesheet"/><script defer="True" src="transfer.js?v=352a4388f45e"></script><link href="steering.css?v=f9aec4bf7426" rel="stylesheet"/><script defer="" src="steering.js?v=0317f3351a63"></script><link href="steering-coordinates.css?v=78d78edebc8f" rel="stylesheet"/><link href="story.css?v=372f0c00dc31" rel="stylesheet"/><link href="dataset.css?v=b8ac4d398157" rel="stylesheet"/><link href="contact.css?v=2b7e5ce8b559" rel="stylesheet"/><script defer="" src="contact.js?v=cd8fb9cc04a5"></script><link href="playback-controls.css?v=8ab6b22129cf" rel="stylesheet"/><link href="typography.css?v=c0abda12a9f3" rel="stylesheet"/>
+<link href="simplify.css?v=2b9516f16be7" rel="stylesheet"/><link href="transfer.css?v=8eb4b1bf6c6b" rel="stylesheet"/><script defer="True" src="transfer.js?v=d895062b23ef"></script><link href="steering.css?v=f9aec4bf7426" rel="stylesheet"/><script defer="" src="steering.js?v=0317f3351a63"></script><link href="steering-coordinates.css?v=78d78edebc8f" rel="stylesheet"/><link href="story.css?v=275c19b3f4a3" rel="stylesheet"/><link href="dataset.css?v=b8ac4d398157" rel="stylesheet"/><link href="contact.css?v=2b7e5ce8b559" rel="stylesheet"/><script defer="" src="contact.js?v=cd8fb9cc04a5"></script><link href="playback-controls.css?v=8ab6b22129cf" rel="stylesheet"/><link href="typography.css?v=f5f57426f3ac" rel="stylesheet"/>
 <script defer="" src="dataset.js?v=254c4e52189a"></script><script defer src="task-demos.js?v=b08401c40f14"></script></head>
 <body>
 <a class="skip-link" href="#abstract">Skip to research content</a>
@@ -247,7 +247,18 @@ Steertuning:
 </div>
 <p class="sc-result sr-only" data-coordinate-result=""></p>
 <span aria-live="polite" class="sr-only" data-coordinate-announcement=""></span>
-</section></div></section><section aria-labelledby="deploy-title" class="paper-section container story-chapter" id="deploy"><h2 id="deploy-title"><span aria-hidden="true" class="section-number">06</span><span class="section-heading-text">Full stack robot deployment</span></h2><p class="story-lead">We use Gemini ER 1.6 to orchestrate navigation and manipulation, coordinating the robot’s actions to complete the task.</p><article class="subsection" id="deployment">
+</section></div>
+<p class="story-lead steering-studies-intro">We ablate finetuning, steering strength, and trajectory selection to evaluate their roles in adaptation.</p>
+<article class="subsection" id="steering-study">
+<h3 id="steering-study-title">Finetuning and steering</h3>
+<figure class="curve-panel steering-panel" id="steering-chart"></figure>
+<p class="figure-note plot-provenance">Prediction error on 12 tasks · approximate values</p>
+</article>
+<article class="subsection" id="trajectory-study">
+<h3 id="trajectory-results">Trajectory selection</h3>
+<figure aria-labelledby="trajectory-results" class="result-chart" data-result-chart="trajectory"></figure>
+</article>
+</section><section aria-labelledby="deploy-title" class="paper-section container story-chapter" id="deploy"><h2 id="deploy-title"><span aria-hidden="true" class="section-number">06</span><span class="section-heading-text">Full stack robot deployment</span></h2><p class="story-lead">We use Gemini ER 1.6 to orchestrate navigation and manipulation, coordinating the robot’s actions to complete the task.</p><article class="subsection" id="deployment">
 <figure class="research-figure">
 <div class="deployment-explainer" id="deployment-figure">
 <div class="deploy-command"><q>Pick up the bag and bring it to the table.</q></div>
@@ -366,24 +377,17 @@ Steertuning:
 <div class="scaling-grid" id="scaling-charts"></div>
 <p class="figure-note plot-provenance"><a download="" href="assets/plot-data.json">Approximate plot data</a></p>
 </article>
-<article class="subsection" id="steering-study">
-<h3 id="steering-study-title">Finetuning and steering</h3>
-<figure class="curve-panel steering-panel" id="steering-chart"></figure>
-<p class="figure-note plot-provenance">Prediction error on 12 tasks · approximate values</p>
-</article>
+
 <div class="ablation-tables">
 <article>
 <h3 id="architecture-results">Architecture</h3>
 <figure aria-labelledby="architecture-results" class="result-chart" data-result-chart="architecture"></figure>
 </article>
-<article>
-<h3 id="trajectory-results">Trajectory selection</h3>
-<figure aria-labelledby="trajectory-results" class="result-chart" data-result-chart="trajectory"></figure>
-</article>
+
 </div>
 </section></main>
 <footer class="page-footer container">
-<span>Steertuning v2026.10.12.4-anonymous</span><a href="#top">Back to top</a>
+<span>Steertuning v2026.10.13.1-anonymous</span><a href="#top">Back to top</a>
 </footer>
 </body>
 </html>

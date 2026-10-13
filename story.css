@@ -1,4 +1,13 @@
 /* Read the method in execution order, then evaluate it. */
+/* Give laptop pages clear margins; all figures stay in the shared column. */
+@media(min-width:761px) {
+ body :is(.container,.reading-width) {width:min(var(--content-width),calc(100% - 128px));}
+ body .container .reading-width {width:100%;}
+}
+body #pretraining .research-figure:has(#policy-figure) {width:100%; max-width:none; margin-left:0; transform:none;}
+body #pretraining #policy-figure {padding:24px 0;}
+body #steer .steering-studies-intro {margin:48px 0 28px;}
+
 .story-route { display:flex; flex-wrap:wrap; gap:12px 0; margin-block:10px 32px; }
 .story-route a { font:400 var(--type-label)/1.5 var(--serif); white-space:nowrap; }
 .story-route a:not(:last-child)::after { content:'→'; display:inline-block; padding-inline:16px; color:#92a68d; }
@@ -181,6 +190,7 @@ body .deploy-step > span:nth-child(2) {min-width:0;}
 }
 @media(max-width:380px){
  body .deploy-skills {grid-template-columns:1fr;}
+ body #steering-chart .steering-key {grid-template-columns:1fr;}
 }
 
 /* Irmak review: minimal copy, with every processing pair visible. */
@@ -237,7 +247,7 @@ body #steer .sm-note {margin:12px 0 0;}
 }
 
 /* Compact experiment readouts retain the measured uncertainty. */
-body #ablations .plot-readout {display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; min-height:0;}
+body :is(#ablations,#steer) .plot-readout {display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; min-height:0;}
 
 /* Full-stack recordings roll in sequence; the active video owns diagram time. */
 body .deploy-videos {margin-top:24px; padding-top:0; border:0;}

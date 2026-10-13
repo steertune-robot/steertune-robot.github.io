@@ -47,36 +47,6 @@
     paintSteering();
   }
 
-  // Aim the outgoing connector at the recorded scene, not its caption. The
-  // stage layout determines this offset, so changing it cannot resize a stage.
-  const grid = figure.querySelector('.transfer-grid');
-  const robot = figure.querySelector('.transfer-robot');
-  const robotVideo = robot?.querySelector('video');
-  const steer = figure.querySelector('.steer-step');
-  function alignRobotVideo() {
-    if (!grid || !robot || !robotVideo || !steer) return;
-    if (figure.getBoundingClientRect().width <= 800) {
-      robot.style.removeProperty('--transfer-robot-offset');
-      return;
-    }
-    const stage = steer.getBoundingClientRect();
-    const video = robotVideo.getBoundingClientRect();
-    const offset = Math.max(0, stage.top - grid.getBoundingClientRect().top
-      + stage.height / 2 - video.height / 2);
-    const value = `${offset.toFixed(2)}px`;
-    if (robot.style.getPropertyValue('--transfer-robot-offset') !== value) {
-      robot.style.setProperty('--transfer-robot-offset', value);
-    }
-  }
-  if ('ResizeObserver' in window) {
-    const alignmentObserver = new ResizeObserver(alignRobotVideo);
-    for (const element of [figure, steer, robotVideo]) {
-      if (element) alignmentObserver.observe(element);
-    }
-  } else window.addEventListener('resize', alignRobotVideo);
-  document.fonts?.ready.then(alignRobotVideo);
-  alignRobotVideo();
-
   function load(video) {
     if (loaded.has(video)) return;
     for (const source of video.querySelectorAll('source[data-src]')) {

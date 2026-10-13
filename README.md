@@ -2,7 +2,7 @@
 
 Anonymous research project page for **Steertuning Policies from a Few Human Videos**, Paper ID 1039.
 
-Current release: **v2026.10.12.3-anonymous**. GitHub Pages publishes `main` from the repository root at https://steertune-robot.github.io/.
+Current release: **v2026.10.12.4-anonymous**. GitHub Pages publishes `main` from the repository root at https://steertune-robot.github.io/.
 
 The page shows anonymous authors, omits author affiliations and personal links, and retains the anonymous manuscript. Public provenance uses recording identifiers and checksums without private absolute paths. `robots.txt` and the page metadata discourage search indexing. Third-party licenses and attribution remain intact.
 

@@ -243,10 +243,10 @@ h1 {
 .resource-button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   border: 1px solid #cfc5b6;
-  border-radius: 0;
-  padding: 8px 14px;
+  border-radius: 6px;
+  padding: 6px 10px;
   font: 500 0.75rem/1.5 var(--label);
   min-height: 37px;
 }
@@ -1376,7 +1376,7 @@ tbody tr:last-child > * {
   }
   .resource-button {
     font-size: 0.8125rem;
-    padding: 9px 13px;
+    padding: 6px 10px;
   }
   .resource-button small {
     font-size: 0.5625rem;
@@ -1567,7 +1567,7 @@ tbody tr:last-child > * {
     font-size: 2.5rem;
   }
   .resource-button {
-    padding: 8px 12px;
+    padding: 6px 10px;
   }
   .task-tabs button {
     font-size: 0.6875rem;

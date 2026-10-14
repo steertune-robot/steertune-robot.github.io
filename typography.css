@@ -6,6 +6,7 @@
   --type-body: 1.111111rem;
   --type-label: var(--type-body);
   --type-meta: var(--type-body);
+  --type-compact: 1rem;
   --type-panel: var(--type-body);
   --type-subheading: 1.555556rem;
   --type-section: 2.222222rem;
@@ -254,3 +255,8 @@ body :is(.sm-target-key b,.sm-target-labels span) {font:600 var(--type-label)/1 
 /* Rollout gallery uses the shared readable label scale. */
 body :is(.deploy-gallery-select button,.deploy-gallery-arrows,.deploy-gallery-arrows button,.deploy-gallery-heading strong,.deploy-gallery-note) {font:400 var(--type-label)/1.4 var(--serif);}
 body .deploy-gallery-heading strong {font-weight:600;}
+
+/* Compact resource links retain the shared Source family and 18 px text. */
+body .publication-links :is(.resource-button,.resource-status) {
+  font:400 var(--type-compact)/1.5 var(--serif);
+}

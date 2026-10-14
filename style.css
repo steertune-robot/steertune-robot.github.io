@@ -234,49 +234,55 @@ h1 {
   margin-top: 7px;
 }
 .publication-links {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
-  gap: 7px 10px;
-  width: min(100%, 360px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
   margin: 20px auto 0;
 }
 .resource-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-width: 0;
+  gap: 9px;
   min-height: 44px;
-  padding: 6px 8px;
-  border: 1px solid #b8beb5;
-  border-radius: 6px;
-  background: #f5f3ed;
-  color: #62695e;
+  padding: 6px 2px;
+  border: 0;
+  border-bottom: 1px solid #8b8a7e;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
   text-decoration: none;
 }
 .publication-links .resource-button svg {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 18px;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+a.resource-button::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  margin-left: 2px;
+  background: currentColor;
+  clip-path: polygon(20% 0,100% 0,100% 80%,86% 80%,86% 24%,10% 100%,0 90%,76% 14%,20% 14%);
 }
 a.resource-button:focus-visible {
   outline: 2px solid var(--green);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
-.resource-button.primary {
-  background: var(--green);
-  border-color: var(--green);
-  color: #fffdf8;
+a.resource-button:hover {
+  color: var(--green);
+  border-bottom-color: var(--green);
 }
-.resource-button.primary:hover {
-  background: #234a39;
+.resource-button.unavailable {
+  color: #6a6c63;
+  border-bottom-color: #c7c5bb;
+  cursor: default;
 }
-.publication-links .resource-status {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: var(--muted);
-  text-align: center;
+@media (max-width: 600px) {
+  .paper-header .publication-links { gap: 20px; }
 }
 .teaser-section {
   padding-top: 2px;

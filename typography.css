@@ -257,6 +257,6 @@ body :is(.deploy-gallery-select button,.deploy-gallery-arrows,.deploy-gallery-ar
 body .deploy-gallery-heading strong {font-weight:600;}
 
 /* Compact resource links retain the shared Source family and 18 px text. */
-body .publication-links :is(.resource-button,.resource-status) {
+body .publication-links .resource-button {
   font:400 var(--type-compact)/1.5 var(--serif);
 }

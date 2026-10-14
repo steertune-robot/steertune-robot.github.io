@@ -39,7 +39,8 @@ body :is(.affiliations,.anonymous-authors,.resource-button,.teaser-caption,
   line-height:1.5;
   letter-spacing:0;
 }
-body :is(.contribution-note,.resource-button small) { font:400 var(--type-meta)/1.5 var(--serif); }
+body .resource-button small { font:400 var(--type-meta)/1.5 var(--serif); }
+body .contribution-note { font:400 var(--type-compact)/1.5 var(--serif); }
 body .transfer-topline > span { text-transform:none; }
 body .transfer-topline { align-items:center; }
 body .transfer-step { min-height:178px; }
@@ -259,4 +260,15 @@ body .deploy-gallery-heading strong {font-weight:600;}
 /* Compact resource links retain the shared Source family and 18 px text. */
 body .publication-links .resource-button {
   font:400 var(--type-compact)/1.5 var(--serif);
+}
+
+/* Acknowledgements use the shared compact reading size. */
+body #acknowledgements > p {
+  font-size: var(--type-compact);
+  line-height: 1.6;
+}
+body #acknowledgements > p a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }

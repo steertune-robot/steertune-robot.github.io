@@ -3,6 +3,7 @@
    Components must consume this scale rather than introduce their own fonts. */
 :root {
   --label: var(--serif);
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --type-body: 1.111111rem;
   --type-label: var(--type-body);
   --type-meta: var(--type-body);
@@ -273,5 +274,6 @@ body #acknowledgements > p a {
   text-underline-offset: 3px;
 }
 
-/* Citation keeps the shared Source family and readable compact size. */
-body :is(.citation-code,.citation-code code,.citation-copy,.citation-status) {font:400 var(--type-compact)/1.6 var(--serif);}
+/* BibTeX is code; controls retain the shared Source family. */
+body :is(.citation-copy,.citation-status) {font:400 var(--type-compact)/1.6 var(--serif);}
+body :is(.citation-code,.citation-code code) {font:400 var(--type-compact)/1.5 var(--font-code);}

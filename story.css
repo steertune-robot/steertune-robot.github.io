@@ -274,3 +274,15 @@ body .deploy-gallery-toolbar .deploy-controls {gap:8px;}
 @media(prefers-reduced-motion:reduce){body .deploy-video-grid {transition:none;}}
 
 body .deploy-planner:not(button) {cursor:default;}
+
+/* Citation follows the same narrow column as the paper. */
+.citation-intro {display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:20px;}
+.citation-intro p {margin:0;}
+.citation-copy {flex:none; min-height:44px; padding:8px 18px; border:0; border-radius:0; background:#e4eade; color:var(--ink); cursor:pointer;}
+.citation-copy:focus-visible,.citation-code:focus-visible {outline:2px solid var(--green); outline-offset:0;}
+.citation-code {margin:0; padding:24px; background:rgba(224,230,217,.42); white-space:pre-wrap; overflow-wrap:anywhere; border:0; border-radius:0;}
+.citation-status {margin:8px 0 0; min-height:1.6em;}
+@media(max-width:600px) {
+ .citation-intro {align-items:flex-start; flex-wrap:wrap; gap:12px;}
+ .citation-code {padding:16px;}
+}

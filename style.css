@@ -31,7 +31,7 @@
   --label: var(--serif);
   --serif: Source, Georgia, serif;
   --heading: Cormorant, Georgia, serif;
-  --content-width: 960px;
+  --content-width: 840px;
   color-scheme: light;
   /* One shared type scale for prose, controls, and figure labels. */
   font-size: 112.5%;

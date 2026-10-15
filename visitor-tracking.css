@@ -1,0 +1,4 @@
+/* Keep visitor tracking active without displaying the provider's map. */
+#mapmyvisitors-widget {
+  display: none !important;
+}

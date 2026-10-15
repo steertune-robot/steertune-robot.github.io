@@ -416,7 +416,7 @@ const plotTypeObserver = new ResizeObserver((entries) => {
     const width = target.getBoundingClientRect().width;
     const viewWidth = target.viewBox.baseVal.width;
     if (width > 0 && viewWidth > 0)
-      target.style.setProperty('--plot-font-size', `${18 * viewWidth / width}px`);
+      target.style.setProperty('--plot-font-size', `${(parseFloat(getComputedStyle(target).getPropertyValue('--plot-label-px')) || 16) * viewWidth / width}px`);
     // Stagger crowded categorical ticks on small phones instead of shrinking them.
     const ticks = target.querySelectorAll('.plot-x-tick');
     if (ticks.length) {

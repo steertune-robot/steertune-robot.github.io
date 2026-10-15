@@ -4,14 +4,22 @@
 :root {
   --label: var(--serif);
   --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --type-body: 1.111111rem;
-  --type-label: var(--type-body);
-  --type-meta: var(--type-body);
-  --type-compact: 1rem;
+  --type-body: 1rem;
+  --type-label: 0.888889rem;
+  --type-meta: var(--type-label);
+  --type-compact: 0.888889rem;
+  --type-code: 0.833333rem;
   --type-panel: var(--type-body);
-  --type-subheading: 1.555556rem;
-  --type-section: 2.222222rem;
+  --type-subheading: 1.333333rem;
+  --type-section: 1.888889rem;
   --type-value: var(--type-body);
+  --diagram-label: 16;
+  --diagram-title: 18;
+  --diagram-small: 15;
+  --diagram-symbol: 24;
+  --diagram-quote: 26;
+  --plot-label-px: 16;
+  --type-title: clamp(2rem, 4vw, 2.666667rem);
 }
 body { font: 400 var(--type-body)/1.65 var(--serif); }
 body :is(button, input, select, textarea) { font-family: var(--serif); }
@@ -86,14 +94,14 @@ body :is(#policy-figure,.policy-context) .ag-host[data-view=sampling][data-compa
 /* SVG units are adjusted in architecture.js, keeping labels readable at every size. */
 body :is(#policy-figure,.policy-context) .av-svg text {
   font-family:var(--serif); font-weight:400; letter-spacing:0;
-  font-size:calc(var(--diagram-unit,1px) * 20);
+  font-size:calc(var(--diagram-unit,1px) * var(--diagram-label));
 }
-body :is(#policy-figure,.policy-context) .av-svg :is(.av-input-title,.av-node-title) { font-size:calc(var(--diagram-unit,1px) * 22); }
-body :is(#policy-figure,.policy-context) .av-svg :is(.av-small,.av-port,.av-edge-label,.av-stage,.av-dimension) { font-size:calc(var(--diagram-unit,1px) * 18); }
-body :is(#policy-figure,.policy-context) .av-svg .av-core-title { font:600 calc(var(--diagram-unit,1px) * 22) var(--serif); }
-body :is(#policy-figure,.policy-context) .av-svg .av-timestep { font:italic 400 calc(var(--diagram-unit,1px) * 28) var(--serif); }
-body :is(#policy-figure,.policy-context) .av-svg .av-quote { font:400 calc(var(--diagram-unit,1px) * 32) var(--serif); }
-body :is(#policy-figure,.policy-context) .av-sampling-node .av-node-title { font-size:calc(var(--diagram-unit,1px) * 20); font-weight:600; }
+body :is(#policy-figure,.policy-context) .av-svg :is(.av-input-title,.av-node-title) { font-size:calc(var(--diagram-unit,1px) * var(--diagram-title)); }
+body :is(#policy-figure,.policy-context) .av-svg :is(.av-small,.av-port,.av-edge-label,.av-stage,.av-dimension) { font-size:calc(var(--diagram-unit,1px) * var(--diagram-small)); }
+body :is(#policy-figure,.policy-context) .av-svg .av-core-title { font:600 calc(var(--diagram-unit,1px) * var(--diagram-title)) var(--serif); }
+body :is(#policy-figure,.policy-context) .av-svg .av-timestep { font:italic 400 calc(var(--diagram-unit,1px) * var(--diagram-symbol)) var(--serif); }
+body :is(#policy-figure,.policy-context) .av-svg .av-quote { font:400 calc(var(--diagram-unit,1px) * var(--diagram-quote)) var(--serif); }
+body :is(#policy-figure,.policy-context) .av-sampling-node .av-node-title { font-size:calc(var(--diagram-unit,1px) * var(--diagram-label)); font-weight:600; }
 body .scientific-plot .plot-label, body .scaling-panel .scientific-plot .plot-label {
   font-family:var(--serif); font-weight:400; font-size:var(--plot-font-size,18px);
 }
@@ -121,7 +129,7 @@ body .scientific-plot .plot-label, body .scaling-panel .scientific-plot .plot-la
  body .chart-select-label { gap:8px; }
 }
 @media(max-width:360px) {
- body :is(#policy-figure,.policy-context) .av-svg :is(.av-input-title,.av-node-title) { font-size:calc(var(--diagram-unit,1px) * 18); }
+ body :is(#policy-figure,.policy-context) .av-svg :is(.av-input-title,.av-node-title) { font-size:calc(var(--diagram-unit,1px) * var(--diagram-small)); }
 }
 
 /* Recorded XYZ trajectories share the site’s readable type scale. */
@@ -276,4 +284,10 @@ body #acknowledgements > p a {
 
 /* BibTeX is code; controls retain the shared Source family. */
 body :is(.citation-copy,.citation-status) {font:400 var(--type-compact)/1.6 var(--serif);}
-body :is(.citation-code,.citation-code code) {font:400 var(--type-compact)/1.5 var(--font-code);}
+body :is(.citation-code,.citation-code code) {font:400 var(--type-code)/1.5 var(--font-code);}
+
+/* Rebalanced for the 840 px reading column. */
+body .paper-header h1 {font-size:var(--type-title);}
+@media(max-width:600px) {
+ :root {--type-section:1.666667rem; --type-subheading:1.222222rem;}
+}
